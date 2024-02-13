@@ -23,7 +23,7 @@ export default function DeckGlComponent() {
 
     return (
       <DeckGLOverlay
-      layers={layersDeck}
+        layers={layersDeck}
         onHover={(info : any) => {
           if(info.picked === true){
             map!.getCanvas().style.cursor = "pointer"

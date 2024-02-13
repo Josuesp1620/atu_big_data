@@ -13,13 +13,11 @@ import FooterMapComponent from "./FooterMap";
 import "../style/Map.css";
 import { ArcLayer } from "@deck.gl/layers/typed";
 import * as turf from '@turf/turf';
-
 import axios from "axios";
 import CleanMapControl from "@/components/control/CleanMapControl";
-
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { addLayersDeck, removeAllLayersDeck } from "@/redux/features/layersDeckSlice";
-import { componentFactory } from "@/lib/renderedComponent";
+import { setSelectionState } from "@/redux/features/arcSlice";
 
 export default function MapComponent() {
   const mapRef = React.useRef<MapRef>(null);
@@ -28,11 +26,7 @@ export default function MapComponent() {
   const mapStyle = useAppSelector((state) => state.mapStyleReducer.layer);
   const layers = useAppSelector((state) => state.layersReducer.layers);
 
-
-  const [isSourceSelected, setIsSourceSelected] = React.useState(false);
-
-  const [source, setSource] = React.useState(null);
-  const [target, setTarget] = React.useState(null);
+  const selectionState = useAppSelector((state) => state.arcReducer)
 
   async function handleMapClick(e) {
     const lngLat = e.lngLat;
@@ -44,45 +38,46 @@ export default function MapComponent() {
     const featureCollection = response.data as turf.FeatureCollection;
 
     const updatedFeatureCollection = featureCollection.features.map(feature => {
-
       var pointOnPolygon = turf.pointOnFeature(feature);
-      console.log(pointOnPolygon)
-
       feature.properties.centroid = pointOnPolygon.geometry.coordinates;
       return feature;
+
     });
 
-    if (!isSourceSelected) {
-      setSource(null)
-      setTarget(null)
-      
-      setIsSourceSelected(true);
-      setSource(updatedFeatureCollection[0]);
+    if (!selectionState.isSourceSelected) {
+      dispatch(setSelectionState(({
+        source: updatedFeatureCollection[0],
+        target: null,
+        isSourceSelected: true,
+      })));
     } else {
-      setTarget(updatedFeatureCollection[0]);      
+      dispatch(setSelectionState(({
+        source: selectionState.source,
+        target: updatedFeatureCollection[0],
+        isSourceSelected: false,
+      })));    
     }
   };
 
   React.useEffect(() => {    
-    if (source !== null && target !== null ) {
-      const dataArc : any = { type: 'FeatureCollection', features: [source, target]};
+    if (selectionState.source !== null && selectionState.target !== null ) {
+      const dataArc : any = { type: 'FeatureCollection', features: [selectionState.source, selectionState.target]};
       const arcInstance = new ArcLayer({
         id: "arc-layer",
         data: dataArc,
         getWidth: 12,
         dataTransform: ( d : any ) =>
            d.features.filter(( f : any ) => f && f.properties),
-        getSourcePosition: () => source.properties.centroid,
+        getSourcePosition: () => selectionState.source.properties.centroid,
         getTargetPosition: (f) => f.properties.centroid,
         getSourceColor: d => [Math.sqrt(d.inbound), 140, 0],
         getTargetColor: d => [Math.sqrt(d.outbound), 140, 0],
       });
       
       dispatch(removeAllLayersDeck())
-      setIsSourceSelected(false)
       dispatch(addLayersDeck([arcInstance]))
     }
-  }, [source, target]);
+  }, [selectionState]);
   
   const onMapLoad = React.useCallback(() => {
     const attributionControl = document.querySelector('.maplibregl-ctrl-attrib-inner');
@@ -102,7 +97,7 @@ export default function MapComponent() {
         mapLib={maplibregl}
         style={{ width: '100vw', height: '100vh' }}>
         
-        {layers.length !== 0 && layers.map((layer) => componentFactory(layer))}
+        {layers.length !== 0 && layers.map((layer) => layer)}
 
 
         <HeaderMapComponent />
@@ -112,7 +107,7 @@ export default function MapComponent() {
         <ScaleControl />
         <CleanMapControl />
         
-        <FooterMapComponent source={source} target={target}/>
+        <FooterMapComponent />
 
       </Map>
     </>
