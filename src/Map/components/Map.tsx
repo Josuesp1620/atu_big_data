@@ -17,10 +17,12 @@ import * as turf from '@turf/turf';
 import axios from "axios";
 import CleanMapControl from "@/components/control/CleanMapControl";
 
+import { useAppSelector } from "@/redux/hooks";
+
 export default function MapComponent() {
   const mapRef = React.useRef<MapRef>(null);
 
-  const [mapStyle, setMapStyle] = React.useState(MAP_STYLE[0]);
+  const mapStyle = useAppSelector((state) => state.mapStyleReducer.layer);
 
   const [layers, setLayers] = React.useState([]);
 
@@ -103,7 +105,7 @@ export default function MapComponent() {
         {layers.length !== 0 && layers.map((layer) => layer)}
 
 
-        <HeaderMapComponent setMapStyle={setMapStyle} mapStyle={mapStyle} />
+        <HeaderMapComponent />
 
         <DeckGlComponent key="deckglComponent" layersDeck={layersDeck}/>
         <NavigationControl position="bottom-right"/>

@@ -1,13 +1,19 @@
 import { MAP_STYLE } from "@/Map/constants/map.constants";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { changeMapStyle } from "@/redux/features/mapStyleSlice";
 import {
     DndContext
 } from "@dnd-kit/core";
 
-export function LayersPopover({ setMapStyle, mapStyle }: { setMapStyle: any, mapStyle : any }) {
+export function LayersPopover() {
   const items = MAP_STYLE;
 
+  const mapStyle = useAppSelector((state) => state.mapStyleReducer.layer);
+  const dispatch = useAppDispatch();
+
+
     const handleSelectLayer = (layer:any) => {
-      setMapStyle(layer);
+      dispatch(changeMapStyle(layer));
     };
   
     return (

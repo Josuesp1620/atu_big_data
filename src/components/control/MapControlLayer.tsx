@@ -6,7 +6,7 @@ import { LayersIcon } from "@radix-ui/react-icons";
 import { Suspense } from "react";
 import { LayersPopover } from "./Layers";
 
-export default function ControlLayers({ setMapStyle, mapStyle }: { setMapStyle: any, mapStyle : any }) {
+export default function ControlLayers() {
     return (
       <T.Provider>
         <T.Root>
@@ -23,7 +23,7 @@ export default function ControlLayers({ setMapStyle, mapStyle }: { setMapStyle: 
           
           <E.PopoverContent2 size="xxs" className="mx-3 w-30">
             <Suspense fallback={<E.Loading size="sm" />}>
-              <LayersPopover setMapStyle={setMapStyle} mapStyle={mapStyle}/>
+              <LayersPopover />
             </Suspense>
           </E.PopoverContent2>
         </Root>

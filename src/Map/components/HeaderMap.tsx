@@ -3,7 +3,7 @@ import * as E from "@/components/elements";
 import { EraserIcon, GearIcon, HomeIcon, PersonIcon, QuestionMarkCircledIcon } from '@radix-ui/react-icons'
 
 
-export default function HeaderMapComponent({ setMapStyle, mapStyle }: { setMapStyle: any, mapStyle: any }) {
+export default function HeaderMapComponent() {
 
     const cleanMap = () => {
         console.log("CLEAN MAP")
@@ -51,7 +51,7 @@ export default function HeaderMapComponent({ setMapStyle, mapStyle }: { setMapSt
             </div>
 
             <div className="flex mx-3">
-                <ControlLayers setMapStyle={setMapStyle} mapStyle={mapStyle} />
+                <ControlLayers />
             </div>
         </div>
         
