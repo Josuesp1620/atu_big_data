@@ -4,7 +4,6 @@ import React from "react"
 import {MapboxOverlay, MapboxOverlayProps} from '@deck.gl/mapbox/typed';
 import {useControl} from 'react-map-gl';
 import {useMap} from 'react-map-gl/maplibre';
-import { useAppSelector } from "@/redux/hooks";
 
 
 function DeckGLOverlay(props: MapboxOverlayProps & {
@@ -16,11 +15,8 @@ function DeckGLOverlay(props: MapboxOverlayProps & {
 }
 
 
-export default function DeckGlComponent() {
+export default function DeckGlComponent({ layersDeck } : { layersDeck : any }) {
     const {current: map} = useMap();
-    const layersDeck = useAppSelector((state) => state.layersDeckReducer.layers);
-
-
     return (
       <DeckGLOverlay
       layers={layersDeck}

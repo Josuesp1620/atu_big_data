@@ -3,16 +3,12 @@ import * as T from "@radix-ui/react-tooltip";
 import { Root, Trigger } from "@radix-ui/react-popover";
 import * as E from "@/components/elements";
 import { TrashIcon } from "@radix-ui/react-icons";
-import { useAppDispatch } from "@/redux/hooks";
-import { removeAllLayersDeck } from "@/redux/features/layersDeckSlice";
-import { removeAllLayers } from "@/redux/features/layersSlice";
 
-export default function CleanMapControl() {
-  const dispatch = useAppDispatch();
+export default function CleanMapControl( { setLayersDeck,setLayers } : {setLayersDeck : any ,setLayers : any } ) {
 
     const cleanMap = () => {
-        dispatch(removeAllLayersDeck())
-        dispatch(removeAllLayers())
+        setLayersDeck([])
+        setLayers([])
     }
 
     return (
