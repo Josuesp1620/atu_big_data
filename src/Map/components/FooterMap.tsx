@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import * as E from "@/components/elements";
-import {Source, Layer} from 'react-map-gl';
 import { mapLayersStyleGeoserver } from '../constants/map.style.layers';
+import { removeAllLayersDeck } from "@/redux/features/layersDeckSlice";
+import { useAppDispatch } from '@/redux/hooks';
+import { addLayers, removeLayer } from '@/redux/features/layersSlice';
 
-export default function FooterMapComponent({ setLayers, setLayersDeck, source, target }) {
+export default function FooterMapComponent({ source, target }) {
   const [checkedStates, setCheckedStates] = useState(mapLayersStyleGeoserver);
+  const dispatch = useAppDispatch();
 
     const isAnyCheckboxChecked = () => {
       return Object.values(checkedStates).some(state => state.state);
@@ -17,17 +20,27 @@ export default function FooterMapComponent({ setLayers, setLayersDeck, source, t
 
     const layerDetails = newState[name];
 
-    if (checked && layerDetails.layer) {
-      const layerNew = 
-      <Source  key={layerDetails.id} id={layerDetails.id} type="vector"  scheme="tms" name={layerDetails.layer} tiles={[`http://200.121.128.47:8080/geoserver/gwc/service/tms/1.0.0/atu_vt:${layerDetails.layer}@EPSG%3A900913@pbf/{z}/{x}/{y}.pbf`]}>
-        <Layer {...layerDetails.fillStyle} />
-        <Layer {...layerDetails.lineStyle} />
-        <Layer {...layerDetails.labelLayer}/>
-      </Source>;
-      setLayers((currentLayes) => [...currentLayes, layerNew] )
+    if (checked && layerDetails.layer) {      
+      dispatch(addLayers({
+        type: "source",
+        props: {
+          id: layerDetails.id, 
+          type: "vector",  
+          scheme: "tms", 
+          name: layerDetails.layer, 
+          tiles: [`http://200.121.128.47:8080/geoserver/gwc/service/tms/1.0.0/atu_vt:${layerDetails.layer}@EPSG%3A900913@pbf/{z}/{x}/{y}.pbf`]
+        },
+        children: [
+          { type: "layer", props: {...layerDetails.fillStyle} },
+          { type: "layer", props: {...layerDetails.lineStyle} },
+          { type: "layer", props: {...layerDetails.labelLayer} },
+        ]
+
+      }))
+
     } else {
-      setLayers((currentLayers) => currentLayers.filter(layer => layer.key !== layerDetails.id));
-      setLayersDeck([])
+      dispatch(removeLayer(layerDetails))
+      dispatch(removeAllLayersDeck())
     }
   };
 

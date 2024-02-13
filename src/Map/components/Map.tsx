@@ -1,13 +1,13 @@
 "use client"
 
 import React from "react";
-import Map, { NavigationControl, ScaleControl, AttributionControl } from 'react-map-gl/maplibre';
+import Map, { NavigationControl, ScaleControl } from 'react-map-gl/maplibre';
 import maplibregl from "maplibre-gl";
 import type { MapRef } from 'react-map-gl/maplibre';
 
 import "maplibre-gl/dist/maplibre-gl.css";
 import DeckGlComponent from "./Deckgl";
-import { INITIAL_VIEW_STATE, MAP_STYLE } from "@/Map/constants/map.constants";
+import { INITIAL_VIEW_STATE } from "@/Map/constants/map.constants";
 import HeaderMapComponent from "./HeaderMap";
 import FooterMapComponent from "./FooterMap";
 import "../style/Map.css";
@@ -17,22 +17,22 @@ import * as turf from '@turf/turf';
 import axios from "axios";
 import CleanMapControl from "@/components/control/CleanMapControl";
 
-import { useAppSelector } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { addLayersDeck, removeAllLayersDeck } from "@/redux/features/layersDeckSlice";
+import { componentFactory } from "@/lib/renderedComponent";
 
 export default function MapComponent() {
   const mapRef = React.useRef<MapRef>(null);
+  const dispatch = useAppDispatch();
 
   const mapStyle = useAppSelector((state) => state.mapStyleReducer.layer);
-
-  const [layers, setLayers] = React.useState([]);
+  const layers = useAppSelector((state) => state.layersReducer.layers);
 
 
   const [isSourceSelected, setIsSourceSelected] = React.useState(false);
 
   const [source, setSource] = React.useState(null);
   const [target, setTarget] = React.useState(null);
-
-  const [layersDeck, setLayersDeck] = React.useState([]);
 
   async function handleMapClick(e) {
     const lngLat = e.lngLat;
@@ -78,9 +78,9 @@ export default function MapComponent() {
         getTargetColor: d => [Math.sqrt(d.outbound), 140, 0],
       });
       
-      setLayersDeck([])
+      dispatch(removeAllLayersDeck())
       setIsSourceSelected(false)
-      setLayersDeck([arcInstance])
+      dispatch(addLayersDeck([arcInstance]))
     }
   }, [source, target]);
   
@@ -102,17 +102,17 @@ export default function MapComponent() {
         mapLib={maplibregl}
         style={{ width: '100vw', height: '100vh' }}>
         
-        {layers.length !== 0 && layers.map((layer) => layer)}
+        {layers.length !== 0 && layers.map((layer) => componentFactory(layer))}
 
 
         <HeaderMapComponent />
 
-        <DeckGlComponent key="deckglComponent" layersDeck={layersDeck}/>
+        <DeckGlComponent key="deckglComponent" />
         <NavigationControl position="bottom-right"/>
         <ScaleControl />
-        <CleanMapControl setLayersDeck={setLayersDeck} setLayers={setLayers}/>
+        <CleanMapControl />
         
-        <FooterMapComponent setLayers={setLayers} setLayersDeck={setLayersDeck} source={source} target={target}/>
+        <FooterMapComponent source={source} target={target}/>
 
       </Map>
     </>
