@@ -30,29 +30,31 @@ export default function FooterMapComponent() {
         <Layer {...layerDetails.fillStyle} />
         <Layer {...layerDetails.lineStyle} />
         <Layer {...layerDetails.labelLayer}/>
-      </Source>;     
+        <Layer {...layerDetails.selecterdLineStyle}  filter={['==',layerDetails.filter,'',]} />
+      </Source>;
       dispatch(addLayers(layerNew))
     } else {
       dispatch(removeLayer(layerDetails))
       dispatch(removeAllLayersDeck())
     }
+    console.log(selectionState)
   };
 
   return (
    <>
-  {isAnyCheckboxChecked() && (
-    <div className="absolute top-0 right-0 my-16 mx-3 p-6 bg-white shadow-lg border border-gray-200 rounded dialog-footer">
-      <p className="text-gray-700 title-dialog">SELECCIONE 2 POLIGONOS:</p>
-      <p className="text-gray-700">Punto Origen: <span className="font-medium">{selectionState.source ? selectionState.source.properties.nom_macro : "No seleccionado" }</span></p>
-      <p className="text-gray-700">Punto Destino: <span className="font-medium">{selectionState.target ? selectionState.target.properties.nom_macro : "No seleccionado"}</span></p>
-    </div>
-  )}
+    {isAnyCheckboxChecked() && (
+      <div className="absolute top-0 right-0 my-16 mx-3 p-6 bg-white shadow-lg border border-gray-200 rounded dialog-footer">
+        <p className="text-gray-700 title-dialog">SELECCIONE 2 POLIGONOS:</p>
+        <p className="text-gray-700">Punto Origen: <span className="font-medium">{selectionState.source ? selectionState.source.properties.nom_macro : "No seleccionado" }</span></p>
+        <p className="text-gray-700">Punto Destino: <span className="font-medium">{selectionState.target ? selectionState.target.properties.nom_macro : "No seleccionado"}</span></p>
+      </div>
+    )}
 
     
 
     <div className="footer-component">
       <div className="flex items-center justify-center gap-2">
-        {Object.entries(checkedStates).map(([name, { state, label, layer }]) => (
+        {Object.entries(checkedStates).map(([name, { state, label }]) => (
           <E.Button key={name} size="md" variant="custom">
             <label>
               <input

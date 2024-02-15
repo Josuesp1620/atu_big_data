@@ -16,6 +16,7 @@ export const layersSlice = createSlice({
       state.layers = [...state.layers, action.payload];
     },
     removeLayer: (state, action: PayloadAction<any>) => {
+
       state.layers = state.layers.filter(layer => layer.props.id !== action.payload.id);
     },
     removeAllLayers: (state) => {

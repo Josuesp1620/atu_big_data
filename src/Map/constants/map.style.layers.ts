@@ -4,6 +4,7 @@ export const mapLayersStyleGeoserver = {
     state: false,
     layer: "macrozonas",
     label: "Macrozonas",
+    filter:"nom_macro",
     fillStyle : {
       id: "macrozonas-fill",
       type: "fill",
@@ -20,6 +21,16 @@ export const mapLayersStyleGeoserver = {
       "source-layer": "macrozonas",
       paint: {
         "line-color": "#FF0000",
+        "line-width": 3
+      }
+    },
+    selecterdLineStyle : {
+      id: "macrozonas-selected-outline",
+      type: "line",
+      source: "macrozonas",
+      "source-layer": "macrozonas",
+      paint: {
+        "line-color": "#94F14B",
         "line-width": 3
       }
     },
@@ -51,6 +62,7 @@ export const mapLayersStyleGeoserver = {
     state: false,
     layer: "sector160v2",
     label: "Mesozonas",
+    filter:"sector_160",
     fillStyle : {
       id: "sector160v2-fill",
       type: "fill",
@@ -68,6 +80,16 @@ export const mapLayersStyleGeoserver = {
       paint: {
         "line-color": "#D6BBBB",
         "line-width": 1
+      }
+    },
+    selecterdLineStyle : {
+      id: "sector160v2-selected-outline",
+      type: "line",
+      source: "sector160v2",
+      "source-layer": "sector160v2",
+      paint: {
+        "line-color": "#94F14B",
+        "line-width": 3
       }
     },
     labelLayer : {
@@ -92,6 +114,7 @@ export const mapLayersStyleGeoserver = {
     state: false,
     layer: "sector335",
     label: "Microzonas",
+    filter:"zone_id",
     fillStyle : {
       id: "sector335-fill",
       type: "fill",
@@ -109,6 +132,16 @@ export const mapLayersStyleGeoserver = {
       paint: {
         "line-color": "#EC3F3F",
         "line-width": 2
+      }
+    },
+    selecterdLineStyle : {
+      id: "sector335-selected-outline",
+      type: "line",
+      source: "sector335",
+      "source-layer": "sector335",
+      paint: {
+        "line-color": "#94F14B",
+        "line-width": 3
       }
     },
     labelLayer : {

@@ -2,7 +2,7 @@
 
 import React from "react";
 import Map, { NavigationControl, ScaleControl } from 'react-map-gl/maplibre';
-import maplibregl from "maplibre-gl";
+import maplibregl, { typeOf } from "maplibre-gl";
 import type { MapRef } from 'react-map-gl/maplibre';
 
 import "maplibre-gl/dist/maplibre-gl.css";
@@ -27,22 +27,22 @@ export default function MapComponent() {
   const layers = useAppSelector((state) => state.layersReducer.layers);
 
   const selectionState = useAppSelector((state) => state.arcReducer)
-
   async function handleMapClick(e) {
     const lngLat = e.lngLat;
-    const lng = lngLat.lng;
-    const lat = lngLat.lat;
-    const typeName = "atu_vt:macrozonas";
-    const wfsUrl = `http://200.121.128.47:8080/geoserver/atu_vt/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=${typeName}&outputFormat=application%2Fjson&CQL_FILTER=INTERSECTS(geom,POINT(${lng} ${lat}))`;
+    const wfsUrl = `http://200.121.128.47:8080/geoserver/atu_vt/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=atu_vt:${layers.at(-1)?.props.name}&outputFormat=application%2Fjson&CQL_FILTER=INTERSECTS(geom,POINT(${lngLat.lng} ${lngLat.lat}))`;
+
     const response = await axios.get(wfsUrl);
     const featureCollection = response.data as turf.FeatureCollection;
-
+    console.log(featureCollection)
     const updatedFeatureCollection = featureCollection.features.map(feature => {
       var pointOnPolygon = turf.pointOnFeature(feature);
       feature.properties.centroid = pointOnPolygon.geometry.coordinates;
       return feature;
-
     });
+
+    const map = mapRef.current.getMap();
+
+    const layerId = `${layers.at(-1)?.props.name}-selected-outline`
 
     if (!selectionState.isSourceSelected) {
       dispatch(setSelectionState(({
@@ -50,7 +50,16 @@ export default function MapComponent() {
         target: null,
         isSourceSelected: true,
       })));
-    } else {
+      dispatch(removeAllLayersDeck())
+
+      map.setFilter(layerId, [
+        "in", 
+        map.getFilter(layerId)[1], 
+        updatedFeatureCollection[0].properties[map.getFilter(layerId)[1]].toString()
+      ]);
+      map.setPaintProperty(layerId, 'line-color', '#94F14B');
+      
+    } else {         
       dispatch(setSelectionState(({
         source: selectionState.source,
         target: updatedFeatureCollection[0],
@@ -61,6 +70,17 @@ export default function MapComponent() {
 
   React.useEffect(() => {    
     if (selectionState.source !== null && selectionState.target !== null ) {
+      const map = mapRef.current.getMap();
+      const layerId = `${layers.at(-1)?.props.name}-selected-outline`
+
+      map.setFilter(layerId, [
+        'in', 
+        map.getFilter(layerId)[1], selectionState.source.properties[map.getFilter(layerId)[1]].toString(),
+        map.getFilter(layerId)[1], selectionState.target.properties[map.getFilter(layerId)[1]].toString()
+      ]);
+
+      map.setPaintProperty(layerId, 'line-color', '#94F14B');
+
       const dataArc : any = { type: 'FeatureCollection', features: [selectionState.source, selectionState.target]};
       const arcInstance = new ArcLayer({
         id: "arc-layer",
@@ -84,6 +104,7 @@ export default function MapComponent() {
       if (attributionControl) {
         attributionControl.innerHTML = '© <a href="#" target="_blank" rel="noopener">GeoSolution</a> | © <a href="http://www.openstreetmap.org/about/" target="_blank">OpenStreetMap</a> contributors';
       }
+    
   }, []);
 
   return (
