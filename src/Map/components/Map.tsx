@@ -14,13 +14,20 @@ import "../style/Map.css";
 import { ArcLayer } from "@deck.gl/layers/typed";
 import * as turf from '@turf/turf';
 import axios from "axios";
-import CleanMapControl from "@/components/control/CleanMapControl";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { addLayersDeck, removeAllLayersDeck } from "@/redux/features/layersDeckSlice";
 import { setSelectionState } from "@/redux/features/arcSlice";
+import { PanelToggle } from "@/components/PanelToggle";
+import { SidePanelMapComponent } from "./SidePanelMap";
 
 export default function MapComponent() {
+
+  const [showPanel, setShowPanel] = React.useState(false);
+  const [panelWidth, setPanelWidth] = React.useState(350);
+  const [screenWidth, setScreenWidth] = React.useState<string | number>("100vw");
+
   const mapRef = React.useRef<MapRef>(null);
+
   const dispatch = useAppDispatch();
 
   const mapStyle = useAppSelector((state) => state.mapStyleReducer.layer);
@@ -28,21 +35,24 @@ export default function MapComponent() {
 
   const selectionState = useAppSelector((state) => state.arcReducer)
   async function handleMapClick(e) {
+    const map = mapRef.current.getMap();
+    const layerId = `${layers.at(-1)?.props.name}-selected-outline`
+
     const lngLat = e.lngLat;
     const wfsUrl = `http://200.121.128.47:8080/geoserver/atu_vt/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=atu_vt:${layers.at(-1)?.props.name}&outputFormat=application%2Fjson&CQL_FILTER=INTERSECTS(geom,POINT(${lngLat.lng} ${lngLat.lat}))`;
 
     const response = await axios.get(wfsUrl);
+    
     const featureCollection = response.data as turf.FeatureCollection;
-    console.log(featureCollection)
+    
+    if(map!.getCanvas().style.cursor === "pointer" || response.data.features.length === 0) return
+
     const updatedFeatureCollection = featureCollection.features.map(feature => {
       var pointOnPolygon = turf.pointOnFeature(feature);
+      feature.properties.filter = map.getFilter(layerId)[1]
       feature.properties.centroid = pointOnPolygon.geometry.coordinates;
       return feature;
     });
-
-    const map = mapRef.current.getMap();
-
-    const layerId = `${layers.at(-1)?.props.name}-selected-outline`
 
     if (!selectionState.isSourceSelected) {
       dispatch(setSelectionState(({
@@ -54,8 +64,8 @@ export default function MapComponent() {
 
       map.setFilter(layerId, [
         "in", 
-        map.getFilter(layerId)[1], 
-        updatedFeatureCollection[0].properties[map.getFilter(layerId)[1]].toString()
+        updatedFeatureCollection[0].properties.filter, 
+        updatedFeatureCollection[0].properties[updatedFeatureCollection[0].properties.filter].toString()
       ]);
       map.setPaintProperty(layerId, 'line-color', '#94F14B');
       
@@ -68,15 +78,22 @@ export default function MapComponent() {
     }
   };
 
-  React.useEffect(() => {    
+  function click(e){
+    console.log(e)
+  }
+
+  React.useEffect(() => {
+    const screenWidth = window.innerWidth;
+    setScreenWidth(screenWidth)
+
     if (selectionState.source !== null && selectionState.target !== null ) {
       const map = mapRef.current.getMap();
       const layerId = `${layers.at(-1)?.props.name}-selected-outline`
 
       map.setFilter(layerId, [
         'in', 
-        map.getFilter(layerId)[1], selectionState.source.properties[map.getFilter(layerId)[1]].toString(),
-        map.getFilter(layerId)[1], selectionState.target.properties[map.getFilter(layerId)[1]].toString()
+        selectionState.source.properties.filter, selectionState.source.properties[selectionState.source.properties.filter].toString(),
+        selectionState.source.properties.filter, selectionState.target.properties[selectionState.source.properties.filter].toString()
       ]);
 
       map.setPaintProperty(layerId, 'line-color', '#94F14B');
@@ -86,6 +103,8 @@ export default function MapComponent() {
         id: "arc-layer",
         data: dataArc,
         getWidth: 12,
+        pickable: true,
+        onClick: click,
         dataTransform: ( d : any ) =>
            d.features.filter(( f : any ) => f && f.properties),
         getSourcePosition: () => selectionState.source.properties.centroid,
@@ -101,35 +120,35 @@ export default function MapComponent() {
   
   const onMapLoad = React.useCallback(() => {
     const attributionControl = document.querySelector('.maplibregl-ctrl-attrib-inner');
-      if (attributionControl) {
-        attributionControl.innerHTML = '© <a href="#" target="_blank" rel="noopener">GeoSolution</a> | © <a href="http://www.openstreetmap.org/about/" target="_blank">OpenStreetMap</a> contributors';
-      }
-    
+    mapRef.current.resize();
+    if (attributionControl) {
+      attributionControl.innerHTML = '© <a href="#" target="_blank" rel="noopener">GeoSolution</a> | © <a href="http://www.openstreetmap.org/about/" target="_blank">OpenStreetMap</a> contributors';
+    }    
   }, []);
 
   return (
     <>
+      {showPanel && <SidePanelMapComponent panelWidth={panelWidth} setPanelWidth={setPanelWidth}/>}
+
       <Map
         ref={mapRef}
         onClick={handleMapClick}
         mapStyle={mapStyle.style}
         onLoad={onMapLoad}
         initialViewState={INITIAL_VIEW_STATE}
-        mapLib={maplibregl}
-        style={{ width: '100vw', height: '100vh' }}>
+        mapLib={maplibregl} 
+        style={{ width: showPanel ? `${parseInt(screenWidth.toString()) - panelWidth}px` : screenWidth, height: "100vh" }}>
         
         {layers.length !== 0 && layers.map((layer) => layer)}
 
 
-        <HeaderMapComponent />
+        <HeaderMapComponent setShowPanel={setShowPanel} showPanel={showPanel}/>
 
         <DeckGlComponent key="deckglComponent" />
         <NavigationControl position="bottom-right"/>
         <ScaleControl />
-        <CleanMapControl />
-        
         <FooterMapComponent />
-
+        <PanelToggle side={"right"} setShowPanel={setShowPanel} showPanel={showPanel}></PanelToggle>
       </Map>
     </>
   );

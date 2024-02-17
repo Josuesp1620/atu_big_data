@@ -5,6 +5,7 @@ import { removeAllLayersDeck } from "@/redux/features/layersDeckSlice";
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { addLayers, removeLayer } from '@/redux/features/layersSlice';
 import {Source, Layer} from 'react-map-gl';
+import CleanMapControl from '@/components/control/CleanMapControl';
 
 export default function FooterMapComponent() {
   const [checkedStates, setCheckedStates] = useState(mapLayersStyleGeoserver);
@@ -45,8 +46,8 @@ export default function FooterMapComponent() {
     {isAnyCheckboxChecked() && (
       <div className="absolute top-0 right-0 my-16 mx-3 p-6 bg-white shadow-lg border border-gray-200 rounded dialog-footer">
         <p className="text-gray-700 title-dialog">SELECCIONE 2 POLIGONOS:</p>
-        <p className="text-gray-700">Punto Origen: <span className="font-medium">{selectionState.source ? selectionState.source.properties.nom_macro : "No seleccionado" }</span></p>
-        <p className="text-gray-700">Punto Destino: <span className="font-medium">{selectionState.target ? selectionState.target.properties.nom_macro : "No seleccionado"}</span></p>
+        <p className="text-gray-700">Punto Origen: <span className="font-medium">{selectionState.source ? selectionState.source.properties[selectionState.source.properties.filter] : "No seleccionado" }</span></p>
+        <p className="text-gray-700">Punto Destino: <span className="font-medium">{selectionState.target ? selectionState.target.properties[selectionState.target.properties.filter] : "No seleccionado"}</span></p>
       </div>
     )}
 
@@ -71,6 +72,9 @@ export default function FooterMapComponent() {
         ))}
       </div>
     </div>
+
+    {/* <CleanMapControl checkedStates={checkedStates}  setCheckedStates={setCheckedStates}/> */}
+
     </>
   );
 }

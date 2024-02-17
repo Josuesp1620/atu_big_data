@@ -3,7 +3,7 @@ import * as E from "@/components/elements";
 import { EraserIcon, GearIcon, HomeIcon, PersonIcon, QuestionMarkCircledIcon } from '@radix-ui/react-icons'
 
 
-export default function HeaderMapComponent() {
+export default function HeaderMapComponent({ setShowPanel, showPanel }:{ setShowPanel: any, showPanel : any }) {
 
     const cleanMap = () => {
         console.log("CLEAN MAP")
@@ -22,7 +22,9 @@ export default function HeaderMapComponent() {
             </div>
 
             <div className="flex items-center z-50 buttons-center">
-                <E.Button size="md" variant="primary" className="mr-2">
+                <E.Button size="md" variant="primary" className="mr-2" onClick={() =>{
+                    setShowPanel(!showPanel)
+                }}>
                     <PersonIcon></PersonIcon>
                     Análisis de viajes
                 </E.Button>

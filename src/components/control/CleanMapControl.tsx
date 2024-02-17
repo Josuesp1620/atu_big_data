@@ -7,12 +7,17 @@ import { useAppDispatch } from "@/redux/hooks";
 import { removeAllLayersDeck } from "@/redux/features/layersDeckSlice";
 import { removeAllLayers } from "@/redux/features/layersSlice";
 
-export default function CleanMapControl() {
+export default function CleanMapControl({checkedStates, setCheckedStates}) {
   const dispatch = useAppDispatch();
 
     const cleanMap = () => {
-        dispatch(removeAllLayersDeck())
-        dispatch(removeAllLayers())
+      const newState = { ...checkedStates };
+      for (const key in newState) {
+        newState[key].state = false;
+      }
+      setCheckedStates(newState);
+      dispatch(removeAllLayersDeck())
+      dispatch(removeAllLayers())
     }
 
     return (

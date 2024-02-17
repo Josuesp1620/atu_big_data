@@ -120,6 +120,68 @@ export function sharedOutline(
     }
   };
 
+  
+export const StyledLabelSpan = classed.span(
+  ({ size = "sm" }: { size?: B3Size }) =>
+    clsx(
+      {
+        "text-sm": size === "sm",
+        "text-xs": size === "xs",
+      },
+      "text-gray-700 dark:text-gray-300 select-none"
+    )
+);
+
+
+export const styledPanelTitle = ({
+  interactive = false,
+}: {
+  interactive?: boolean;
+}) =>
+  clsx(
+    `text-sm
+  w-full
+  text-gray-700 dark:text-gray-300
+  flex justify-between items-center`,
+    "px-3 py-3",
+    interactive && `hover:text-gray-900 dark:hover:text-white`
+  );
+
+
+export const styledCheckbox = ({
+  variant = "default",
+}: {
+  variant: B3Variant;
+}) =>
+  clsx([
+    sharedOutline("primary"),
+    {
+      "text-purple-500 focus:ring-purple-500": variant === "primary",
+      "text-gray-500 border-gray-500 hover:border-gray-700 dark:hover:border-gray-300 focus:ring-gray-500":
+        variant === "default",
+    },
+    `bg-transparent rounded dark:ring-offset-gray-700`,
+  ]);
+
+  
+export const inputClass = ({
+  _size = "sm",
+  variant = "default",
+}: {
+  _size?: B3Size;
+  variant?: B3Variant;
+}) =>
+  clsx([
+    sharedPadding(_size),
+    sharedOutline("default"),
+    {
+      "font-mono": variant === "code",
+    },
+    `block w-56
+    dark:bg-transparent dark:text-gray-100`,
+]);
+
+
 export const styledButton = ({
     size = "sm",
     variant = "default",
