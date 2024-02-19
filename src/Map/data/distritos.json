@@ -1,0 +1,252 @@
+[
+    {
+        "tipo": "distrito",
+        "id": "1",
+        "denominacion": "Distr: MI PERU - OESTE"
+    },
+    {
+        "tipo": "distrito",
+        "id": "2",
+        "denominacion": "Distr: ATE VITARTE - ESTE"
+    },
+    {
+        "tipo": "distrito",
+        "id": "3",
+        "denominacion": "Distr: LINCE - CENTRO"
+    },
+    {
+        "tipo": "distrito",
+        "id": "4",
+        "denominacion": "Distr: LA VICTORIA - CENTRO"
+    },
+    {
+        "tipo": "distrito",
+        "id": "5",
+        "denominacion": "Distr: COMAS - NORTE"
+    },
+    {
+        "tipo": "distrito",
+        "id": "6",
+        "denominacion": "Distr: SAN LUIS - ESTE"
+    },
+    {
+        "tipo": "distrito",
+        "id": "7",
+        "denominacion": "Distr: LA MOLINA - ESTE"
+    },
+    {
+        "tipo": "distrito",
+        "id": "8",
+        "denominacion": "Distr: MIRAFLORES - CENTRO"
+    },
+    {
+        "tipo": "distrito",
+        "id": "9",
+        "denominacion": "Distr: PUCUSANA - SUR"
+    },
+    {
+        "tipo": "distrito",
+        "id": "10",
+        "denominacion": "Distr: LA PERLA - OESTE"
+    },
+    {
+        "tipo": "distrito",
+        "id": "11",
+        "denominacion": "Distr: SAN BARTOLO - SUR"
+    },
+    {
+        "tipo": "distrito",
+        "id": "12",
+        "denominacion": "Distr: BREÑA - CENTRO"
+    },
+    {
+        "tipo": "distrito",
+        "id": "13",
+        "denominacion": "Distr: SANTA MARIA DEL MAR - SUR"
+    },
+    {
+        "tipo": "distrito",
+        "id": "14",
+        "denominacion": "Distr: BELLAVISTA - OESTE"
+    },
+    {
+        "tipo": "distrito",
+        "id": "15",
+        "denominacion": "Distr: LA PUNTA - OESTE"
+    },
+    {
+        "tipo": "distrito",
+        "id": "16",
+        "denominacion": "Distr: SURQUILLO - CENTRO"
+    },
+    {
+        "tipo": "distrito",
+        "id": "17",
+        "denominacion": "Distr: LURIGANCHO - ESTE"
+    },
+    {
+        "tipo": "distrito",
+        "id": "18",
+        "denominacion": "Distr: SAN JUAN DE MIRAFLORES - SUR"
+    },
+    {
+        "tipo": "distrito",
+        "id": "19",
+        "denominacion": "Distr: VILLA MARIA DEL TRIUNFO - SUR"
+    },
+    {
+        "tipo": "distrito",
+        "id": "20",
+        "denominacion": "Distr: PUNTA NEGRA - SUR"
+    },
+    {
+        "tipo": "distrito",
+        "id": "21",
+        "denominacion": "Distr: SAN JUAN DE LURIGANCHO - ESTE"
+    },
+    {
+        "tipo": "distrito",
+        "id": "22",
+        "denominacion": "Distr: VENTANILLA - OESTE"
+    },
+    {
+        "tipo": "distrito",
+        "id": "23",
+        "denominacion": "Distr: CARMEN DE LA LEGUA - OESTE"
+    },
+    {
+        "tipo": "distrito",
+        "id": "24",
+        "denominacion": "Distr: SANTA ROSA - NORTE"
+    },
+    {
+        "tipo": "distrito",
+        "id": "25",
+        "denominacion": "Distr: SANTIAGO DE SURCO - CENTRO"
+    },
+    {
+        "tipo": "distrito",
+        "id": "26",
+        "denominacion": "Distr: SAN BORJA - CENTRO"
+    },
+    {
+        "tipo": "distrito",
+        "id": "27",
+        "denominacion": "Distr: PUENTE PIEDRA - NORTE"
+    },
+    {
+        "tipo": "distrito",
+        "id": "28",
+        "denominacion": "Distr: SAN MIGUEL - CENTRO"
+    },
+    {
+        "tipo": "distrito",
+        "id": "29",
+        "denominacion": "Distr: MAGDALENA DEL MAR - CENTRO"
+    },
+    {
+        "tipo": "distrito",
+        "id": "30",
+        "denominacion": "Distr: CHORRILLOS - SUR"
+    },
+    {
+        "tipo": "distrito",
+        "id": "31",
+        "denominacion": "Distr: CHACLACAYO - ESTE"
+    },
+    {
+        "tipo": "distrito",
+        "id": "32",
+        "denominacion": "Distr: SAN MARTIN DE PORRES - NORTE"
+    },
+    {
+        "tipo": "distrito",
+        "id": "33",
+        "denominacion": "Distr: LURIN - SUR"
+    },
+    {
+        "tipo": "distrito",
+        "id": "34",
+        "denominacion": "Distr: JESUS MARIA - CENTRO"
+    },
+    {
+        "tipo": "distrito",
+        "id": "35",
+        "denominacion": "Distr: BARRANCO - CENTRO"
+    },
+    {
+        "tipo": "distrito",
+        "id": "36",
+        "denominacion": "Distr: PACHACAMAC - SUR"
+    },
+    {
+        "tipo": "distrito",
+        "id": "37",
+        "denominacion": "Distr: RIMAC - CENTRO"
+    },
+    {
+        "tipo": "distrito",
+        "id": "38",
+        "denominacion": "Distr: CARABAYLLO - NORTE"
+    },
+    {
+        "tipo": "distrito",
+        "id": "39",
+        "denominacion": "Distr: CIENEGUILLA - ESTE"
+    },
+    {
+        "tipo": "distrito",
+        "id": "40",
+        "denominacion": "Distr: PUEBLO LIBRE - CENTRO"
+    },
+    {
+        "tipo": "distrito",
+        "id": "41",
+        "denominacion": "Distr: INDEPENDENCIA - NORTE"
+    },
+    {
+        "tipo": "distrito",
+        "id": "42",
+        "denominacion": "Distr: EL AGUSTINO - ESTE"
+    },
+    {
+        "tipo": "distrito",
+        "id": "43",
+        "denominacion": "Distr: CALLAO - OESTE"
+    },
+    {
+        "tipo": "distrito",
+        "id": "44",
+        "denominacion": "Distr: PUNTA HERMOSA - SUR"
+    },
+    {
+        "tipo": "distrito",
+        "id": "45",
+        "denominacion": "Distr: LOS OLIVOS - NORTE"
+    },
+    {
+        "tipo": "distrito",
+        "id": "46",
+        "denominacion": "Distr: SAN ISIDRO - CENTRO"
+    },
+    {
+        "tipo": "distrito",
+        "id": "47",
+        "denominacion": "Distr: SANTA ANITA - ESTE"
+    },
+    {
+        "tipo": "distrito",
+        "id": "48",
+        "denominacion": "Distr: VILLA EL SALVADOR - SUR"
+    },
+    {
+        "tipo": "distrito",
+        "id": "49",
+        "denominacion": "Distr: ANCON - NORTE"
+    },
+    {
+        "tipo": "distrito",
+        "id": "50",
+        "denominacion": "Distr: LIMA - CENTRO"
+    }
+]
