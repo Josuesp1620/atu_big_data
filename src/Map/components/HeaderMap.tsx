@@ -1,27 +1,36 @@
 import ControlLayers from "@/components/control/MapControlLayer";
 import * as E from "@/components/elements";
 import { EraserIcon, GearIcon, HomeIcon, PersonIcon, QuestionMarkCircledIcon } from '@radix-ui/react-icons'
+import { clsx } from "clsx";
+import React from "react";
 
 
-export default function HeaderMapComponent({ setShowPanel, showPanel }:{ setShowPanel: any, showPanel : any }) {
+export default function HeaderMapComponent({ setShowPanel, showPanel, screenWidth }:{ setShowPanel: any, showPanel : any, screenWidth : any }) {
 
     const cleanMap = () => {
         console.log("CLEAN MAP")
     }
+    console.log(screenWidth)
 
     return (
         <div className="absolute flex items-center justify-between z-50" style={{width:"100%"}}>
-            <div className="flex pt-2 z-50 mx-3">
-                <a target="_blank" href="https://www.gob.pe/mtc">
-                    <img src="/img/mapa/mtc.png" style={{ height: "35px" }} />
-                </a>
+             <div className={clsx(
+                'pt-2 z-50 mx-3',
+                { 'flex': screenWidth > 1290 }
+                )}>
+            <a target="_blank" href="https://www.gob.pe/mtc">
+                <img src="/img/mapa/mtc.png" alt="Logo MTC" style={{ height: "35px" }} />
+            </a>
 
-                <a target="_blank" href="https://www.atu.gob.pe/">
-                    <img src="/img/mapa/logoatte.png" style={{ height: "30px", margin: "5px" }}/>
-                </a>
+            <a target="_blank" href="https://www.atu.gob.pe/">
+                <img src="/img/mapa/logoatte.png" alt="Logo ATU" style={{ height: "30px", margin: "5px" }}/>
+            </a>
             </div>
 
-            <div className="flex items-center z-50 buttons-center">
+            <div className={clsx(
+                            'flex items-center z-50 buttons-center ',
+                            { 'move-margin-right': screenWidth < 1290 }
+                            )}>
                 <E.Button size="md" variant="primary" className="mr-2" onClick={() =>{
                     setShowPanel(!showPanel)
                 }}>
