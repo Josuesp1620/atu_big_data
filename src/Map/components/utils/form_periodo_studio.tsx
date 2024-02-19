@@ -25,11 +25,11 @@ export function PeriodoEstudio( ){
         <>
         <div className="py-2 whitespace-nowrap flex justify-between">
             <StyledLabelSpan size="xs">Año:</StyledLabelSpan>
-                <select id="drpanio_especif" className={inputClass({ _size: "xs" })} value={year} onChange={(e) => setYear(e.target.value)}>
-                    <option value="2019">2019</option>
-                    <option value="2017">2017</option>
-                    <option value="2016">2016</option>                            
-                </select>
+            <select id="drpanio_especif" className={inputClass({ _size: "xs" })} value={year} onChange={(e) => setYear(e.target.value)}>
+                <option value="2019">2019</option>
+                <option value="2017">2017</option>
+                <option value="2016">2016</option>                            
+            </select>
         </div>
         <div className="py-1 whitespace-nowrap flex justify-between">
             <StyledLabelSpan size="xs">Mes:</StyledLabelSpan>

@@ -38,7 +38,6 @@ export default function FooterMapComponent() {
       dispatch(removeLayer(layerDetails))
       dispatch(removeAllLayersDeck())
     }
-    console.log(selectionState)
   };
 
   return (

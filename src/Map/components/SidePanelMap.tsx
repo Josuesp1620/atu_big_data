@@ -423,16 +423,10 @@ export function SidePanelMapComponent({ panelWidth, setPanelWidth }) {
             title: "Agrupación de Líneas de Deseo de Viajes",
             children: (                
                 <div className="py-1 whitespace-nowrap flex justify-between">
-                    <StyledLabelSpan size="xs">Tipo de Reporte:</StyledLabelSpan>
-                    <input
-                    disabled
-                    value={"Distrito-Distrito"}
-                    type="text"
-                    name="target_input"
-                    className={inputClass({ _size: "xs" })}
-                    onChange={(e) => {
-                    }}
-                    />
+                    <StyledLabelSpan size="xs">T. Reporte:</StyledLabelSpan>
+                    <select id="tipo_reporte" className={inputClass({ _size: "xs" })} disabled={true}>
+                        <option value="Distrito - Distrito">Distrito - Distrito</option>                      
+                    </select>
                 </div>
             )
         }
@@ -470,22 +464,3 @@ export function SidePanelMapComponent({ panelWidth, setPanelWidth }) {
 }
 
 export default SidePanelMapComponent;
-
-// export function SidePanelMapComponent({ panelWidth, setPanelWidth } : { panelWidth : any, setPanelWidth : any }) {
-//     return (
-//         <SidePanel side={"right"} panelWidth={panelWidth} setPanelWidth={setPanelWidth}>
-
-
-
-//             <div className="divide-y divide-gray-200 dark:divide-gray-900 border-t border-gray-200 dark:border-gray-900 overflow-auto placemark-scrollbar">
-//                 <PanelDetailsCollapsible title="Realizar Consulta" state={true}>
-//                     <div className="flex">
-//                         <Button style={{ marginRight: '10px' }}>Ejecutar Análisis</Button>
-//                         <Button>Tabla</Button>
-//                     </div>
-//                 </PanelDetailsCollapsible>
-//             </div>
-//             <p className="divide-y divide-gray-200 dark:divide-gray-900 border-t border-gray-200 dark:border-gray-900 overflow-auto placemark-scrollbar"></p>
-//       </SidePanel>
-//     );
-// }

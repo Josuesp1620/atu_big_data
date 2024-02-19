@@ -40,7 +40,6 @@ export function InputSearch({ label, disable=false, placeholder='' }: { label: s
 
     const renderListItems = (tipo, title) => {
         const filteredItems = showResult.filter(item => item.tipo === tipo);
-        console.log(filteredItems)
         return filteredItems.length > 0 ? (
             <>
                 <h1 className="px-2">{title}</h1>

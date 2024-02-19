@@ -10,7 +10,6 @@ export default function HeaderMapComponent({ setShowPanel, showPanel, screenWidt
     const cleanMap = () => {
         console.log("CLEAN MAP")
     }
-    console.log(screenWidth)
 
     return (
         <div className="absolute flex items-center justify-between z-50" style={{width:"100%"}}>
