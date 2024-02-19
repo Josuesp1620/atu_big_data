@@ -25,6 +25,7 @@ export default function MapComponent() {
   const [showPanel, setShowPanel] = React.useState(false);
   const [panelWidth, setPanelWidth] = React.useState(350);
   const [screenWidth, setScreenWidth] = React.useState<string | number>("100vw");
+  const [applyTransition, setApplyTransition] = React.useState(false);
 
   const mapRef = React.useRef<MapRef>(null);
 
@@ -137,18 +138,19 @@ export default function MapComponent() {
         onLoad={onMapLoad}
         initialViewState={INITIAL_VIEW_STATE}
         mapLib={maplibregl} 
-        style={{ width: showPanel ? `${parseInt(screenWidth.toString()) - panelWidth}px` : screenWidth, height: "100vh" }}>
+        style={{ width: showPanel ? `${parseInt(screenWidth.toString()) - panelWidth}px` : screenWidth, height: "100vh", transition: applyTransition ? "width 0.5s ease" : ""
+      }}>
         
         {layers.length !== 0 && layers.map((layer) => layer)}
 
 
-        <HeaderMapComponent setShowPanel={setShowPanel} showPanel={showPanel} screenWidth={parseInt(screenWidth.toString()) - panelWidth}/>
+        <HeaderMapComponent setShowPanel={setShowPanel} showPanel={showPanel} screenWidth={parseInt(screenWidth.toString()) - panelWidth}  setApplyTransition={setApplyTransition}/>
 
         <DeckGlComponent key="deckglComponent" />
         <NavigationControl position="bottom-right"/>
         <ScaleControl />
         <FooterMapComponent />
-        <PanelToggle side={"right"} setShowPanel={setShowPanel} showPanel={showPanel}></PanelToggle>
+        <PanelToggle side={"right"} setShowPanel={setShowPanel} showPanel={showPanel} setApplyTransition={setApplyTransition}></PanelToggle>
       </Map>
     </>
   );

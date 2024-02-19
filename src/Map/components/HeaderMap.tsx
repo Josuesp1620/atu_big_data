@@ -5,7 +5,7 @@ import { clsx } from "clsx";
 import React from "react";
 
 
-export default function HeaderMapComponent({ setShowPanel, showPanel, screenWidth }:{ setShowPanel: any, showPanel : any, screenWidth : any }) {
+export default function HeaderMapComponent({ setShowPanel, showPanel, screenWidth, setApplyTransition }:{ setShowPanel: any, showPanel : any, screenWidth : any, setApplyTransition : any }) {
 
     const cleanMap = () => {
         console.log("CLEAN MAP")
@@ -32,6 +32,9 @@ export default function HeaderMapComponent({ setShowPanel, showPanel, screenWidt
                             )}>
                 <E.Button size="md" variant="primary" className="mr-2" onClick={() =>{
                     setShowPanel(!showPanel)
+                    setApplyTransition(true);
+
+                    setTimeout(() => setApplyTransition(false), 500);
                 }}>
                     <PersonIcon></PersonIcon>
                     Análisis de viajes

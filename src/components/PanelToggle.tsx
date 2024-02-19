@@ -6,10 +6,14 @@ import { TContent } from "./elements";
 import React from "react";
 
 
-export function PanelToggle({ side, setShowPanel, showPanel }: { side: any, setShowPanel : any, showPanel : any }) {
+export function PanelToggle({ side, setShowPanel, showPanel, setApplyTransition }: { side: any, setShowPanel : any, showPanel : any, setApplyTransition : any }) {
 
   const togglePanel = () => {
     setShowPanel(!showPanel)
+
+    setApplyTransition(true);
+
+    setTimeout(() => setApplyTransition(false), 500);
   };
 
   return (
