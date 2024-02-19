@@ -2,11 +2,13 @@ import { PanelDetailsCollapsible } from "@/components/PanelCollapsible";
 import { SidePanel } from "@/components/PanelToggle";
 import { Button, StyledLabelSpan, inputClass, styledCheckbox } from "@/components/elements";
 import React from "react";
+import { PeriodoEstudio } from "./utils/form_periodo_studio";
+import { LineasDeseo } from "./utils/form_lineas_deseo";
 
 export function SidePanelMapComponent({ panelWidth, setPanelWidth }) {
     const [activePanel, setActivePanel] = React.useState(null);
+    
     const [activeSubPanel, setSubActivePanel] = React.useState(null);
-
 
     const togglePanel = (title) => {
         setActivePanel(activePanel === title ? null : title);
@@ -23,13 +25,13 @@ export function SidePanelMapComponent({ panelWidth, setPanelWidth }) {
                 <>
                     <div className="py-1 whitespace-nowrap flex justify-between">
                         <StyledLabelSpan size="xs">0 a 6</StyledLabelSpan>
-                        <input
-                        type="checkbox"
-                        name="from_source_checkbox"
-                        className={styledCheckbox({ variant: "default" })}
-                        onChange={(e) => {
+                            <input
+                            type="checkbox"
+                            name="from_source_checkbox"
+                            className={styledCheckbox({ variant: "default" })}
+                            onChange={(e) => {
 
-                        }}
+                            }}
                         />
                     </div>
                     <div className="py-1 whitespace-nowrap flex justify-between">
@@ -316,8 +318,8 @@ export function SidePanelMapComponent({ panelWidth, setPanelWidth }) {
         {
             title: "Motivo de Viaje:",
             children: (
-                <>
-                                    <div className="py-1 whitespace-nowrap flex justify-between">
+                <>        
+                        <div className="py-1 whitespace-nowrap flex justify-between">
                             <StyledLabelSpan size="xs">A Casa</StyledLabelSpan>
                             <input
                             type="checkbox"
@@ -393,12 +395,13 @@ export function SidePanelMapComponent({ panelWidth, setPanelWidth }) {
                 collapsibleSubTitles.map((element) => (
                 <div className="divide-y divide-gray-200 dark:divide-gray-900 border-t border-gray-200 dark:border-gray-900 overflow-auto placemark-scrollbar">
                     <PanelDetailsCollapsible
-                    key={element.title}
-                    title={element.title}
-                    state={activeSubPanel === element.title}
-                    onToggle={() => toggleSubPanel(element.title)}
+                        bold="bold-2"
+                        key={element.title}
+                        title={element.title}                
+                        state={activeSubPanel === element.title}
+                        onToggle={() => toggleSubPanel(element.title)}
                     >
-                     {element.children}
+                        {element.children}
                     </PanelDetailsCollapsible>
                     </div>
                 ))
@@ -407,93 +410,13 @@ export function SidePanelMapComponent({ panelWidth, setPanelWidth }) {
         {
             title: "Seleccionar las Líneas de Deseo",
             children:  (
-                <>
-                    <div className="py-1 whitespace-nowrap flex justify-between">
-                        <StyledLabelSpan size="xs">Desde un Origen</StyledLabelSpan>
-                        <input
-                        type="checkbox"
-                        name="from_source_checkbox"
-                        className={styledCheckbox({ variant: "default" })}
-                        onChange={(e) => {
-
-                        }}
-                        />
-                    </div>
-                    <div className="py-1 whitespace-nowrap flex justify-between">
-                        <StyledLabelSpan size="xs">Hacia un Destino</StyledLabelSpan>
-                        <input
-                        type="checkbox"
-                        name="from_target_checkbox"
-                        className={styledCheckbox({ variant: "default" })}
-                        onChange={(e) => {
-
-                        }}
-                        />
-                    </div>
-                    <div className="py-1 whitespace-nowrap flex justify-between">
-                        <StyledLabelSpan size="xs">Orígen a Destino</StyledLabelSpan>
-                        <input
-                        type="checkbox"
-                        name="source_to_target_checkbox"
-                        className={styledCheckbox({ variant: "default" })}
-                        onChange={(e) => {
-
-                        }}
-                        />
-                    </div>
-
-                    <div className="py-2 whitespace-nowrap flex justify-between">
-                        <StyledLabelSpan size="xs">Orígen</StyledLabelSpan>
-                        <input
-                        type="text"
-                        name="source_input"
-                        className={inputClass({ _size: "xs" })}
-                        onChange={(e) => {
-
-                        }}
-                        />
-                    </div>
-                    <div className="py-1 whitespace-nowrap flex justify-between">
-                        <StyledLabelSpan size="xs">Destino</StyledLabelSpan>
-                        <input
-                        type="text"
-                        name="target_input"
-                        className={inputClass({ _size: "xs" })}
-                        onChange={(e) => {
-
-                        }}
-                        />
-                    </div>
-                </>
+                <LineasDeseo />
             )
         },
         {
             title: "Seleccionar Periodo de Estudio",
             children: (
-                <>
-                    <div className="py-2 whitespace-nowrap flex justify-between">
-                        <StyledLabelSpan size="xs">Año:</StyledLabelSpan>
-                        <input
-                        type="text"
-                        name="source_input"
-                        className={inputClass({ _size: "xs" })}
-                        onChange={(e) => {
-
-                        }}
-                        />
-                    </div>
-                    <div className="py-1 whitespace-nowrap flex justify-between">
-                        <StyledLabelSpan size="xs">Mes:</StyledLabelSpan>
-                        <input
-                        type="text"
-                        name="target_input"
-                        className={inputClass({ _size: "xs" })}
-                        onChange={(e) => {
-
-                        }}
-                        />
-                    </div>
-                </>
+               <PeriodoEstudio />
             )
         },
         {
@@ -515,6 +438,8 @@ export function SidePanelMapComponent({ panelWidth, setPanelWidth }) {
         }
     ];
 
+  
+
   return (
     <SidePanel side={"right"} panelWidth={panelWidth} setPanelWidth={setPanelWidth}>
 
@@ -522,6 +447,7 @@ export function SidePanelMapComponent({ panelWidth, setPanelWidth }) {
         <div className="divide-y divide-gray-200 dark:divide-gray-900 border-t border-gray-200 dark:border-gray-900 overflow-auto placemark-scrollbar">
           <PanelDetailsCollapsible
             key={element.title}
+            bold="bold-1"
             title={element.title}
             state={activePanel === element.title}
             onToggle={() => togglePanel(element.title)}
@@ -531,7 +457,7 @@ export function SidePanelMapComponent({ panelWidth, setPanelWidth }) {
           </div>
         ))}
         <div className="divide-y divide-gray-200 dark:divide-gray-900 border-t border-gray-200 dark:border-gray-900 overflow-auto placemark-scrollbar">
-            <PanelDetailsCollapsible title="Realizar Consulta" state={true} onToggle={() => false}>
+            <PanelDetailsCollapsible title="Realizar Consulta" state={true} onToggle={() => false} bold="bold-1">
                 <div className="flex">
                     <Button style={{ marginRight: '10px' }}>Ejecutar Análisis</Button>
                     <Button>Tabla</Button>

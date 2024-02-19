@@ -10,7 +10,7 @@
   z-index: 100;
 }
 .buttons-center {
-  margin-right: 30em;
+  margin-right: 10em;
 }
 
 .dialog-footer {
@@ -26,4 +26,8 @@
 .title-dialog {
   margin-top: 5px;
   margin-bottom: 5px;
+}
+
+.move-margin-right {
+  margin-right: 0;
 }

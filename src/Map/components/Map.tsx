@@ -45,7 +45,7 @@ export default function MapComponent() {
     
     const featureCollection = response.data as turf.FeatureCollection;
     
-    if(map!.getCanvas().style.cursor === "pointer" || response.data.features.length === 0) return
+    if (map!.getCanvas().style.cursor === "pointer" || !response.data || !response.data.features || response.data.features.length === 0) return;
 
     const updatedFeatureCollection = featureCollection.features.map(feature => {
       var pointOnPolygon = turf.pointOnFeature(feature);
@@ -128,7 +128,7 @@ export default function MapComponent() {
 
   return (
     <>
-      {showPanel && <SidePanelMapComponent panelWidth={panelWidth} setPanelWidth={setPanelWidth}/>}
+      {showPanel && <SidePanelMapComponent panelWidth={panelWidth} setPanelWidth={setPanelWidth} key="side-panel-map"/>}
 
       <Map
         ref={mapRef}
@@ -142,7 +142,7 @@ export default function MapComponent() {
         {layers.length !== 0 && layers.map((layer) => layer)}
 
 
-        <HeaderMapComponent setShowPanel={setShowPanel} showPanel={showPanel}/>
+        <HeaderMapComponent setShowPanel={setShowPanel} showPanel={showPanel} screenWidth={parseInt(screenWidth.toString()) - panelWidth}/>
 
         <DeckGlComponent key="deckglComponent" />
         <NavigationControl position="bottom-right"/>

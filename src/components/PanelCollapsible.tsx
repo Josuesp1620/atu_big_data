@@ -6,20 +6,20 @@ import clsx from "clsx";
 
 export function PanelDetailsCollapsible({
   title,
-  bold = false,
+  bold = "",
   children,
   state,
   onToggle,
 }: React.PropsWithChildren<{
   title: string;
-  bold?: boolean;
+  bold?: string;
   state?: boolean;
   onToggle: () => void | boolean;
 }>) {
   return (
     <C.Root open={state} onOpenChange={onToggle}>
       <C.Trigger className={styledPanelTitle({ interactive: true })}>
-        <span className={clsx(bold ? "font-bold" : "font-normal", 'side-panel')}>{title}</span>
+        <span className={clsx(bold === "bold-1" ? "font-semibold" : bold === "bold-2" ? "font-semibold text-gray-500" : "font-normal", 'side-panel')}>{title}</span>
         {state ? <CaretDownIcon /> : <CaretRightIcon />}
       </C.Trigger>
       <C.Content className="px-3 pb-3 contain-layout">{children}</C.Content>
