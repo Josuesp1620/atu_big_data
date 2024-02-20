@@ -4,18 +4,20 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import clsx from "clsx";
 import { TContent } from "./elements";
 import React from "react";
+import { useAppDispatch } from "@/redux/hooks";
 
 
 export function PanelToggle({ side, setShowPanel, showPanel, setApplyTransition, setPanelWidth }: { side: any, setShowPanel : any, showPanel : any, setApplyTransition : any, setPanelWidth: any }) {
+  const dispatch = useAppDispatch();
 
   const togglePanel = () => {
-    setShowPanel(!showPanel)
+    dispatch(setShowPanel(!showPanel))
 
-    setApplyTransition(true);
+    dispatch(setApplyTransition(true))
 
-    setPanelWidth(350)
+    dispatch(setPanelWidth(350))
 
-    setTimeout(() => setApplyTransition(false), 500);
+    setTimeout(() => dispatch(setApplyTransition(false)), 500);
   };
 
   return (

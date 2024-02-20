@@ -1,5 +1,6 @@
 import { PanelInner } from "@/components/PanelTab";
 import SidePanelMapComponent from "./SidePanelMap";
+import { useAppSelector } from "@/redux/hooks";
 
 export enum TabOption {
     Tab1 = "Análisis de Viajes",
@@ -9,12 +10,14 @@ export enum TabOption {
 const TAB_COMPONENTS = {
     [TabOption.Tab1]: SidePanelMapComponent,
     [TabOption.Support]: () => <div className="px-3">Soporte</div>,
-  };
+};
 
-export function PanelInnerMap({panelWidth, setPanelWidth, setShowPanel}) {
+export function PanelInnerMap({setPanelWidth, setShowPanel}) {
+    const panelWidth = useAppSelector((state) => state.panelReducer.panelWidth)
+
     return (
         <PanelInner 
-            side={"right"} 
+            side={"right"}
             panelWidth={panelWidth} 
             setPanelWidth={setPanelWidth} 
             setShowPanel={setShowPanel} 

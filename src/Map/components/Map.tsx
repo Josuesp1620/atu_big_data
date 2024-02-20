@@ -18,15 +18,10 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { addLayersDeck, removeAllLayersDeck } from "@/redux/features/layersDeckSlice";
 import { setSelectionState } from "@/redux/features/arcSlice";
 import { PanelToggle } from "@/components/PanelToggle";
-import { PanelInner } from "@/components/PanelTab";
 import { PanelInnerMap } from "./PanelTabMap";
+import { setApplyTransition, setPanelWidth, setScreenWidth, setShowPanel } from "@/redux/features/panelSlice";
 
 export default function MapComponent() {
-
-  const [showPanel, setShowPanel] = React.useState(false);
-  const [panelWidth, setPanelWidth] = React.useState(350);
-  const [screenWidth, setScreenWidth] = React.useState<string | number>("100vw");
-  const [applyTransition, setApplyTransition] = React.useState(false);
 
   const mapRef = React.useRef<MapRef>(null);
 
@@ -36,6 +31,9 @@ export default function MapComponent() {
   const layers = useAppSelector((state) => state.layersReducer.layers);
 
   const selectionState = useAppSelector((state) => state.arcReducer)
+  
+  const panelReducer = useAppSelector((state) => state.panelReducer)
+
   async function handleMapClick(e) {
     const map = mapRef.current.getMap();
     const layerId = `${layers.at(-1)?.props.name}-selected-outline`
@@ -85,8 +83,7 @@ export default function MapComponent() {
   }
 
   React.useEffect(() => {
-    const screenWidth = window.innerWidth;
-    setScreenWidth(screenWidth)
+    dispatch(setScreenWidth(window.innerWidth))
 
     if (selectionState.source !== null && selectionState.target !== null ) {
       const map = mapRef.current.getMap();
@@ -127,10 +124,10 @@ export default function MapComponent() {
       attributionControl.innerHTML = '© <a href="#" target="_blank" rel="noopener">GeoSolution</a> | © <a href="http://www.openstreetmap.org/about/" target="_blank">OpenStreetMap</a> contributors';
     }    
   }, []);
-
+  
   return (
     <>
-      {showPanel && <PanelInnerMap setPanelWidth={setPanelWidth} panelWidth={panelWidth} setShowPanel={setShowPanel} key={"panel-inner-map"}/>}
+      {panelReducer.showPanel && <PanelInnerMap setPanelWidth={setPanelWidth} setShowPanel={setShowPanel} key={"panel-inner-map"}/>}
 
       <Map
         ref={mapRef}
@@ -139,19 +136,19 @@ export default function MapComponent() {
         onLoad={onMapLoad}
         initialViewState={INITIAL_VIEW_STATE}
         mapLib={maplibregl} 
-        style={{ width: showPanel ? `${parseInt(screenWidth.toString()) - panelWidth}px` : "100vw", height: "100vh", transition: applyTransition ? "width 0.5s ease" : ""
+        style={{ width: panelReducer.showPanel ? `${parseInt(panelReducer.screenWidth.toString()) - panelReducer.panelWidth}px` : "100vw", height: "100vh", transition: panelReducer.applyTransition ? "width 0.5s ease" : ""
       }}>
         
         {layers.length !== 0 && layers.map((layer) => layer)}
 
 
-        <HeaderMapComponent setShowPanel={setShowPanel} showPanel={showPanel} screenWidth={parseInt(screenWidth.toString()) - panelWidth}  setApplyTransition={setApplyTransition}/>
+        <HeaderMapComponent setShowPanel={setShowPanel} showPanel={panelReducer.showPanel} screenWidth={parseInt(panelReducer.screenWidth.toString()) - panelReducer.panelWidth}  setApplyTransition={setApplyTransition} />
 
         <DeckGlComponent key="deckglComponent" />
         <NavigationControl position="bottom-right"/>
         <ScaleControl />
         <FooterMapComponent />
-        <PanelToggle side={"right"} setShowPanel={setShowPanel} showPanel={showPanel} setApplyTransition={setApplyTransition} setPanelWidth={setPanelWidth}></PanelToggle>
+        <PanelToggle side={"right"} setShowPanel={setShowPanel} showPanel={panelReducer.showPanel} setApplyTransition={setApplyTransition} setPanelWidth={setPanelWidth}></PanelToggle>
       </Map>
     </>
   );

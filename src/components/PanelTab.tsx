@@ -1,3 +1,4 @@
+import { useAppDispatch } from "@/redux/hooks";
 import clsx from "clsx";
 import React from "react";
 
@@ -104,21 +105,21 @@ export function PanelInner({
     TAB_COMPONENTS: any
 }){
     const [activeTab, setTab] = React.useState(active);
-
+    const dispatch = useAppDispatch();
     const [isResizing, setIsResizing] = React.useState(false);
     const [initialX, setInitialX] = React.useState(0);
   
     React.useEffect(() => {
       console.log(panelWidth)
       if(panelWidth < 270){
-        setShowPanel(false)
-        setPanelWidth(350)
+        dispatch(setShowPanel(false))
+        dispatch(setPanelWidth(350))
       }
       const handleMouseMove = (e) => {
         if (isResizing) {
           const deltaX = e.clientX - initialX;
           const newWidth = side === "right" ? panelWidth - deltaX : panelWidth + deltaX;
-          setPanelWidth(newWidth);
+          dispatch(setPanelWidth(newWidth))
           setInitialX(e.clientX);
         }
       };
