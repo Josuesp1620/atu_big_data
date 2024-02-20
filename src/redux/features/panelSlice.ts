@@ -1,10 +1,4 @@
-import { MAP_STYLE } from "@/Map/constants/map.constants";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-// const [showPanel, setShowPanel] = React.useState(false);
-// const [panelWidth, setPanelWidth] = React.useState(350);
-// const [screenWidth, setScreenWidth] = React.useState<string | number>("100vw");
-// const [applyTransition, setApplyTransition] = React.useState(false);
 
 type panelSlice = {
     showPanel: boolean;

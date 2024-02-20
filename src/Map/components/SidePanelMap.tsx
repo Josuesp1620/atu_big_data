@@ -5,19 +5,13 @@ import React from "react";
 import { PeriodoEstudio } from "./utils/form_periodo_studio";
 import { LineasDeseo } from "./utils/form_lineas_deseo";
 import clsx from "clsx";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { setActivePanel, setActiveSubPanel } from "@/redux/features/sidePanelSlice";
 
 export function SidePanelMapComponent({panelWidth}) {
-    const [activePanel, setActivePanel] = React.useState(null);
-    
-    const [activeSubPanel, setSubActivePanel] = React.useState(null);
 
-    const togglePanel = (title) => {
-        setActivePanel(activePanel === title ? null : title);
-    };
-
-    const toggleSubPanel = (title) => {
-        setSubActivePanel(activeSubPanel === title ? null : title);
-    };
+    const sidePanel = useAppSelector((state) => state.sidePanelReducer);
+    const dispatch = useAppDispatch();
 
     const collapsibleSubTitles = [
         {
@@ -407,8 +401,10 @@ export function SidePanelMapComponent({panelWidth}) {
                         bold="bold-2"
                         key={element.title}
                         title={element.title}                
-                        state={activeSubPanel === element.title}
-                        onToggle={() => toggleSubPanel(element.title)}
+                        state={sidePanel.activeSubPanel === element.title}
+                        onToggle={() => {
+                            dispatch(setActiveSubPanel(element.title))
+                        }}
                     >
                         {element.children}
                     </PanelDetailsCollapsible>
@@ -458,8 +454,10 @@ export function SidePanelMapComponent({panelWidth}) {
           <PanelDetailsCollapsible            
             bold="bold-1"
             title={element.title}
-            state={activePanel === element.title}
-            onToggle={() => togglePanel(element.title)}
+            state={sidePanel.activePanel === element.title}
+            onToggle={() => {
+                dispatch(setActivePanel(element.title))
+            }}
           >
             {element.children}
           </PanelDetailsCollapsible>

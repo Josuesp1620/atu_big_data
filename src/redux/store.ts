@@ -4,6 +4,7 @@ import layersDeckReducer from "@/redux/features/layersDeckSlice"
 import layersReducer from "@/redux/features/layersSlice"
 import arcReducer from "@/redux/features/arcSlice"
 import panelReducer from "@/redux/features/panelSlice"
+import sidePanelReducer from "@/redux/features/sidePanelSlice"
 
 export const store = configureStore({
   reducer: {
@@ -11,7 +12,8 @@ export const store = configureStore({
     layersDeckReducer,
     layersReducer,
     arcReducer,
-    panelReducer
+    panelReducer,
+    sidePanelReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
