@@ -5,6 +5,8 @@ type panelSlice = {
     panelWidth: number;
     screenWidth: string | number;
     applyTransition: boolean;
+    activePanel: any;
+    activeSubPanel: any;
 };
 
 const initialState: panelSlice = {
@@ -12,6 +14,8 @@ const initialState: panelSlice = {
     panelWidth : 350,
     screenWidth : "100vw",
     applyTransition : false,
+    activePanel : null,
+    activeSubPanel : null,
 };
 
 export const panelSlice = createSlice({
@@ -30,11 +34,17 @@ export const panelSlice = createSlice({
     setApplyTransition: (state, action: PayloadAction<any>) => {
         state.applyTransition = action.payload;
     },
+    setActivePanel: (state, action: PayloadAction<any>) => {
+      state.activePanel = state.activePanel === action.payload ? null : action.payload;
+    },
+    setActiveSubPanel: (state, action: PayloadAction<any>) => {
+        state.activeSubPanel = state.activeSubPanel === action.payload ? null : action.payload;
+    },
   },
 });
 
 export const {
-    setShowPanel, setPanelWidth, setScreenWidth, setApplyTransition
+    setShowPanel, setPanelWidth, setScreenWidth, setApplyTransition, setActivePanel, setActiveSubPanel
 } = panelSlice.actions;
 
 export default panelSlice.reducer;

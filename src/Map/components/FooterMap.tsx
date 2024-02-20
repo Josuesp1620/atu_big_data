@@ -5,7 +5,6 @@ import { removeAllLayersDeck } from "@/redux/features/layersDeckSlice";
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { addLayers, removeLayer } from '@/redux/features/layersSlice';
 import {Source, Layer} from 'react-map-gl';
-import CleanMapControl from '@/components/control/CleanMapControl';
 
 export default function FooterMapComponent() {
   const [checkedStates, setCheckedStates] = useState(mapLayersStyleGeoserver);

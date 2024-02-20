@@ -1,7 +1,7 @@
 import ControlLayers from "@/components/control/MapControlLayer";
 import * as E from "@/components/elements";
 import { setApplyTransition, setShowPanel } from "@/redux/features/panelSlice";
-import { setActivePanel } from "@/redux/features/sidePanelSlice";
+import { setActivePanel } from "@/redux/features/panelSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { EraserIcon, GearIcon, HomeIcon, PersonIcon, QuestionMarkCircledIcon } from '@radix-ui/react-icons'
 import { clsx } from "clsx";
@@ -10,7 +10,6 @@ import React from "react";
 export default function HeaderMapComponent() {
 
     const dispatch = useAppDispatch();
-    const activePanel = useAppSelector((state) => state.sidePanelReducer.activePanel);
     const panelReducer = useAppSelector((state) => state.panelReducer);
 
     const cleanMap = () => {
@@ -18,11 +17,11 @@ export default function HeaderMapComponent() {
     }
 
     const openSidePanelOption = (title) => {
-        if(panelReducer.showPanel && activePanel !== title){
+        if(panelReducer.showPanel && panelReducer.activePanel !== title){
             dispatch(setActivePanel(title))
             return
         }
-        if(panelReducer.showPanel && activePanel === title){
+        if(panelReducer.showPanel && panelReducer.activePanel === title){
             dispatch(setShowPanel(!panelReducer.showPanel))
             dispatch(setApplyTransition(true))
             dispatch(setActivePanel(null))

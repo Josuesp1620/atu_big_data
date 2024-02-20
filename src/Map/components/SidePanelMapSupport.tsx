@@ -4,12 +4,12 @@ import { StyledLabelSpan } from "@/components/elements";
 import React from "react";
 import clsx from "clsx";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { setActivePanel, setActiveSubPanel } from "@/redux/features/sidePanelSlice";
+import { setActivePanel, setActiveSubPanel } from "@/redux/features/panelSlice";
 import { DownloadIcon } from "@radix-ui/react-icons";
 
 export function SidePanelMapSupportComponent({panelWidth}) {
 
-    const sidePanel = useAppSelector((state) => state.sidePanelReducer);
+    const sidePanel = useAppSelector((state) => state.panelReducer);
     const dispatch = useAppDispatch();
 
     const collapsibleSubTitles = [

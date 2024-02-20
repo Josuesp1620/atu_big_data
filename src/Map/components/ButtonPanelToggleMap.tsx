@@ -1,6 +1,6 @@
 import { PanelToggle } from "@/components/PanelToggle";
 import { setApplyTransition, setPanelWidth, setShowPanel } from "@/redux/features/panelSlice";
-import { setActivePanel } from "@/redux/features/sidePanelSlice";
+import { setActivePanel } from "@/redux/features/panelSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 export function ButtonPanelToggleMap(){
