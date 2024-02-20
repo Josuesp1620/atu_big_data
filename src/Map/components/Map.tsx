@@ -129,7 +129,7 @@ export default function MapComponent() {
 
   return (
     <>
-      {showPanel && <SidePanelMapComponent panelWidth={panelWidth} setPanelWidth={setPanelWidth} key="side-panel-map" setShowPanel={setShowPanel}/>}
+      {showPanel && <SidePanelMapComponent panelWidth={panelWidth} setPanelWidth={setPanelWidth} setShowPanel={setShowPanel}/>}
 
       <Map
         ref={mapRef}
@@ -138,7 +138,7 @@ export default function MapComponent() {
         onLoad={onMapLoad}
         initialViewState={INITIAL_VIEW_STATE}
         mapLib={maplibregl} 
-        style={{ width: showPanel ? `${parseInt(screenWidth.toString()) - panelWidth}px` : screenWidth, height: "100vh", transition: applyTransition ? "width 0.5s ease" : ""
+        style={{ width: showPanel ? `${parseInt(screenWidth.toString()) - panelWidth}px` : "100vw", height: "100vh", transition: applyTransition ? "width 0.5s ease" : ""
       }}>
         
         {layers.length !== 0 && layers.map((layer) => layer)}
@@ -150,7 +150,7 @@ export default function MapComponent() {
         <NavigationControl position="bottom-right"/>
         <ScaleControl />
         <FooterMapComponent />
-        <PanelToggle side={"right"} setShowPanel={setShowPanel} showPanel={showPanel} setApplyTransition={setApplyTransition}></PanelToggle>
+        <PanelToggle side={"right"} setShowPanel={setShowPanel} showPanel={showPanel} setApplyTransition={setApplyTransition} setPanelWidth={setPanelWidth}></PanelToggle>
       </Map>
     </>
   );
