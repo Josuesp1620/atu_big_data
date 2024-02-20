@@ -5,6 +5,7 @@ import clsx from "clsx";
 import { TContent } from "./elements";
 import React from "react";
 import { useAppDispatch } from "@/redux/hooks";
+import { setActivePanel } from "@/redux/features/sidePanelSlice";
 
 
 export function PanelToggle({ side, setShowPanel, showPanel, setApplyTransition, setPanelWidth }: { side: any, setShowPanel : any, showPanel : any, setApplyTransition : any, setPanelWidth: any }) {
@@ -16,7 +17,7 @@ export function PanelToggle({ side, setShowPanel, showPanel, setApplyTransition,
     dispatch(setApplyTransition(true))
 
     dispatch(setPanelWidth(350))
-
+    dispatch(setActivePanel(null))
     setTimeout(() => dispatch(setApplyTransition(false)), 500);
   };
 

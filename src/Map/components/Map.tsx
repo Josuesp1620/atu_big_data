@@ -142,7 +142,7 @@ export default function MapComponent() {
         {layers.length !== 0 && layers.map((layer) => layer)}
 
 
-        <HeaderMapComponent setShowPanel={setShowPanel} showPanel={panelReducer.showPanel} screenWidth={parseInt(panelReducer.screenWidth.toString()) - panelReducer.panelWidth}  setApplyTransition={setApplyTransition} />
+        <HeaderMapComponent />
 
         <DeckGlComponent key="deckglComponent" />
         <NavigationControl position="bottom-right"/>
