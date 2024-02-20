@@ -51,17 +51,24 @@ export function SidePanel({
   side, 
   panelWidth, 
   setPanelWidth,
+  setShowPanel,
   children,
 }: React.PropsWithChildren<{
   side : string;
-  panelWidth? : any;
-  setPanelWidth ?: any;
+  panelWidth?: any;
+  setPanelWidth?: any;
+  setShowPanel?: any;
 }>) {
   
   const [isResizing, setIsResizing] = React.useState(false);
   const [initialX, setInitialX] = React.useState(0);
 
   React.useEffect(() => {
+    
+    if(panelWidth < 150){
+      setShowPanel(false)
+      setPanelWidth(350)
+    }
     const handleMouseMove = (e) => {
       if (isResizing) {
         const deltaX = e.clientX - initialX;

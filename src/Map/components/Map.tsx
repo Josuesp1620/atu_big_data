@@ -129,7 +129,7 @@ export default function MapComponent() {
 
   return (
     <>
-      {showPanel && <SidePanelMapComponent panelWidth={panelWidth} setPanelWidth={setPanelWidth} key="side-panel-map"/>}
+      {showPanel && <SidePanelMapComponent panelWidth={panelWidth} setPanelWidth={setPanelWidth} key="side-panel-map" setShowPanel={setShowPanel}/>}
 
       <Map
         ref={mapRef}

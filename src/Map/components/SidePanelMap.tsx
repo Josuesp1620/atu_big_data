@@ -5,7 +5,7 @@ import React from "react";
 import { PeriodoEstudio } from "./utils/form_periodo_studio";
 import { LineasDeseo } from "./utils/form_lineas_deseo";
 
-export function SidePanelMapComponent({ panelWidth, setPanelWidth }) {
+export function SidePanelMapComponent({ panelWidth, setPanelWidth, setShowPanel }) {
     const [activePanel, setActivePanel] = React.useState(null);
     
     const [activeSubPanel, setSubActivePanel] = React.useState(null);
@@ -435,7 +435,7 @@ export function SidePanelMapComponent({ panelWidth, setPanelWidth }) {
   
 
   return (
-    <SidePanel side={"right"} panelWidth={panelWidth} setPanelWidth={setPanelWidth}>
+    <SidePanel side={"right"} panelWidth={panelWidth} setPanelWidth={setPanelWidth} setShowPanel={setShowPanel}>
 
         {collapsibleTitles.map((element) => (
         <div className="divide-y divide-gray-200 dark:divide-gray-900 border-t border-gray-200 dark:border-gray-900 overflow-auto placemark-scrollbar">
