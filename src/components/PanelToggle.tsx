@@ -50,103 +50,24 @@ export function PanelToggle({ side, setShowPanel, showPanel, setApplyTransition,
 }
 
 export function SidePanel({
-  side, 
-  panelWidth, 
-  setPanelWidth,
-  setShowPanel,
+  side,
+  panelWidth,
   children,
 }: React.PropsWithChildren<{
   side : string;
-  panelWidth?: any;
-  setPanelWidth?: any;
-  setShowPanel?: any;
+  panelWidth: any;
 }>) {
-  
-  const [isResizing, setIsResizing] = React.useState(false);
-  const [initialX, setInitialX] = React.useState(0);
-
-  React.useEffect(() => {
-    
-    if(panelWidth < 150){
-      setShowPanel(false)
-      setPanelWidth(350)
-    }
-    const handleMouseMove = (e) => {
-      if (isResizing) {
-        const deltaX = e.clientX - initialX;
-        const newWidth = side === "right" ? panelWidth - deltaX : panelWidth + deltaX;
-        setPanelWidth(newWidth);
-        setInitialX(e.clientX);
-      }
-    };
-
-    const handleMouseUp = () => {
-      if (isResizing) {
-        setIsResizing(false);
-      }
-    };
-
-    document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseup", handleMouseUp);
-
-    return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
-    };
-  }, [isResizing, initialX, panelWidth, setPanelWidth, side]);
-
-  const handleMouseDown = (e) => {
-    setIsResizing(true);
-    setInitialX(e.clientX);
-  };
-
-  const panelStyles = {
-    width: `${panelWidth}px`,
-    height: "100vh",
-  };
 
   return (
-    <div
-        
-        className={clsx(
-          side === "right" ? "right-0" : "left-0"
-        )}
-      >
-
-        <div          
-        style={panelStyles}
+      <div     
+          style={{width: `${panelWidth}px`}}     
           className={clsx(
             side === "right" ? "right-0" : "left-0",
-            'absolute p-3 border-t border-b bg-white'
+            'absolute p-3 bg-white'
           )}
         >
           {children}
         </div>
-        <button
-          type="button"
-          role="separator"
-          aria-orientation="vertical"
-          aria-label="Resize panel"
-          tabIndex={1}
-          className={clsx(
-            "absolute",
-            "top-0",
-            "bottom-0",
-            "touch-none",
-            "flex",
-            "items-center",
-            "justify-center",
-            "w-1",
-            "z-max",
-            "bg-indigo-300",
-            "hover:bg-indigo-400"
-          )}
-          style={{ cursor: "col-resize", right: side === "right" ? panelWidth - 5 : "unset", left: side === "left" ? 0 : "unset" }}
-          onMouseDown={handleMouseDown}
-        >
-          <div className="hover-hover:hidden h-16 w-1 rounded" />
-        </button>
-      </div>
-    );
+  );
 
 }

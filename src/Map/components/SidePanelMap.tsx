@@ -4,8 +4,9 @@ import { Button, StyledLabelSpan, inputClass, styledCheckbox } from "@/component
 import React from "react";
 import { PeriodoEstudio } from "./utils/form_periodo_studio";
 import { LineasDeseo } from "./utils/form_lineas_deseo";
+import clsx from "clsx";
 
-export function SidePanelMapComponent({ panelWidth, setPanelWidth, setShowPanel }) {
+export function SidePanelMapComponent({panelWidth}) {
     const [activePanel, setActivePanel] = React.useState(null);
     
     const [activeSubPanel, setSubActivePanel] = React.useState(null);
@@ -398,6 +399,7 @@ export function SidePanelMapComponent({ panelWidth, setPanelWidth, setShowPanel 
         {
             id: "tit-001",
             title: "Perfil de Viajero",
+            headLine: false,
             children:  (
                 collapsibleSubTitles.map((element) => (
                 <div key={element.id} className="divide-y divide-gray-200 dark:divide-gray-900 border-t border-gray-200 dark:border-gray-900 overflow-auto placemark-scrollbar">
@@ -416,6 +418,7 @@ export function SidePanelMapComponent({ panelWidth, setPanelWidth, setShowPanel 
         },
         {
             id: "tit-002",
+            headLine: true,
             title: "Seleccionar las Líneas de Deseo",
             children:  (
                 <LineasDeseo />
@@ -423,6 +426,7 @@ export function SidePanelMapComponent({ panelWidth, setPanelWidth, setShowPanel 
         },
         {
             id: "tit-003",
+            headLine: true,
             title: "Seleccionar Periodo de Estudio",
             children: (
                <PeriodoEstudio />
@@ -430,6 +434,7 @@ export function SidePanelMapComponent({ panelWidth, setPanelWidth, setShowPanel 
         },
         {
             id: "tit-004",
+            headLine: true,
             title: "Agrupación de Líneas de Deseo de Viajes",
             children: (                
                 <div className="py-1 whitespace-nowrap flex justify-between">
@@ -445,10 +450,11 @@ export function SidePanelMapComponent({ panelWidth, setPanelWidth, setShowPanel 
   
 
   return (
-    <SidePanel side={"right"} panelWidth={panelWidth} setPanelWidth={setPanelWidth} setShowPanel={setShowPanel}>
 
+    <SidePanel side={"right"} panelWidth={panelWidth}>
+        
         {collapsibleTitles.map((element) => (
-        <div key={element.id} className="divide-y divide-gray-200 dark:divide-gray-900 border-t border-gray-200 dark:border-gray-900 overflow-auto placemark-scrollbar">
+        <div key={element.id} className={clsx( element.headLine ? "divide-y divide-gray-200 dark:divide-gray-900 border-t border-gray-200 dark:border-gray-900 overflow-auto placemark-scrollbar" : "")}>
           <PanelDetailsCollapsible            
             bold="bold-1"
             title={element.title}

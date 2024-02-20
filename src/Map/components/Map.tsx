@@ -2,7 +2,7 @@
 
 import React from "react";
 import Map, { NavigationControl, ScaleControl } from 'react-map-gl/maplibre';
-import maplibregl, { typeOf } from "maplibre-gl";
+import maplibregl from "maplibre-gl";
 import type { MapRef } from 'react-map-gl/maplibre';
 
 import "maplibre-gl/dist/maplibre-gl.css";
@@ -18,7 +18,8 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { addLayersDeck, removeAllLayersDeck } from "@/redux/features/layersDeckSlice";
 import { setSelectionState } from "@/redux/features/arcSlice";
 import { PanelToggle } from "@/components/PanelToggle";
-import { SidePanelMapComponent } from "./SidePanelMap";
+import { PanelInner } from "@/components/PanelTab";
+import { PanelInnerMap } from "./PanelTabMap";
 
 export default function MapComponent() {
 
@@ -129,7 +130,7 @@ export default function MapComponent() {
 
   return (
     <>
-      {showPanel && <SidePanelMapComponent panelWidth={panelWidth} setPanelWidth={setPanelWidth} setShowPanel={setShowPanel}/>}
+      {showPanel && <PanelInnerMap setPanelWidth={setPanelWidth} panelWidth={panelWidth} setShowPanel={setShowPanel} key={"panel-inner-map"}/>}
 
       <Map
         ref={mapRef}
