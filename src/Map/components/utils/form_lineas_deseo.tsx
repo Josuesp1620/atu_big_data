@@ -1,4 +1,4 @@
-import { InputSearch } from "@/components/InputSearch"
+import { InputSearch } from "@/Map/components/utils/InputSearch"
 import { StyledLabelSpan, styledCheckbox } from "@/components/elements"
 import React from "react"
 

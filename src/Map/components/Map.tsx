@@ -17,9 +17,9 @@ import axios from "axios";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { addLayersDeck, removeAllLayersDeck } from "@/redux/features/layersDeckSlice";
 import { setSelectionState } from "@/redux/features/arcSlice";
-import { PanelToggle } from "@/components/PanelToggle";
 import { PanelInnerMap } from "./PanelTabMap";
-import { setApplyTransition, setPanelWidth, setScreenWidth, setShowPanel } from "@/redux/features/panelSlice";
+import { setScreenWidth } from "@/redux/features/panelSlice";
+import { ButtonPanelToggleMap } from "./ButtonPanelToggleMap";
 
 export default function MapComponent() {
 
@@ -127,7 +127,7 @@ export default function MapComponent() {
   
   return (
     <>
-      {panelReducer.showPanel && <PanelInnerMap setPanelWidth={setPanelWidth} setShowPanel={setShowPanel} key={"panel-inner-map"}/>}
+      {panelReducer.showPanel && <PanelInnerMap key={"panel-inner-map"}/>}
 
       <Map
         ref={mapRef}
@@ -148,7 +148,7 @@ export default function MapComponent() {
         <NavigationControl position="bottom-right"/>
         <ScaleControl />
         <FooterMapComponent />
-        <PanelToggle side={"right"} setShowPanel={setShowPanel} showPanel={panelReducer.showPanel} setApplyTransition={setApplyTransition} setPanelWidth={setPanelWidth}></PanelToggle>
+        <ButtonPanelToggleMap />
       </Map>
     </>
   );

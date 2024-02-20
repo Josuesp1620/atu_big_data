@@ -8,7 +8,7 @@ import clsx from "clsx";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setActivePanel, setActiveSubPanel } from "@/redux/features/sidePanelSlice";
 
-export function SidePanelMapComponent({panelWidth}) {
+export function SidePanelMapAnalisisComponent({panelWidth}) {
 
     const sidePanel = useAppSelector((state) => state.sidePanelReducer);
     const dispatch = useAppDispatch();
@@ -476,4 +476,4 @@ export function SidePanelMapComponent({panelWidth}) {
   );
 }
 
-export default SidePanelMapComponent;
+export default SidePanelMapAnalisisComponent;

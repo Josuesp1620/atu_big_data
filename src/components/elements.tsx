@@ -309,19 +309,19 @@ export function PopoverContent2({
   }
 
 
-  export function Loading({ size = "sm" }: { size?: B3Size }) {
-    return (
-      <div
-        className={clsx(
-          {
-            "h-32": size === "sm",
-            "h-16": size === "xs",
-          },
-          `text-gray-500 flex items-center justify-center`
-        )}
-      >
-        <SymbolIcon className="animate-spin" />
-        <span className="ml-2">Loading…</span>
-      </div>
-    );
-  }
+export function Loading({ size = "sm" }: { size?: B3Size }) {
+  return (
+    <div
+      className={clsx(
+        {
+          "h-32": size === "sm",
+          "h-16": size === "xs",
+        },
+        `text-gray-500 flex items-center justify-center`
+      )}
+    >
+      <SymbolIcon className="animate-spin" />
+      <span className="ml-2">Loading…</span>
+    </div>
+  );
+}
