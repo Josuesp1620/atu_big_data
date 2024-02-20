@@ -20,6 +20,7 @@ export function SidePanelMapComponent({ panelWidth, setPanelWidth, setShowPanel 
 
     const collapsibleSubTitles = [
         {
+            id: "sub-001",
             title: "Horario (24 horas):",
             children: (
                 <>
@@ -128,6 +129,7 @@ export function SidePanelMapComponent({ panelWidth, setPanelWidth, setShowPanel 
             )
         },
         {
+            id: "sub-002",
             title: "Edad (años):",
             children: (
                 <>
@@ -191,6 +193,7 @@ export function SidePanelMapComponent({ panelWidth, setPanelWidth, setShowPanel 
             )
         },
         {
+            id: "sub-003",
             title: "Nivel Socio Economico:",
             children: (
                 <>
@@ -232,6 +235,7 @@ export function SidePanelMapComponent({ panelWidth, setPanelWidth, setShowPanel 
             )
         },
         {
+            id: "sub-004",
             title: "Tipo de dia:",
             children: (
                 <>
@@ -316,6 +320,7 @@ export function SidePanelMapComponent({ panelWidth, setPanelWidth, setShowPanel 
             )
         },
         {
+            id: "sub-005",
             title: "Motivo de Viaje:",
             children: (
                 <>        
@@ -357,6 +362,7 @@ export function SidePanelMapComponent({ panelWidth, setPanelWidth, setShowPanel 
             )
         },
         {
+            id: "sub-006",
             title: "Genero:",
             children: (
                 <>
@@ -390,10 +396,11 @@ export function SidePanelMapComponent({ panelWidth, setPanelWidth, setShowPanel 
 
     const collapsibleTitles = [
         {
+            id: "tit-001",
             title: "Perfil de Viajero",
             children:  (
                 collapsibleSubTitles.map((element) => (
-                <div className="divide-y divide-gray-200 dark:divide-gray-900 border-t border-gray-200 dark:border-gray-900 overflow-auto placemark-scrollbar">
+                <div key={element.id} className="divide-y divide-gray-200 dark:divide-gray-900 border-t border-gray-200 dark:border-gray-900 overflow-auto placemark-scrollbar">
                     <PanelDetailsCollapsible
                         bold="bold-2"
                         key={element.title}
@@ -408,18 +415,21 @@ export function SidePanelMapComponent({ panelWidth, setPanelWidth, setShowPanel 
             )
         },
         {
+            id: "tit-002",
             title: "Seleccionar las Líneas de Deseo",
             children:  (
                 <LineasDeseo />
             )
         },
         {
+            id: "tit-003",
             title: "Seleccionar Periodo de Estudio",
             children: (
                <PeriodoEstudio />
             )
         },
         {
+            id: "tit-004",
             title: "Agrupación de Líneas de Deseo de Viajes",
             children: (                
                 <div className="py-1 whitespace-nowrap flex justify-between">
@@ -438,9 +448,8 @@ export function SidePanelMapComponent({ panelWidth, setPanelWidth, setShowPanel 
     <SidePanel side={"right"} panelWidth={panelWidth} setPanelWidth={setPanelWidth} setShowPanel={setShowPanel}>
 
         {collapsibleTitles.map((element) => (
-        <div className="divide-y divide-gray-200 dark:divide-gray-900 border-t border-gray-200 dark:border-gray-900 overflow-auto placemark-scrollbar">
-          <PanelDetailsCollapsible
-            key={element.title}
+        <div key={element.id} className="divide-y divide-gray-200 dark:divide-gray-900 border-t border-gray-200 dark:border-gray-900 overflow-auto placemark-scrollbar">
+          <PanelDetailsCollapsible            
             bold="bold-1"
             title={element.title}
             state={activePanel === element.title}
@@ -450,7 +459,7 @@ export function SidePanelMapComponent({ panelWidth, setPanelWidth, setShowPanel 
           </PanelDetailsCollapsible>
           </div>
         ))}
-        <div className="divide-y divide-gray-200 dark:divide-gray-900 border-t border-gray-200 dark:border-gray-900 overflow-auto placemark-scrollbar">
+        <div key={"tit-005"} className="divide-y divide-gray-200 dark:divide-gray-900 border-t border-gray-200 dark:border-gray-900 overflow-auto placemark-scrollbar">
             <PanelDetailsCollapsible title="Realizar Consulta" state={true} onToggle={() => false} bold="bold-1">
                 <div className="flex">
                     <Button style={{ marginRight: '10px' }}>Ejecutar Análisis</Button>
