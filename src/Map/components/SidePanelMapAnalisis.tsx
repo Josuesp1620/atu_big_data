@@ -6,11 +6,11 @@ import { PeriodoEstudio } from "./utils/form_periodo_studio";
 import { LineasDeseo } from "./utils/form_lineas_deseo";
 import clsx from "clsx";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { setActivePanel, setActiveSubPanel } from "@/redux/features/sidePanelSlice";
+import { setActivePanel, setActiveSubPanel } from "@/redux/features/panelSlice";
 
 export function SidePanelMapAnalisisComponent({panelWidth}) {
 
-    const sidePanel = useAppSelector((state) => state.sidePanelReducer);
+    const sidePanel = useAppSelector((state) => state.panelReducer);
     const dispatch = useAppDispatch();
 
     const collapsibleSubTitles = [

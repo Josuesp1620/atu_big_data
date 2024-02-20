@@ -2,8 +2,9 @@ import { PanelInner } from "@/components/PanelTab";
 import {SidePanelMapAnalisisComponent} from "./SidePanelMapAnalisis";
 import { useAppSelector } from "@/redux/hooks";
 import { useAppDispatch } from "@/redux/hooks";
-import { setPanelWidth, setShowPanel } from "@/redux/features/panelSlice";
+import { setActiveTab, setPanelWidth, setShowPanel } from "@/redux/features/panelSlice";
 import { SidePanelMapSupportComponent}  from "./SidePanelMapSupport";
+import React from "react";
 
 export enum TabOption {
     Tab1 = "Análisis de Viajes",
@@ -16,25 +17,31 @@ const TAB_COMPONENTS = {
 };
 
 export function PanelInnerMap() {
-    const panelWidth = useAppSelector((state) => state.panelReducer.panelWidth)
+    const panelReducer = useAppSelector((state) => state.panelReducer)
+
     const dispatch = useAppDispatch();
 
-    const setPanelWidthDispatch = (e) => {
-        dispatch(setPanelWidth(e))
-    }
+    const setPanelWidthDispatch = (width) => {
+        dispatch(setPanelWidth(width));
+    };
 
-    const setShowPanelDispatch = (e) => {
-        dispatch(setShowPanel(e))
-    }
+    const setShowPanelDispatch = (show) => {
+        dispatch(setShowPanel(show));
+    };
+
+    const setActiveTabDispatch = (tab) => {
+        dispatch(setActiveTab(tab));
+    };
 
     return (
         <PanelInner 
             side={"right"}
-            panelWidth={panelWidth} 
+            panelWidth={panelReducer.panelWidth} 
             setPanelWidth={setPanelWidthDispatch} 
             setShowPanel={setShowPanelDispatch} 
             tabOrder={[TabOption.Tab1, TabOption.Support]} 
-            active={TabOption.Tab1} 
+            activeTab={panelReducer.activeTab} 
+            setActiveTab={setActiveTabDispatch}
             TAB_COMPONENTS={TAB_COMPONENTS} 
         />
     )

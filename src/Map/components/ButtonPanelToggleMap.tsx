@@ -1,5 +1,5 @@
 import { PanelToggle } from "@/components/PanelToggle";
-import { setApplyTransition, setPanelWidth, setShowPanel } from "@/redux/features/panelSlice";
+import { resetActiveTab, setApplyTransition, setPanelWidth, setShowPanel } from "@/redux/features/panelSlice";
 import { setActivePanel } from "@/redux/features/panelSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
@@ -18,8 +18,7 @@ export function ButtonPanelToggleMap(){
     const setActivePanelDispatch = (e) => {
         dispatch(setActivePanel(e))
     }
-
-
+    
     return (
         <PanelToggle side={"right"} setShowPanel={setShowPanelDispatch} showPanel={panelReducer.showPanel} setApplyTransition={setApplyTransitionDispatch} setPanelWidth={setPanelWidth} setActivePanel={setActivePanelDispatch}/>
     );

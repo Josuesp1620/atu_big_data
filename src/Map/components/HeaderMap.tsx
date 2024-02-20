@@ -1,11 +1,12 @@
 import ControlLayers from "@/components/control/MapControlLayer";
 import * as E from "@/components/elements";
-import { setApplyTransition, setShowPanel } from "@/redux/features/panelSlice";
+import { setActiveSubPanel, setActiveTab, setApplyTransition, setShowPanel } from "@/redux/features/panelSlice";
 import { setActivePanel } from "@/redux/features/panelSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { EraserIcon, GearIcon, HomeIcon, PersonIcon, QuestionMarkCircledIcon } from '@radix-ui/react-icons'
 import { clsx } from "clsx";
 import React from "react";
+import { TabOption } from "./PanelTabMap";
 
 export default function HeaderMapComponent() {
 
@@ -19,12 +20,14 @@ export default function HeaderMapComponent() {
     const openSidePanelOption = (title) => {
         if(panelReducer.showPanel && panelReducer.activePanel !== title){
             dispatch(setActivePanel(title))
+            dispatch(setActiveTab(TabOption.Tab1))
             return
         }
         if(panelReducer.showPanel && panelReducer.activePanel === title){
             dispatch(setShowPanel(!panelReducer.showPanel))
             dispatch(setApplyTransition(true))
             dispatch(setActivePanel(null))
+            dispatch(setActiveSubPanel(null))
             return
         }
         else{
@@ -34,6 +37,21 @@ export default function HeaderMapComponent() {
                 dispatch(setApplyTransition(false))
                 dispatch(setActivePanel(title))
             }, 500)
+            return
+        }
+    }
+
+    const openSidePanelTab = (activeTab) => {
+        if(panelReducer.showPanel && panelReducer.activeTab !== activeTab){
+            dispatch(setActiveTab(activeTab))            
+        }
+        else{
+            dispatch(setShowPanel(!panelReducer.showPanel))
+            dispatch(setApplyTransition(true))
+            setTimeout(() => {
+                dispatch(setApplyTransition(false))
+                dispatch(setActiveTab(activeTab))            
+            }, 500)            
         }
     }
 
@@ -71,11 +89,11 @@ export default function HeaderMapComponent() {
                     <HomeIcon></HomeIcon>
                     Portada
                 </E.Button>
-                <E.Button size="md" variant="primary">
+                <E.Button size="md" variant="primary"  onClick={()=> openSidePanelTab(TabOption.Support)}>
                     <QuestionMarkCircledIcon></QuestionMarkCircledIcon>
                     Ayuda
                 </E.Button>
-                <E.Button size="md" variant="primary">
+                <E.Button size="md" variant="primary" onClick={()=> openSidePanelTab(TabOption.Support)}>
                     <GearIcon></GearIcon>
                     Soporte
                 </E.Button>

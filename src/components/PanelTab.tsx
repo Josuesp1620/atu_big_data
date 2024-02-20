@@ -37,13 +37,14 @@ function Tab({
 
 function TabList({
     tabOrder,
-    setTab,
     activeTab,
+    setActiveTab,
   }: {
     tabOrder: any[];
     activeTab: any;
-    setTab: any;
+    setActiveTab: any;
   }) {
+
     return (
       <div
         role="tablist"
@@ -58,7 +59,7 @@ function TabList({
         {tabOrder.map((tab) => (
           <Tab
             key={tab}
-            onClick={() => setTab(tab)}
+            onClick={() => setActiveTab(tab)}
             active={activeTab === tab}
             label={tab}
           />
@@ -92,7 +93,8 @@ export function PanelInner({
     setPanelWidth,
     setShowPanel,
     tabOrder,
-    active,
+    activeTab,
+    setActiveTab,
     TAB_COMPONENTS
 }: {
     side : string;
@@ -100,15 +102,14 @@ export function PanelInner({
     setPanelWidth: any;
     setShowPanel: any;
     tabOrder: any;
-    active: any;
+    activeTab: any;
+    setActiveTab: any;
     TAB_COMPONENTS: any
 }){
-    const [activeTab, setTab] = React.useState(active);
     const [isResizing, setIsResizing] = React.useState(false);
     const [initialX, setInitialX] = React.useState(0);
   
     React.useEffect(() => {
-      console.log(panelWidth)
       if(panelWidth < 270){
         setShowPanel(false)
         setPanelWidth(350)
@@ -135,7 +136,7 @@ export function PanelInner({
         document.removeEventListener("mousemove", handleMouseMove);
         document.removeEventListener("mouseup", handleMouseUp);
       };
-    }, [isResizing, initialX, panelWidth, setPanelWidth, side]);
+    }, [isResizing, initialX, panelWidth, setPanelWidth]);
   
     const handleMouseDown = (e) => {
       setIsResizing(true);
@@ -165,7 +166,7 @@ export function PanelInner({
                 <TabList
                     tabOrder={tabOrder}
                     activeTab={activeTab}
-                    setTab={setTab}
+                    setActiveTab={setActiveTab}
                 />
                 <ActiveTab activeTab={activeTab} panelWidth={panelWidth} TAB_COMPONENTS={TAB_COMPONENTS}/>                
             </div>

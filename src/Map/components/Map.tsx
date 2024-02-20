@@ -28,6 +28,7 @@ export default function MapComponent() {
   const dispatch = useAppDispatch();
 
   const mapStyle = useAppSelector((state) => state.mapStyleReducer.layer);
+  
   const layers = useAppSelector((state) => state.layersReducer.layers);
 
   const selectionState = useAppSelector((state) => state.arcReducer)

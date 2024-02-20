@@ -1,3 +1,4 @@
+import { TabOption } from "@/Map/components/PanelTabMap";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type panelSlice = {
@@ -7,6 +8,7 @@ type panelSlice = {
     applyTransition: boolean;
     activePanel: any;
     activeSubPanel: any;
+    activeTab: any
 };
 
 const initialState: panelSlice = {
@@ -16,6 +18,7 @@ const initialState: panelSlice = {
     applyTransition : false,
     activePanel : null,
     activeSubPanel : null,
+    activeTab: TabOption.Tab1
 };
 
 export const panelSlice = createSlice({
@@ -40,11 +43,14 @@ export const panelSlice = createSlice({
     setActiveSubPanel: (state, action: PayloadAction<any>) => {
         state.activeSubPanel = state.activeSubPanel === action.payload ? null : action.payload;
     },
+    setActiveTab: (state, action: PayloadAction<any>) => {
+        state.activeTab = action.payload;
+    },
   },
 });
 
 export const {
-    setShowPanel, setPanelWidth, setScreenWidth, setApplyTransition, setActivePanel, setActiveSubPanel
+    setShowPanel, setPanelWidth, setScreenWidth, setApplyTransition, setActivePanel, setActiveSubPanel, setActiveTab
 } = panelSlice.actions;
 
 export default panelSlice.reducer;
