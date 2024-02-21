@@ -137,7 +137,7 @@ export default function MapComponent() {
         onLoad={onMapLoad}
         initialViewState={INITIAL_VIEW_STATE}
         mapLib={maplibregl} 
-        style={{ width: panelReducer.showPanel ? `${parseInt(panelReducer.screenWidth.toString()) - panelReducer.panelWidth}px` : "100vw", height: "100vh", transition: panelReducer.applyTransition ? "" : ""
+        style={{ width: panelReducer.showPanel ? `${parseInt(panelReducer.screenWidth.toString()) - panelReducer.panelWidth}px` : "100vw", height: "100vh", transition: panelReducer.applyTransition ? "width 0.5s ease" : ""
       }}>
         
         {layers.length !== 0 && layers.map((layer) => layer)}

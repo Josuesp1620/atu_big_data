@@ -8,6 +8,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "ATU | Autoridad de Transporte Urbano para Lima y Callao",
   description: "ATU | Autoridad de Transporte Urbano para Lima y Callao",
+  icons: "/atu.ico"
 };
 
 export default function RootLayout({
