@@ -7,6 +7,9 @@ import { EraserIcon, GearIcon, HomeIcon, PersonIcon, QuestionMarkCircledIcon } f
 import { clsx } from "clsx";
 import React from "react";
 import { TabOption } from "./PanelTabMap";
+import { resetCheckedStates } from "@/redux/features/layersGeoserver";
+import { removeAllLayersDeck } from "@/redux/features/layersDeckSlice";
+import { removeAllLayers } from "@/redux/features/layersSlice";
 
 export default function HeaderMapComponent() {
 
@@ -85,7 +88,11 @@ export default function HeaderMapComponent() {
                     </svg>
                     Perfil de viajero
                 </E.Button>
-                <E.Button size="md" variant="primary" onClick={cleanMap}>
+                <E.Button size="md" variant="primary" onClick={()=> {
+                    dispatch(resetCheckedStates());
+                    dispatch(removeAllLayersDeck())
+                    dispatch(removeAllLayers())
+                }}>
                     <EraserIcon></EraserIcon>
                     Limpiar Mapa
                 </E.Button>

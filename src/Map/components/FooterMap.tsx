@@ -1,31 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
 import * as E from "@/components/elements";
-import { mapLayersStyleGeoserver } from '../constants/map.style.layers';
 import { removeAllLayersDeck } from "@/redux/features/layersDeckSlice";
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { addLayers, removeLayer } from '@/redux/features/layersSlice';
 import {Source, Layer} from 'react-map-gl';
 import { clsx } from 'clsx';
+import { setCheckedStates } from '@/redux/features/layersGeoserver';
 
 export default function FooterMapComponent() {
-  const [checkedStates, setCheckedStates] = useState(mapLayersStyleGeoserver);
-
   const selectionState = useAppSelector((state) => state.arcReducer);
 
   const panelReducer = useAppSelector((state) => state.panelReducer);
 
+  const layersGeoserver = useAppSelector((state) => state.layersGeoserverReducer);
+
   const dispatch = useAppDispatch();
 
   const isAnyCheckboxChecked = () => {
-    return Object.values(checkedStates).some(state => state.state);
+    return Object.values(layersGeoserver).some((state : any) => state.state);
   };
 
   const handleCheckboxChange = (name, checked) => {
-    const newState = { ...checkedStates };
-    newState[name].state = checked;
-    setCheckedStates(newState);
-
-    const layerDetails = newState[name];
+    dispatch(setCheckedStates({name, checked}))
+    const layerDetails = layersGeoserver[name];
 
     if (checked && layerDetails.layer) { 
       const layerNew = 
@@ -56,7 +53,7 @@ export default function FooterMapComponent() {
 
     <div className={clsx('footer-component',{ 'move-margin-right': parseInt(panelReducer.screenWidth.toString()) < 1370 })}>
       <div className="flex items-center justify-center gap-2">
-        {Object.entries(checkedStates).map(([name, { state, label }]) => (
+        {Object.entries(layersGeoserver).map(([name, { state, label }]) => (
           <E.Button key={name} size="md" variant="custom">
             <label>
               <input
@@ -73,9 +70,7 @@ export default function FooterMapComponent() {
         ))}
       </div>
     </div>
-
-    {/* <CleanMapControl checkedStates={checkedStates}  setCheckedStates={setCheckedStates}/> */}
-
+    
     </>
   );
 }
