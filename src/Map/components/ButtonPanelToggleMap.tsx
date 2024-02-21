@@ -1,5 +1,5 @@
 import { PanelToggle } from "@/components/PanelToggle";
-import { resetActiveTab, setApplyTransition, setPanelWidth, setShowPanel } from "@/redux/features/panelSlice";
+import { setApplyTransition, setPanelWidth, setShowPanel } from "@/redux/features/panelSlice";
 import { setActivePanel } from "@/redux/features/panelSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 

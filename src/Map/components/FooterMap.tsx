@@ -9,7 +9,7 @@ import {Source, Layer} from 'react-map-gl';
 export default function FooterMapComponent() {
   const [checkedStates, setCheckedStates] = useState(mapLayersStyleGeoserver);
 
-  const selectionState = useAppSelector((state) => state.arcReducer)
+  const selectionState = useAppSelector((state) => state.arcReducer);
 
   const dispatch = useAppDispatch();
 
