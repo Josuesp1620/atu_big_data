@@ -1,4 +1,5 @@
 "use client"
+import Image from 'next/image';
 import React from 'react';
 
 export default function Header() {
@@ -8,7 +9,7 @@ export default function Header() {
     <nav className="bg-white border-gray-200 dark:bg-gray-900">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-8">
         <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-            <img src="/img/logo.png" className="h-8" alt="ATU" />
+            <Image src="/img/logo.png" className="h-8" alt="ATU" />
         </a>
         <button 
           data-collapse-toggle="navbar-default" 

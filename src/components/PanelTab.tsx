@@ -136,7 +136,7 @@ export function PanelInner({
         document.removeEventListener("mousemove", handleMouseMove);
         document.removeEventListener("mouseup", handleMouseUp);
       };
-    }, [isResizing, initialX, panelWidth, setPanelWidth]);
+    }, [isResizing, initialX, panelWidth, setPanelWidth, setShowPanel, side]);
   
     const handleMouseDown = (e) => {
       setIsResizing(true);

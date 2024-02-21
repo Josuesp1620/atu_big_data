@@ -1,5 +1,6 @@
 import { StyledLabelSpan, styledCheckbox } from "@/components/elements";
 import { BackpackIcon, CalendarIcon, ClockIcon, HomeIcon, PersonIcon } from "@radix-ui/react-icons";
+import Image from "next/image";
 
 export const collapsibleSubTitles = [
     {
@@ -363,7 +364,7 @@ export const collapsibleSubTitles = [
         id: "sub-006",
         title: "Genero:",
         icon: (
-            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAABVklEQVR4nK3Uu0oeURSG4UcSCEhEu4BgIwQVD3jstPOEvTamD+gN2KkEIgg2tp7AA3gDaqk2MZ14Si7CWxAiG5awGXT+wT8vTLH23vPNWt9ae3g/bRjKnj51soo/eMK/eLr8B0bwGILdVV/qxA8cYRNTsd6D+xB9qiq4gl+YD68msYvTEOuJcw9VBBexjw+v7M3ipPDh1jKxT2F6I5reOLOHCRVowBi2Il7DBfoL56bD01KWo9QZrGfrvbjFQLY2iIMysa5owEe0Fzx6Eb3M4m/hXemwfs/iyxDJSd39Gh7foaNMMKU/nMWpvJuC6EbMYfJvSQ02Y85y+qIhxxFvY1RFZrDzxl6asc/4G+WqOi7nmHtlLzXqEAu1RFpwhS/Z3TyLoZ2K65a6+TtGqhLTuC7czXH8jB/Caq1uKpBEkjdJNGVaF81ZZinTVH5dpEYk0ReSp+/mGTslPQRpgq07AAAAAElFTkSuQmCC"></img>
+            <Image src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAABVklEQVR4nK3Uu0oeURSG4UcSCEhEu4BgIwQVD3jstPOEvTamD+gN2KkEIgg2tp7AA3gDaqk2MZ14Si7CWxAiG5awGXT+wT8vTLH23vPNWt9ae3g/bRjKnj51soo/eMK/eLr8B0bwGILdVV/qxA8cYRNTsd6D+xB9qiq4gl+YD68msYvTEOuJcw9VBBexjw+v7M3ipPDh1jKxT2F6I5reOLOHCRVowBi2Il7DBfoL56bD01KWo9QZrGfrvbjFQLY2iIMysa5owEe0Fzx6Eb3M4m/hXemwfs/iyxDJSd39Gh7foaNMMKU/nMWpvJuC6EbMYfJvSQ02Y85y+qIhxxFvY1RFZrDzxl6asc/4G+WqOi7nmHtlLzXqEAu1RFpwhS/Z3TyLoZ2K65a6+TtGqhLTuC7czXH8jB/Caq1uKpBEkjdJNGVaF81ZZinTVH5dpEYk0ReSp+/mGTslPQRpgq07AAAAAElFTkSuQmCC" alt="logo_gender"/>
         ),
         children: (
             <>

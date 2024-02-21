@@ -10,6 +10,7 @@ import { TabOption } from "./PanelTabMap";
 import { resetCheckedStates } from "@/redux/features/layersGeoserver";
 import { removeAllLayersDeck } from "@/redux/features/layersDeckSlice";
 import { removeAllLayers } from "@/redux/features/layersSlice";
+import Image from "next/image";
 
 export default function HeaderMapComponent() {
 
@@ -67,11 +68,11 @@ export default function HeaderMapComponent() {
                 { 'flex': isLargeScreen}
                 )}>
             <a target="_blank" href="https://www.gob.pe/mtc">
-                <img src="/img/mapa/mtc.png" alt="Logo MTC" style={{ height: "35px" }} />
+                <Image src="/img/mapa/mtc.png" alt="Logo MTC" style={{ height: "35px" }} />
             </a>
 
             <a target="_blank" href="https://www.atu.gob.pe/">
-            <img src="/img/mapa/logoatte.png" alt="Logo ATU" 
+            <Image src="/img/mapa/logoatte.png" alt="Logo ATU" 
                 style={{ height: "30px", margin: isLargeScreen ? "5px" : "", marginLeft: isLargeScreen ? "" : "-10px", marginTop: isLargeScreen ? "" : "5px"}}
             />            
             </a>
@@ -93,19 +94,19 @@ export default function HeaderMapComponent() {
                     dispatch(removeAllLayersDeck())
                     dispatch(removeAllLayers())
                 }}>
-                    <EraserIcon></EraserIcon>
+                    <EraserIcon />
                     Limpiar Mapa
                 </E.Button>
                 <E.Button size="md" variant="primary">
-                    <HomeIcon></HomeIcon>
+                    <HomeIcon />
                     Portada
                 </E.Button>
                 <E.Button size="md" variant="primary"  onClick={()=> openSidePanelTab(TabOption.Support)}>
-                    <QuestionMarkCircledIcon></QuestionMarkCircledIcon>
+                    <QuestionMarkCircledIcon />
                     Ayuda
                 </E.Button>
                 <E.Button size="md" variant="primary" onClick={()=> openSidePanelTab(TabOption.Support)}>
-                    <GearIcon></GearIcon>
+                    <GearIcon />
                     Soporte
                 </E.Button>
             </div>

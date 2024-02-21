@@ -116,7 +116,7 @@ export default function MapComponent() {
       dispatch(removeAllLayersDeck())
       dispatch(addLayersDeck([arcInstance]))
     }
-  }, [selectionState]);
+  }, [selectionState, dispatch, layers]);
   
   const onMapLoad = React.useCallback(() => {
     const attributionControl = document.querySelector('.maplibregl-ctrl-attrib-inner');
