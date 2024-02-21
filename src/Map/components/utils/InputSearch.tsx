@@ -78,7 +78,7 @@ export function InputSearch({ label, disable=false, placeholder='' }: { label: s
                 </div>
                 <div className="result-search">
                     {showResult.length > 0 && (
-                        <ul className="absolute z-10 bg-white border border-gray-100 rounded w-full shadow-lg">
+                        <ul className="absolute z-50 bg-white border border-gray-100 rounded w-full shadow-lg">
                             {renderListItems("macrozonas", data_input.macrozonas.title)}
                             {renderListItems("distrito", data_input.distrito.title)}
                             {renderListItems("sectores", data_input.sectores.title)}
