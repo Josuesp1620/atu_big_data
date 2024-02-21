@@ -5,11 +5,14 @@ import { removeAllLayersDeck } from "@/redux/features/layersDeckSlice";
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { addLayers, removeLayer } from '@/redux/features/layersSlice';
 import {Source, Layer} from 'react-map-gl';
+import { clsx } from 'clsx';
 
 export default function FooterMapComponent() {
   const [checkedStates, setCheckedStates] = useState(mapLayersStyleGeoserver);
 
   const selectionState = useAppSelector((state) => state.arcReducer);
+
+  const panelReducer = useAppSelector((state) => state.panelReducer);
 
   const dispatch = useAppDispatch();
 
@@ -51,7 +54,7 @@ export default function FooterMapComponent() {
 
     
 
-    <div className="footer-component">
+    <div className={clsx('footer-component',{ 'move-margin-right': parseInt(panelReducer.screenWidth.toString()) < 1370 })}>
       <div className="flex items-center justify-center gap-2">
         {Object.entries(checkedStates).map(([name, { state, label }]) => (
           <E.Button key={name} size="md" variant="custom">

@@ -55,22 +55,26 @@ export default function HeaderMapComponent() {
         }
     }
 
+    const isLargeScreen = parseInt(panelReducer.screenWidth.toString()) - panelReducer.panelWidth > 1290;
+
     return (
         <div className="absolute flex items-center justify-between z-50" style={{width:"100%"}}>
              <div className={clsx(
                 'pt-2 z-50 mx-3',
-                { 'flex': parseInt(panelReducer.screenWidth.toString()) - panelReducer.panelWidth > 1290 }
+                { 'flex': isLargeScreen}
                 )}>
             <a target="_blank" href="https://www.gob.pe/mtc">
                 <img src="/img/mapa/mtc.png" alt="Logo MTC" style={{ height: "35px" }} />
             </a>
 
             <a target="_blank" href="https://www.atu.gob.pe/">
-                <img src="/img/mapa/logoatte.png" alt="Logo ATU" style={{ height: "30px", margin: "5px" }}/>
+            <img src="/img/mapa/logoatte.png" alt="Logo ATU" 
+                style={{ height: "30px", margin: isLargeScreen ? "5px" : "", marginLeft: isLargeScreen ? "" : "-10px", marginTop: isLargeScreen ? "" : "5px"}}
+            />            
             </a>
             </div>
 
-            <div className={clsx('flex items-center z-50 buttons-center ',{ 'move-margin-right': parseInt(panelReducer.screenWidth.toString()) < 1290 })}>
+            <div className={clsx('flex items-center z-50 buttons-center ',{ 'move-margin-right': parseInt(panelReducer.screenWidth.toString()) < 1370 })}>
                 <E.Button size="md" variant="primary" className="mr-2" onClick={() => openSidePanelOption("Seleccionar las Líneas de Deseo")}>
                     <PersonIcon></PersonIcon>
                     Análisis de viajes
