@@ -6,16 +6,13 @@ import { TrashIcon } from "@radix-ui/react-icons";
 import { useAppDispatch } from "@/redux/hooks";
 import { removeAllLayersDeck } from "@/redux/features/layersDeckSlice";
 import { removeAllLayers } from "@/redux/features/layersSlice";
+import { resetCheckedStates } from "@/redux/features/layersGeoserver";
 
-export default function CleanMapControl({checkedStates, setCheckedStates}) {
+export default function CleanMapControl() {
   const dispatch = useAppDispatch();
 
     const cleanMap = () => {
-      const newState = { ...checkedStates };
-      for (const key in newState) {
-        newState[key].state = false;
-      }
-      setCheckedStates(newState);
+      dispatch(resetCheckedStates());
       dispatch(removeAllLayersDeck())
       dispatch(removeAllLayers())
     }
