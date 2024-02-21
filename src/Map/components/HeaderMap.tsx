@@ -68,17 +68,17 @@ export default function HeaderMapComponent() {
                 { 'flex': isLargeScreen}
                 )}>
             <a target="_blank" href="https://www.gob.pe/mtc">
-                <Image src="/img/mapa/mtc.png" alt="Logo MTC" style={{ height: "35px" }} />
+                <Image src="/img/mapa/mtc.png" alt="Logo MTC" width={150} height={35} />
             </a>
 
             <a target="_blank" href="https://www.atu.gob.pe/">
-            <Image src="/img/mapa/logoatte.png" alt="Logo ATU" 
+            <Image src="/img/mapa/logoatte.png" alt="Logo ATU" width={150} height={30}
                 style={{ height: "30px", margin: isLargeScreen ? "5px" : "", marginLeft: isLargeScreen ? "" : "-10px", marginTop: isLargeScreen ? "" : "5px"}}
             />            
             </a>
             </div>
 
-            <div className={clsx('flex items-center z-50 buttons-center ',{ 'move-margin-right': parseInt(panelReducer.screenWidth.toString()) < 1370 })}>
+            <div className={clsx('flex items-center z-50 buttons-center',{ 'move-margin-right': !isLargeScreen })}>
                 <E.Button size="md" variant="primary" className="mr-2" onClick={() => openSidePanelOption("Seleccionar las Líneas de Deseo")}>
                     <PersonIcon></PersonIcon>
                     Análisis de viajes
