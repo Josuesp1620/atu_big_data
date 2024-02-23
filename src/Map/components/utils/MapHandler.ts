@@ -3,7 +3,7 @@ import axios from "axios";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { addLayersDeck, removeAllLayersDeck } from "@/redux/features/layersDeckSlice";
 import { setSelectionState } from "@/redux/features/arcSlice";
-import { ArcLayer } from "@deck.gl/layers/typed";
+import { ArcLayer, IconLayer } from "@deck.gl/layers/typed";
 import { useMap } from 'react-map-gl/maplibre';
 import * as turf from '@turf/turf';
 
@@ -58,7 +58,10 @@ const MapHandler = () => {
       })));    
     }
   }
-
+  const ICON_MAPPING = {
+    marker: {x: 0, y: 0, width: 128, height: 128, mask: true}
+  };
+  
   React.useEffect(() => {
     const map = mapRef.getMap();
     if (selectionState.source !== null && selectionState.target !== null ) {
@@ -74,6 +77,22 @@ const MapHandler = () => {
       map.setPaintProperty(layerId, 'line-color', '#94F14B');
 
       const dataArc : any = { type: 'FeatureCollection', features: [selectionState.source, selectionState.target]};
+      console.log(dataArc)
+      const iconLayer = new IconLayer({
+        id: 'icon-layer',
+        data: dataArc,
+        pickable: true,
+        iconAtlas: 'http://37.60.239.85:3002/marker_arrow.png',
+        iconMapping: ICON_MAPPING,
+        getIcon: f => 'marker',
+        dataTransform: ( d : any ) =>
+           d.features.filter(( f : any ) => f && f.properties && f.id != selectionState.source.id),
+        sizeScale: 15,
+        getPosition: f => f.properties.centroid,
+        getSize: f => 5,
+        getColor: d => [Math.sqrt(d.inbound), 140, 0]
+      });
+
       const arcInstance = new ArcLayer({
         id: "arc-layer",
         data: dataArc,
@@ -89,7 +108,7 @@ const MapHandler = () => {
       });
       
       dispatch(removeAllLayersDeck())
-      dispatch(addLayersDeck([arcInstance]))
+      dispatch(addLayersDeck([iconLayer, arcInstance]))
     }
 
     map.on('click', handleMapClick);
