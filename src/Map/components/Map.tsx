@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { PanelInnerMap } from "./PanelTabMap";
 import { ButtonPanelToggleMap } from "./ButtonPanelToggleMap";
 import { setScreenWidth } from "@/redux/features/panelSlice";
-import MapHandler from "./helpers/MapHandler";
+import MapHandler from "./utils/MapHandler";
 
 export default function MapComponent() {
   const mapRef = React.useRef(null);
