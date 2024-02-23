@@ -1,11 +1,11 @@
 import React from 'react';
+import axios from "axios";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { addLayersDeck, removeAllLayersDeck } from "@/redux/features/layersDeckSlice";
 import { setSelectionState } from "@/redux/features/arcSlice";
 import { ArcLayer } from "@deck.gl/layers/typed";
 import { useMap } from 'react-map-gl/maplibre';
 import * as turf from '@turf/turf';
-import { fetchFeatures } from './mapHelpers';
 
 const MapHandler = () => {
   const {current: mapRef} = useMap();
@@ -18,9 +18,11 @@ const MapHandler = () => {
     const map = mapRef.getMap();
     const layerId = `${layers.at(-1)?.props.name}-selected-outline`
 
-
+    
     const lngLat = e.lngLat;
-    const response : any = fetchFeatures(layers, lngLat)
+
+    const wfsUrl = `http://200.121.128.47:8080/geoserver/atu_vt/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=atu_vt:${layers.at(-1)?.props.name}&outputFormat=application%2Fjson&CQL_FILTER=INTERSECTS(geom,POINT(${lngLat.lng} ${lngLat.lat}))`;
+    const response = await axios.get(wfsUrl);
 
     const featureCollection = response.data as turf.FeatureCollection;
     
@@ -95,7 +97,7 @@ const MapHandler = () => {
     return () => {
       map.off('click', handleMapClick);
     };
-  }, [selectionState, layers, mapRef, dispatch]);
+  }, [selectionState, layers]);
 
   return null;
 };
