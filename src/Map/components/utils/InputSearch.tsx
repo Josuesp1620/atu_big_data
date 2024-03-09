@@ -3,11 +3,19 @@ import { StyledLabelSpan, inputClass } from "@/components/elements";
 import Fuse from 'fuse.js';
 import { data_input } from "@/Map/constants/input.data.constants";
 import { clsx } from "clsx";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { setLineasDeseo } from "@/redux/features/analyticsSlice";
+import {Source, Layer} from 'react-map-gl';
+import { addLayers, removeAllLayers, removeLayer } from "@/redux/features/layersSlice";
+import { removeAllLayersDeck } from "@/redux/features/layersDeckSlice";
 
-export function InputSearch({ label, disable=false, placeholder='' }: { label: string, disable?: boolean, placeholder?: string }) {
+export function InputSearch({ label, disable=false, placeholder='', type='' }: { label: string, disable?: boolean, placeholder?: string, type?: string }) {
     const [value, setValue] = React.useState("");
+    const dispatch = useAppDispatch();
 
     const [showResult, setShowResult] = React.useState([]);
+
+    const layersGeoserver = useAppSelector((state) => state.layersGeoserverReducer);
 
     const fuseOptions = {
         includeScore: true,
@@ -15,9 +23,26 @@ export function InputSearch({ label, disable=false, placeholder='' }: { label: s
         threshold: 0.3,
     };
 
-    const handleOptionClick = (item) => {
+    const handleOptionClick = (item, type) => {
         setValue(item.denominacion);
+        console.log(item)
         setShowResult([]);
+        dispatch(setLineasDeseo({[type === 'source' ? 'source_id' : 'target_id']: parseInt(item.id)}))
+
+        const layerDetails = layersGeoserver[item.tipo];
+        dispatch(removeAllLayers())
+        dispatch(removeAllLayersDeck())
+        
+        if (layerDetails.layer) { 
+          const layerNew = 
+          <Source  key={layerDetails.id} id={layerDetails.id} type="vector"  scheme="tms" name={layerDetails.layer} tiles={[`http://200.121.128.47:8080/geoserver/gwc/service/tms/1.0.0/atu_vt:${layerDetails.layer}@EPSG%3A900913@pbf/{z}/{x}/{y}.pbf`]}>
+            <Layer {...layerDetails.fillStyle} />
+            <Layer {...layerDetails.lineStyle} />
+            <Layer {...layerDetails.labelLayer}/>
+            <Layer {...layerDetails.selecterdLineStyle}  filter={['==',layerDetails.filter,'',]} />
+          </Source>;
+          dispatch(addLayers(layerNew))
+        }
     };
     
     const handleOnchangeInput = (event) => {
@@ -26,14 +51,14 @@ export function InputSearch({ label, disable=false, placeholder='' }: { label: s
 
         const searchInType = (typeData) => {
             const fuse = new Fuse(typeData.data, fuseOptions);
-            return fuse.search(value).slice(0, 5).map((result: any) => ({...result.item, type: typeData.title}));
+            return fuse.search(value).slice(0, 5).map((result: any) => ({...result.item, type: typeData.tipo}));
         };
 
         const combinedResults = [
             ...searchInType(data_input.macrozonas),
             ...searchInType(data_input.distrito),
-            ...searchInType(data_input.sectores),
-            ...searchInType(data_input.microsectores)
+            ...searchInType(data_input.mesozonas),
+            ...searchInType(data_input.microzonas)
         ];
         setShowResult(combinedResults);
     };
@@ -47,7 +72,7 @@ export function InputSearch({ label, disable=false, placeholder='' }: { label: s
                     <li
                         key={index}
                         className="py-1 px-2 hover:bg-gray-100 cursor-pointer text-xs"
-                        onClick={() => handleOptionClick(item)}
+                        onClick={() => handleOptionClick(item, type)}
                     >
                         {item.denominacion}
                     </li>
@@ -81,8 +106,8 @@ export function InputSearch({ label, disable=false, placeholder='' }: { label: s
                         <ul className="absolute z-50 bg-white border border-gray-100 rounded w-full shadow-lg">
                             {renderListItems("macrozonas", data_input.macrozonas.title)}
                             {renderListItems("distrito", data_input.distrito.title)}
-                            {renderListItems("sectores", data_input.sectores.title)}
-                            {renderListItems("microsectores", data_input.microsectores.title)}
+                            {renderListItems("mesozonas", data_input.mesozonas.title)}
+                            {renderListItems("microzonas", data_input.microzonas.title)}
                         </ul>
                     )}
                 </div>

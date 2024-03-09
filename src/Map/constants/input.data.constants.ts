@@ -1,7 +1,7 @@
 import distritos from "../data/distritos.json"
 import macrozonas from "../data/macrozonas.json"
-import sectores from "../data/sectores.json"
-import microsectores from "../data/microsectores.json"
+import mesozonas from "../data/sectores.json"
+import microzonas from "../data/microsectores.json"
 
 export const data_input = {
     macrozonas: {
@@ -15,15 +15,15 @@ export const data_input = {
         data: distritos,
         title: 'Distritos'
     },
-    sectores: {
-        id: "sectores", 
-        data: sectores,
+    mesozonas: {
+        id: "mesozonas", 
+        data: mesozonas,
         title: 'Mesozonas'
         
     },
-    microsectores: {
-        id: "microsectores", 
-        data: microsectores,
+    microzonas: {
+        id: "microzonas", 
+        data: microzonas,
         title: 'Microzonas'
         
     }

@@ -93,10 +93,10 @@ export function LineasDeseo() {
         </div>
 
         <div>
-            <InputSearch label={"Origen"} placeholder={"Ingrese Origen"} disable={lineasDeseo.inputSource.disable} />
+            <InputSearch label={"Origen"} placeholder={"Ingrese Origen"} disable={lineasDeseo.inputSource.disable} type={'source'}/>
         </div>
         <div>
-            <InputSearch label={"Destino"} placeholder={"Ingrese Destino"} disable={lineasDeseo.inputTarget.disable} />
+            <InputSearch label={"Destino"} placeholder={"Ingrese Destino"} disable={lineasDeseo.inputTarget.disable} type={'target'}/>
         </div>
     </>
     )
