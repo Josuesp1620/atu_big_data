@@ -4,13 +4,18 @@ interface AnalyticsState {
   perfil_viajero : {
     horario: string[],
     edad: string[],
-    nivel_s_e: string[],
+    nse: string[],
     tipo_dia: string[],
-    motivo_viaje: string[],
-    genero: string[] | null
+    motivo: string[],
+    genero: string[],
+    modo: string[]
   },
   lineas_deseo : {
     type: string | null,
+    type_source: string | null,
+    type_target: string | null,
+    value_source: string | null,
+    value_target: string | null,
     source_id : number | null,
     target_id: number | null,
   },
@@ -24,13 +29,18 @@ const initialState: AnalyticsState = {
   perfil_viajero : {
     horario: [],
     edad: [],
-    nivel_s_e: [],
+    nse: [],
     tipo_dia: [],
-    motivo_viaje: [],
+    motivo: [],
     genero: [],
+    modo: [],
   },
   lineas_deseo : {
     type: null,
+    type_source: null,
+    type_target: null,
+    value_source: null,
+    value_target: null,
     source_id : null,
     target_id: null,
   },
@@ -57,8 +67,8 @@ export const AnalyticsSlice = createSlice({
     },
     resetAnalytics : (state) => {
       state.perfil_viajero = initialState.perfil_viajero
-      state.perfil_viajero = initialState.perfil_viajero
-      state.perfil_viajero = initialState.perfil_viajero
+      state.lineas_deseo = initialState.lineas_deseo
+      state.periodo_estudio = initialState.periodo_estudio
     }
   },
 });

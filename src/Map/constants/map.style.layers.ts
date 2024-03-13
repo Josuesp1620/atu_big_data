@@ -4,7 +4,7 @@ export const mapLayersStyleGeoserver = {
     state: false,
     layer: "macrozonas",
     label: "Macrozonas",
-    filter:"nom_macro",
+    filter:"taz",
     fillStyle : {
       id: "macrozonas-fill",
       type: "fill",
@@ -40,7 +40,7 @@ export const mapLayersStyleGeoserver = {
       source: "macrozonas",
       "source-layer": "macrozonas",
       layout: {
-        "text-field": "{nom_macro}",
+        "text-field": "{name}",
         "text-font": ["Open Sans Regular", "Arial Unicode MS Regular"],
         "text-ignore-placement": true
       },
@@ -60,47 +60,47 @@ export const mapLayersStyleGeoserver = {
   mesozonas: {
     id:"vt_mesozonas",
     state: false,
-    layer: "sector160v2",
+    layer: "mesozonas",
     label: "Mesozonas",
-    filter:"sector_160",
+    filter:"taz",
     fillStyle : {
-      id: "sector160v2-fill",
+      id: "mesozonas-fill",
       type: "fill",
-      source: "sector160v2",
-      "source-layer": "sector160v2",
+      source: "mesozonas",
+      "source-layer": "mesozonas",
       paint: {
         "fill-color": "rgba(226, 244, 195, 0)",
       }
     },
     lineStyle : {
-      id: "sector160v2-outline",
+      id: "mesozonas-outline",
       type: "line",
-      source: "sector160v2",
-      "source-layer": "sector160v2",
+      source: "mesozonas",
+      "source-layer": "mesozonas",
       paint: {
         "line-color": "#D6BBBB",
         "line-width": 1
       }
     },
     selecterdLineStyle : {
-      id: "sector160v2-selected-outline",
+      id: "mesozonas-selected-outline",
       type: "line",
-      source: "sector160v2",
-      "source-layer": "sector160v2",
+      source: "mesozonas",
+      "source-layer": "mesozonas",
       paint: {
         "line-color": "#94F14B",
         "line-width": 3
       }
     },
     labelLayer : {
-      id: "sector160v2-label",
+      id: "mesozonas-label",
       type: "symbol",
-      source: "sector160v2",
-      "source-layer": "sector160v2",
+      source: "mesozonas",
+      "source-layer": "mesozonas",
       layout: {
-        "text-field": "{sector_160}",
+        "text-field": "{taz}",
         "text-font": ["Open Sans Regular", "Arial Unicode MS Regular"],
-        "text-ignore-placement": true
+        "text-ignore-placement": true,
       },
       paint: {
         "text-color": "#D319CD",
@@ -112,45 +112,45 @@ export const mapLayersStyleGeoserver = {
   microzonas: {
     id:"vt_microzonas",
     state: false,
-    layer: "sector335",
+    layer: "microzonas",
     label: "Microzonas",
-    filter:"zone_id",
+    filter:"taz",
     fillStyle : {
-      id: "sector335-fill",
+      id: "microzonas-fill",
       type: "fill",
-      source: "sector335",
-      "source-layer": "sector335",
+      source: "microzonas",
+      "source-layer": "microzonas",
       paint: {
         "fill-color": "rgba(226, 244, 195, 0)",
       }
     },
     lineStyle : {
-      id: "sector335-outline",
+      id: "microzonas-outline",
       type: "line",
-      source: "sector335",
-      "source-layer": "sector335",
+      source: "microzonas",
+      "source-layer": "microzonas",
       paint: {
         "line-color": "#EC3F3F",
         "line-width": 2
       }
     },
     selecterdLineStyle : {
-      id: "sector335-selected-outline",
+      id: "microzonas-selected-outline",
       type: "line",
-      source: "sector335",
-      "source-layer": "sector335",
+      source: "microzonas",
+      "source-layer": "microzonas",
       paint: {
         "line-color": "#94F14B",
         "line-width": 3
       }
     },
     labelLayer : {
-      id: "sector335-label",
+      id: "microzonas-label",
       type: "symbol",
-      source: "sector335",
-      "source-layer": "sector335",
+      source: "microzonas",
+      "source-layer": "microzonas",
       layout: {
-        "text-field": "{zone_id}",
+        "text-field": "{taz}",
         "text-font": ["Open Sans Regular", "Arial Unicode MS Regular"],
         "text-ignore-placement": true
       },

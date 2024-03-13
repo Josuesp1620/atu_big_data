@@ -23,8 +23,8 @@ export const arcSlice = createSlice({
     },
     resetArc: (state) => {
         state.isSourceSelected = false;
-        state.source = [];
-        state.target = [];
+        state.source = null;
+        state.target = null;
     }
   },
 });
