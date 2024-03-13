@@ -35,6 +35,9 @@ export default function MapComponent() {
     }    
   }, []);
 
+  const [hoverInfo, setHoverInfo] = React.useState<any>(null);
+
+
   return (
     <>
       {panelReducer.showPanel && <PanelInnerMap />}
@@ -50,11 +53,18 @@ export default function MapComponent() {
         {layers.length !== 0 && layers.map((layer) => layer)}
         <HeaderMapComponent />
         <DeckGlComponent />
+        {hoverInfo  !== null && hoverInfo.object && (
+        <div style={{position: 'absolute', zIndex: 1, pointerEvents: 'none', left: hoverInfo.x, top: hoverInfo.y, background: "gray"}}>
+          ------------------
+          { hoverInfo.object }
+          ------------------
+        </div>
+      )}
         <NavigationControl position="bottom-right" />
         <ScaleControl />
         <FooterMapComponent />
         <ButtonPanelToggleMap />
-        <MapHandler/>
+        <MapHandler setHoverInfo={setHoverInfo}/>
 
       </Map>
       
