@@ -8,14 +8,14 @@ export default function MotivoViaje() {
     const analytics = useAppSelector((state) => state.analyticsReducer.perfil_viajero);
 
     const onChange = (value) => {
-        const list_motivo_viaje = analytics.motivo_viaje
-        const updatedMotivoViajeList = list_motivo_viaje.includes(value)
-        ? list_motivo_viaje.filter((motivo_viaje) => motivo_viaje !== value)
-        : [...list_motivo_viaje, value];
+        const list_motivo = analytics.motivo
+        const updatedMotivoViajeList = list_motivo.includes(value)
+        ? list_motivo.filter((motivo) => motivo !== value)
+        : [...list_motivo, value];
         
         dispatch(
             setPerfilViajero({
-            motivo_viaje: updatedMotivoViajeList,
+            motivo: updatedMotivoViajeList,
             })
         );  
     }
@@ -27,9 +27,9 @@ export default function MotivoViaje() {
                         <input
                         type="checkbox"
                         name="source_to_target_checkbox"
-                        checked={analytics.motivo_viaje.includes("A Casa")}
+                        checked={analytics.motivo.includes("A casa")}
                         className={styledCheckbox({ variant: "default" })}
-                        onChange={(e) => {onChange("A Casa")}}
+                        onChange={(e) => {onChange("A casa")}}
                         />
                     </div>
 
@@ -38,9 +38,9 @@ export default function MotivoViaje() {
                         <input
                         type="checkbox"
                         name="from_source_checkbox"
-                        checked={analytics.motivo_viaje.includes("A Trabajo")}
+                        checked={analytics.motivo.includes("A trabajo")}
                         className={styledCheckbox({ variant: "default" })}
-                        onChange={(e) => {onChange("A Trabajo")}}
+                        onChange={(e) => {onChange("A trabajo")}}
                         />
                     </div>
                     <div className="py-1 whitespace-nowrap flex justify-between">
@@ -48,7 +48,7 @@ export default function MotivoViaje() {
                         <input
                         type="checkbox"
                         name="from_target_checkbox"
-                        checked={analytics.motivo_viaje.includes("Otros")}
+                        checked={analytics.motivo.includes("Otros")}
                         className={styledCheckbox({ variant: "default" })}
                         onChange={(e) => {onChange("Otros")}}
                         />

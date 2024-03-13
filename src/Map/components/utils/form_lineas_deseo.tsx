@@ -1,9 +1,13 @@
 import { InputSearch } from "@/Map/components/utils/InputSearch"
 import { StyledLabelSpan, styledCheckbox } from "@/components/elements"
+import { setLineasDeseo } from "@/redux/features/analyticsSlice";
+import { useAppDispatch } from "@/redux/hooks";
 import React from "react"
 
 export function LineasDeseo() {
-    const [lineasDeseo, setLineasDeseo] = React.useState({
+    const dispatch = useAppDispatch();
+
+    const [lineasDeseo, _setLineasDeseo] = React.useState({
         from_source_checkbox: true, 
         from_target_checkbox: false, 
         source_to_target_checkbox: false,
@@ -27,7 +31,8 @@ export function LineasDeseo() {
             checked={lineasDeseo.from_source_checkbox}
             className={styledCheckbox({ variant: "default" })}
             onChange={(e) => {
-                setLineasDeseo({
+                dispatch(setLineasDeseo({value_target: ""}))
+                _setLineasDeseo({
                     from_source_checkbox: true, 
                     from_target_checkbox: false, 
                     source_to_target_checkbox: false,
@@ -51,7 +56,8 @@ export function LineasDeseo() {
             checked={lineasDeseo.from_target_checkbox}
             className={styledCheckbox({ variant: "default" })}
             onChange={(e) => {
-                setLineasDeseo({
+                dispatch(setLineasDeseo({value_source: ""}))
+                _setLineasDeseo({
                     from_source_checkbox: false, 
                     from_target_checkbox: true, 
                     source_to_target_checkbox: false,
@@ -75,7 +81,7 @@ export function LineasDeseo() {
             checked={lineasDeseo.source_to_target_checkbox}
             className={styledCheckbox({ variant: "default" })}
             onChange={(e) => {
-                setLineasDeseo({
+                _setLineasDeseo({
                     from_source_checkbox: false, 
                     from_target_checkbox: false, 
                     source_to_target_checkbox: true,

@@ -8,14 +8,15 @@ import { setLineasDeseo } from "@/redux/features/analyticsSlice";
 import {Source, Layer} from 'react-map-gl';
 import { addLayers, removeAllLayers, removeLayer } from "@/redux/features/layersSlice";
 import { removeAllLayersDeck } from "@/redux/features/layersDeckSlice";
+import { resetArc } from "@/redux/features/arcSlice";
 
 export function InputSearch({ label, disable=false, placeholder='', type='' }: { label: string, disable?: boolean, placeholder?: string, type?: string }) {
-    const [value, setValue] = React.useState("");
     const dispatch = useAppDispatch();
 
     const [showResult, setShowResult] = React.useState([]);
 
     const layersGeoserver = useAppSelector((state) => state.layersGeoserverReducer);
+    const analytics = useAppSelector((state) => state.analyticsReducer);
 
     const fuseOptions = {
         includeScore: true,
@@ -24,10 +25,15 @@ export function InputSearch({ label, disable=false, placeholder='', type='' }: {
     };
 
     const handleOptionClick = (item, type) => {
-        setValue(item.denominacion);
-        console.log(item)
+        dispatch(resetArc())
         setShowResult([]);
-        dispatch(setLineasDeseo({[type === 'source' ? 'source_id' : 'target_id']: parseInt(item.id)}))
+        dispatch(setLineasDeseo({
+            [type === 'source' ? 'source_id' : 'target_id']: parseInt(item.id), 
+            type_source: item.tipo === 'macrozonas' ? 'taz_macro_o' : item.tipo === 'mesozonas' ? 'taz_meso_o' :  item.tipo === 'microzonas' ? 'taz_micro_o' : '',
+            type_target: item.tipo === 'macrozonas' ? 'taz_macro_d' : item.tipo === 'mesozonas' ? 'taz_meso_d' :  item.tipo === 'microzonas' ? 'taz_micro_d' : '',
+            type: item.tipo === 'macrozonas' ? 'macrozonas' : item.tipo === 'mesozonas' ? 'mesozonas' :  item.tipo === 'microzonas' ? 'microzonas' : '',
+            [type === 'source' ? 'value_source' : 'value_target']: item.denominacion,
+        }))
 
         const layerDetails = layersGeoserver[item.tipo];
         dispatch(removeAllLayers())
@@ -39,7 +45,7 @@ export function InputSearch({ label, disable=false, placeholder='', type='' }: {
             <Layer {...layerDetails.fillStyle} />
             <Layer {...layerDetails.lineStyle} />
             <Layer {...layerDetails.labelLayer}/>
-            <Layer {...layerDetails.selecterdLineStyle}  filter={['==',layerDetails.filter,'',]} />
+            <Layer {...layerDetails.selecterdLineStyle}  filter={['in','taz','',]} />
           </Source>;
           dispatch(addLayers(layerNew))
         }
@@ -47,7 +53,7 @@ export function InputSearch({ label, disable=false, placeholder='', type='' }: {
     
     const handleOnchangeInput = (event) => {
         const { value } = event.target;
-        setValue(value);
+        dispatch(setLineasDeseo({ [type === 'source' ? 'value_source' : 'value_target']:value}))
 
         const searchInType = (typeData) => {
             const fuse = new Fuse(typeData.data, fuseOptions);
@@ -81,11 +87,6 @@ export function InputSearch({ label, disable=false, placeholder='', type='' }: {
         ) : null;
     };
 
-    React.useEffect(() => {
-        if(disable === true){
-            setValue("");
-        }
-    }, [disable, value])
     return (
         <>
             <div className="relative">
@@ -94,7 +95,7 @@ export function InputSearch({ label, disable=false, placeholder='', type='' }: {
                     <input
                         type="text"
                         name="source_input"
-                        value={value}
+                        value={type === 'source' ? analytics.lineas_deseo.value_source : analytics.lineas_deseo.value_target}
                         disabled={disable}
                         placeholder={placeholder}
                         className={clsx(disable ? "cursor-not-allowed" : "cursor-text", inputClass({ _size: "xs" }))}

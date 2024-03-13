@@ -9,16 +9,13 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setActivePanel, setActiveSubPanel } from "@/redux/features/panelSlice";
 import { collapsiblePerfilViajero } from "./utils/Perfil_Viajero/perfil_viajero_fields";
 import axios from "axios";
-import { useMap } from 'react-map-gl/maplibre';
-import * as turf from '@turf/turf';
 import { setSelectionState } from "@/redux/features/arcSlice";
 import { removeAllLayersDeck } from "@/redux/features/layersDeckSlice";
+import { SymbolIcon } from "@radix-ui/react-icons";
 
 
 export function SidePanelMapAnalisisComponent({panelWidth}) {
-
-    const layers = useAppSelector((state) => state.layersReducer.layers);
-    const selectionState = useAppSelector((state) => state.arcReducer);
+    const [isSubmitting, setIsSubitting] = React.useState(false);
     const analytics = useAppSelector((state) => state.analyticsReducer);
     const sidePanel = useAppSelector((state) => state.panelReducer);
     const dispatch = useAppDispatch();    
@@ -79,46 +76,26 @@ export function SidePanelMapAnalisisComponent({panelWidth}) {
         }
     ];
 
-    const getGeojsonGeoserver = async ({ lngLat } : { lngLat : any }) => {   
-        const wfsUrl = `http://200.121.128.47:8080/geoserver/atu_vt/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=atu_vt:${layers.at(-1)?.props.name}&outputFormat=application%2Fjson&CQL_FILTER=INTERSECTS(geom,POINT(${lngLat.lng} ${lngLat.lat}))`;
-        const response = await axios.get(wfsUrl);
-        const featureCollection = response.data as turf.FeatureCollection;
-        const updatedFeatureCollection = featureCollection.features.map(feature => {
-        //   var pointOnPolygon = turf.pointOnFeature(feature);
-          feature.properties.filter = 'nom_macro'
-          feature.properties.centroid = [lngLat.lng, lngLat.lat];
-          return feature;
-        });
-        return updatedFeatureCollection
-    }  
-
     const onClickTest = async () => {
+        setIsSubitting(true)
         dispatch(removeAllLayersDeck())
-        let datosFiltrados = Object.fromEntries(Object.entries(analytics.perfil_viajero).filter(([_, v]) => v.length > 0));
-
-        const response =  await axios.post('http://37.60.239.85:9991/filter_data',{
-            'source_macrozonas' : analytics.lineas_deseo.source_id,
-        })
-
-        const response_data = response.data.data.data
-        const lngLat = {"lng": response_data.source.lon,"lat": response_data.source.lat}
-        const source = await getGeojsonGeoserver({ lngLat })
-
-        const featuresTarget: any[] = [];
-
-        await Promise.all(
-            response_data.target.map(async (element: any) => {
-                const lngLat = {"lng": element.lon,"lat": element.lat}
-                const target: any = await getGeojsonGeoserver({ lngLat });
-                featuresTarget.push(target[0]);
-            })
-        );
+        const filters = {
+            ...analytics.perfil_viajero,
+            [analytics.lineas_deseo.type_source]: analytics.lineas_deseo.source_id === null ? [] : [analytics.lineas_deseo.source_id],
+            [analytics.lineas_deseo.type_target]: analytics.lineas_deseo.target_id === null ? [] : [analytics.lineas_deseo.target_id],
+            "type": analytics.lineas_deseo.type,
+        };
         
+        console.log(filters)
+        const response =  await axios.post('http://37.60.239.85:7777/filter_data', filters)
+        console.log(response.data.data.data)
+        const response_data =response.data.data.data
         dispatch(setSelectionState(({
-            source: source[0],
-            target: featuresTarget,
+            source: response_data.source,
+            target: response_data.target,
             isSourceSelected: false,
         })));    
+        setIsSubitting(false)
 
     }
 
@@ -147,7 +124,17 @@ export function SidePanelMapAnalisisComponent({panelWidth}) {
                 <div className="flex">
                     <Button style={{ marginRight: '10px' }} onClick={() => {
                         onClickTest()
-                    }}>Ejecutar Análisis Test</Button>
+                    }}>
+                        Ejecutar Análisis
+                        {isSubmitting && <SymbolIcon
+                            className={clsx(
+                            "animate-spin transition-opacity",
+                            isSubmitting ? "opacity-50" : "opacity-0",
+                            false && "absolute top-8 right-2.5 text-white"
+                            )}
+                        />}
+                        
+                    </Button>
                     {/* <Button>Tabla</Button> */}
                 </div>
             </PanelDetailsCollapsible>
