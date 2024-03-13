@@ -6,6 +6,7 @@ import { addLayers, removeLayer } from '@/redux/features/layersSlice';
 import {Source, Layer} from 'react-map-gl';
 import { clsx } from 'clsx';
 import { setCheckedStates } from '@/redux/features/layersGeoserver';
+import { resetArc } from '@/redux/features/arcSlice';
 
 export default function FooterMapComponent() {
   const selectionState = useAppSelector((state) => state.arcReducer);
@@ -30,24 +31,26 @@ export default function FooterMapComponent() {
         <Layer {...layerDetails.fillStyle} />
         <Layer {...layerDetails.lineStyle} />
         <Layer {...layerDetails.labelLayer}/>
-        <Layer {...layerDetails.selecterdLineStyle}  filter={['==',layerDetails.filter,'',]} />
+        <Layer {...layerDetails.selecterdLineStyle}  filter={['in', 'taz', '']} />
       </Source>;
       dispatch(addLayers(layerNew))
     } else {
-      dispatch(removeLayer(layerDetails))
+      dispatch(resetArc())
       dispatch(removeAllLayersDeck())
+      dispatch(removeLayer(layerDetails))
     }
   };
 
   return (
    <>
-    {isAnyCheckboxChecked() && (
+    {/* TODO */}
+    {/* {isAnyCheckboxChecked() && (
       <div className="absolute top-0 right-0 my-16 mx-3 p-6 bg-white shadow-lg border border-gray-200 rounded dialog-footer">
         <p className="text-gray-700 title-dialog">SELECCIONE 2 POLIGONOS:</p>
         <p className="text-gray-700">Punto Origen: <span className="font-medium">{selectionState.source ? selectionState.source.properties[selectionState.source.properties.filter] : "No seleccionado" }</span></p>
         <p className="text-gray-700">Punto Destino: <span className="font-medium">{selectionState.target ? selectionState.target.properties[selectionState.target.properties.filter] : "No seleccionado"}</span></p>
       </div>
-    )}
+    )} */}
 
     
 

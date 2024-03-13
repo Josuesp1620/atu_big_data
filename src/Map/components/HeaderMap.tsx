@@ -17,10 +17,6 @@ export default function HeaderMapComponent() {
     const dispatch = useAppDispatch();
     const panelReducer = useAppSelector((state) => state.panelReducer);
 
-    const cleanMap = () => {
-        console.log("CLEAN MAP")
-    }
-
     const openSidePanelOption = (title) => {
         if(panelReducer.showPanel && panelReducer.activePanel !== title){
             dispatch(setActivePanel(title))
@@ -91,8 +87,8 @@ export default function HeaderMapComponent() {
                 </E.Button>
                 <E.Button size="md" variant="primary" onClick={()=> {
                     dispatch(resetCheckedStates());
-                    dispatch(removeAllLayersDeck())
                     dispatch(removeAllLayers())
+                    dispatch(removeAllLayersDeck())
                 }}>
                     <EraserIcon />
                     Limpiar Mapa
