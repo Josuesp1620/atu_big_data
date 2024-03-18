@@ -64,11 +64,11 @@ export default function HeaderMapComponent() {
                 { 'flex': isLargeScreen}
                 )}>
             <a target="_blank" href="https://www.gob.pe/mtc">
-                <Image src="/img/mapa/mtc.png" alt="Logo MTC" width={150} height={35} />
+                <Image src={`${process.env.basePath}/img/mapa/mtc.png`} alt="Logo MTC" width={150} height={35} />
             </a>
 
             <a target="_blank" href="https://www.atu.gob.pe/">
-            <Image src="/img/mapa/logoatte.png" alt="Logo ATU" width={150} height={30}
+            <Image src={`${process.env.basePath}/img/mapa/logoatte.png`} alt="Logo ATU" width={150} height={30}
                 style={{ height: "30px", margin: isLargeScreen ? "5px" : "", marginLeft: isLargeScreen ? "" : "-10px", marginTop: isLargeScreen ? "" : "5px"}}
             />            
             </a>

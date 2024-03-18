@@ -22,6 +22,18 @@ export default function MapComponent() {
   const panelReducer = useAppSelector((state) => state.panelReducer);
 
   React.useEffect(() => {
+    layers.length !== 0 && layers.map((layer) => {
+      mapRef.current.getMap().removeLayer(layer.id);
+    })
+    layers.length !== 0 && layers.map((layer) => {
+      mapRef.current.getMap().removeSource(layer.id);
+    })
+    layers.length !== 0 && layers.map((layer) => {
+      mapRef.current.getMap().addLayer(layer);
+    })
+  }, [layers]);
+
+  React.useEffect(() => {
     dispatch(setScreenWidth(window.innerWidth));
   }, [dispatch]);
 
@@ -37,7 +49,6 @@ export default function MapComponent() {
 
   const [hoverInfo, setHoverInfo] = React.useState<any>(null);
 
-
   return (
     <>
       {panelReducer.showPanel && <PanelInnerMap />}
@@ -50,16 +61,16 @@ export default function MapComponent() {
         mapLib={maplibregl}
         style={{ width: panelReducer.showPanel ? `${parseInt(panelReducer.screenWidth.toString()) - panelReducer.panelWidth}px` : "100vw", height: "100vh", transition: panelReducer.applyTransition ? "width 0.5s ease" : "" }}>
         
-        {layers.length !== 0 && layers.map((layer) => layer)}
+        
         <HeaderMapComponent />
         <DeckGlComponent />
-        {hoverInfo  !== null && hoverInfo.object && (
-        <div style={{position: 'absolute', zIndex: 1, pointerEvents: 'none', left: hoverInfo.x, top: hoverInfo.y, background: "gray"}}>
-          ------------------
-          { hoverInfo.object }
-          ------------------
-        </div>
-      )}
+        {hoverInfo !== null && hoverInfo.info.object && (
+          <div style={{position: 'absolute', zIndex: 30, pointerEvents: 'none', left: hoverInfo.info.x, top: hoverInfo.info.y, background: "white", padding: "5px"}}>
+            <p className="font-bold">DETALLE</p>
+            <p>{hoverInfo.source.name} {">>"} { hoverInfo.info.object.properties.name }</p>
+            <p>Viajes: {hoverInfo.info.object.properties.suma_viajes}</p>
+          </div>
+        )}
         <NavigationControl position="bottom-right" />
         <ScaleControl />
         <FooterMapComponent />

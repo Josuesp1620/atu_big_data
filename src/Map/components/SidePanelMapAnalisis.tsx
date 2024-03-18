@@ -9,13 +9,13 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setActivePanel, setActiveSubPanel } from "@/redux/features/panelSlice";
 import { collapsiblePerfilViajero } from "./utils/Perfil_Viajero/perfil_viajero_fields";
 import axios from "axios";
-import { setSelectionState } from "@/redux/features/arcSlice";
+import { setDashboardData, setSelectionState } from "@/redux/features/arcSlice";
 import { removeAllLayersDeck } from "@/redux/features/layersDeckSlice";
 import { SymbolIcon } from "@radix-ui/react-icons";
 
 
 export function SidePanelMapAnalisisComponent({panelWidth}) {
-    const [isSubmitting, setIsSubitting] = React.useState(false);
+    const [isSubmitting, setIsSubmitting] = React.useState(false);
     const analytics = useAppSelector((state) => state.analyticsReducer);
     const sidePanel = useAppSelector((state) => state.panelReducer);
     const dispatch = useAppDispatch();    
@@ -77,7 +77,7 @@ export function SidePanelMapAnalisisComponent({panelWidth}) {
     ];
 
     const onClickTest = async () => {
-        setIsSubitting(true)
+        setIsSubmitting(true)
         dispatch(removeAllLayersDeck())
         const filters = {
             ...analytics.perfil_viajero,
@@ -86,16 +86,19 @@ export function SidePanelMapAnalisisComponent({panelWidth}) {
             "type": analytics.lineas_deseo.type,
         };
         
-        console.log(filters)
-        const response =  await axios.post('http://37.60.239.85:7777/filter_data', filters)
-        console.log(response.data.data.data)
-        const response_data =response.data.data.data
+        const responseArc =  await axios.post('http://37.60.239.85:7777/filter_data', filters)
+        const _responseArc =responseArc.data.data.data
+        
         dispatch(setSelectionState(({
-            source: response_data.source,
-            target: response_data.target,
+            source: _responseArc.source,
+            target: _responseArc.target,
             isSourceSelected: false,
-        })));    
-        setIsSubitting(false)
+        })));
+
+        const responseDashboardData =  await axios.post('http://37.60.239.85:7777/data_dash_board', filters)
+        const _responseDashboardData =responseDashboardData.data.data.data
+        dispatch(setDashboardData((_responseDashboardData)));
+        setIsSubmitting(false)
 
     }
 

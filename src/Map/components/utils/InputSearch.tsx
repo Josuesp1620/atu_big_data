@@ -6,7 +6,7 @@ import { clsx } from "clsx";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setLineasDeseo } from "@/redux/features/analyticsSlice";
 import {Source, Layer} from 'react-map-gl';
-import { addLayers, removeAllLayers, removeLayer } from "@/redux/features/layersSlice";
+import { addLayers, removeAllLayers } from "@/redux/features/layersSlice";
 import { removeAllLayersDeck } from "@/redux/features/layersDeckSlice";
 import { resetArc } from "@/redux/features/arcSlice";
 
@@ -40,14 +40,7 @@ export function InputSearch({ label, disable=false, placeholder='', type='' }: {
         dispatch(removeAllLayersDeck())
         
         if (layerDetails.layer) { 
-          const layerNew = 
-          <Source  key={layerDetails.id} id={layerDetails.id} type="vector"  scheme="tms" name={layerDetails.layer} tiles={[`http://200.121.128.47:8080/geoserver/gwc/service/tms/1.0.0/atu_vt:${layerDetails.layer}@EPSG%3A900913@pbf/{z}/{x}/{y}.pbf`]}>
-            <Layer {...layerDetails.fillStyle} />
-            <Layer {...layerDetails.lineStyle} />
-            <Layer {...layerDetails.labelLayer}/>
-            <Layer {...layerDetails.selecterdLineStyle}  filter={['in','taz','',]} />
-          </Source>;
-          dispatch(addLayers(layerNew))
+            dispatch(addLayers([layerDetails.labelLayer, layerDetails.outLineLayer, layerDetails.selectedOutLineLayer, layerDetails.fillLayer]))
         }
     };
     

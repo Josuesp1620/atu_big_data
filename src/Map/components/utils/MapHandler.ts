@@ -1,9 +1,9 @@
 import React from 'react';
-import axios from "axios";
+import { v4 as uuidv4 } from 'uuid';
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { addLayersDeck, removeAllLayersDeck } from "@/redux/features/layersDeckSlice";
 import { resetArc, setSelectionState } from "@/redux/features/arcSlice";
-import { ArcLayer } from "@deck.gl/layers/typed";
+import { ArcLayer, TextLayer } from "@deck.gl/layers/typed";
 import { useMap } from 'react-map-gl/maplibre';
 import * as turf from '@turf/turf';
 import { ScatterplotLayer } from "@deck.gl/layers/typed";
@@ -14,42 +14,54 @@ const MapHandler = ({setHoverInfo}) => {
   const dispatch = useAppDispatch();
   const layers = useAppSelector((state) => state.layersReducer.layers);
   const selectionState = useAppSelector((state) => state.arcReducer);
-  const [ctrlPressed, setCtrlPressed] = React.useState(false);
-  const ctrlPressedRef = React.useRef(ctrlPressed);
-
-  const getGeojsonGeoserver = async ({ lngLat, type } : { lngLat : any, type: any }) => {
-    const map = mapRef.getMap();
-
-    const wfsUrl = `http://200.121.128.47:8080/geoserver/atu_vt/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=atu_vt:${layers.at(-1)?.props.name}&outputFormat=application%2Fjson&CQL_FILTER=INTERSECTS(geom,POINT(${lngLat.lng} ${lngLat.lat}))`;
-
-    const response = await axios.get(wfsUrl);
-
-    const featureCollection = response.data as turf.FeatureCollection;
-    
-    if (map!.getCanvas().style.cursor === "pointer" || !response.data || !response.data.features || response.data.features.length === 0) return null;
-
-    const updatedFeatureCollection = featureCollection.features.map(feature => {
-      feature.properties.type = type;
-      feature.properties.centroid = [feature.properties.lon, feature.properties.lat]
-      return feature;
-    });
-
-    return updatedFeatureCollection
-  
-  }  
+  const [altPressed, setAaltPressed] = React.useState(false);
+  const altPressedRef = React.useRef(altPressed);
 
   async function handleMapClick(e) {
 
     const map = mapRef.getMap();
-    const lngLat = e.lngLat;
+    const features : any = map.queryRenderedFeatures(e.point);
+    if (map!.getCanvas().style.cursor === "pointer" || !features || features.length === 0) return null;
 
-    const layerId = `${layers.at(-1)?.props.name}-selected-outline`
+    const featuresFiltered = features.filter((f) => {
+      const layerId = layers.at(-1).id;
+      return f.layer.id === layerId;
+    });
+
+    if(featuresFiltered.length === 0) return null
+
+    const dataFeatures = {
+      type: "FeatureCollection",
+      features: [
+        {
+          type: "Feature",
+          geometry: {
+            type: featuresFiltered[0].geometry.type,
+            coordinates: featuresFiltered[0].geometry.coordinates
+          },
+          properties: featuresFiltered[0].properties
+        }
+      ]
+    };
+
+    const layerId = `${layers.at(-1).id}-outline-selected`
     const type = !selectionState.isSourceSelected  ? "source" : "target";
     
-    const updatedFeatureCollection = await getGeojsonGeoserver({lngLat, type})
-    console.log(updatedFeatureCollection)
+    const featureCollection = dataFeatures as turf.FeatureCollection;
+    
+
+    const updatedFeatureCollection = featureCollection.features.map(feature => {
+      feature.properties.type = type;
+      feature.properties.centroid = [feature.properties.lon, feature.properties.lat]
+      // TODO: Random Point On Feature
+      // if(selectionState.isSourceSelected && feature.properties.taz === selectionState.source.properties.taz){
+      //   feature.properties.centroid = [feature.properties.lon+ 0.05, feature.properties.lat+ 0.05]
+      // }
+      return feature;
+    });
+
     if (updatedFeatureCollection === null) return
-    if (ctrlPressedRef.current === false &&!selectionState.isSourceSelected) {
+    if (altPressedRef.current === false &&!selectionState.isSourceSelected) {
       dispatch(setSelectionState(({
         source: updatedFeatureCollection[0],
         target: null,
@@ -69,29 +81,29 @@ const MapHandler = ({setHoverInfo}) => {
       dispatch(setSelectionState(({
         source: selectionState.source,
         target: updatedFeatureCollection,
-        isSourceSelected: ctrlPressedRef.current,
+        isSourceSelected: altPressedRef.current,
       })));    
     }
   }
 
-   function handleKeyDown(event) {
-    if (event.keyCode === 17) {
-      setCtrlPressed(true);
+  function handleKeyDown(event) {
+    if (event.keyCode === 18) {
+      setAaltPressed(true);
     }
   }
 
   function handleKeyUp(event) {
-    if (event.keyCode === 17) {
-      setCtrlPressed(false);
+    if (event.keyCode === 18) {
+      setAaltPressed(false);
     }
   }
 
   React.useEffect(() => {
-    ctrlPressedRef.current = ctrlPressed;
-    if(!ctrlPressedRef.current){
+    altPressedRef.current = altPressed;
+    if(!altPressedRef.current){
       dispatch(resetArc());
     }
-  }, [ctrlPressed]);
+  }, [altPressed]);
 
   React.useEffect(() => {
     document.addEventListener("keydown", handleKeyDown);
@@ -107,24 +119,22 @@ const MapHandler = ({setHoverInfo}) => {
     
     if (selectionState.source !== null && selectionState.target !== null ) {
       const map = mapRef.getMap();
-      const layerId = `${layers.at(-1)?.props.name}-selected-outline`
+      const layerId = `${layers.at(-1).id}-outline-selected`
       
-      const filters: any =  ctrlPressedRef.current ? map.getFilter(layerId) :['in', 'taz', selectionState.source.properties.taz];
+      const filters: any =  altPressedRef.current ? map.getFilter(layerId) :['in', 'taz', selectionState.source.properties.taz];
+      
       selectionState.target.map((target) => {
         filters.push("taz")
         filters.push(target.properties.taz)
       })
-      const layerGet =  map.getLayer(layerId) 
-      console.log(layerGet)
-
+      
       map.setFilter(layerId, filters);
-    
+
       const dataArc : any = { type: 'FeatureCollection', features: [selectionState.source, ...selectionState.target]};
 
       const arcInstance = new ArcLayer({
-        id: "arc-layer",
-        data: dataArc,
-        getWidth: 2,
+        id: uuidv4(), // Genera un ID único para la capa
+        data: dataArc,       
         getHeight: 0.5,
         pickable: true,
         onClick: (e) => console.log(e),
@@ -134,15 +144,24 @@ const MapHandler = ({setHoverInfo}) => {
         getTargetPosition: (f) => f.properties.centroid,
         getSourceColor: (f) => [Math.sqrt(f.inbound), 140, 0],
         getTargetColor: (f) => [255, 140, 0],
-        onHover: info => setHoverInfo(info),
-        transitions: {
-          getSourceColor:1000000000,
-          getTargetColor: 1000000000
-        }
+        getWidth: (f) => {
+          if(f.properties.type === "target"  && f.properties.suma_viajes){
+            const sumaViajes = parseFloat(f.properties.suma_viajes.replace(',', ''));
+            const minWidth = 4;
+            const maxWidth = 30;
+            const scaledWidth = minWidth + (maxWidth - minWidth) * (sumaViajes / selectionState.source.properties.max_suma_viajes);
+            return scaledWidth;
+          }
+          else{
+            return 3
+          }
+          
+        },
+        onHover: info => setHoverInfo({info, source: selectionState.source.properties}),
       });
 
       const layerCircle = new ScatterplotLayer({
-        id: 'airports',
+        id: uuidv4(), // Genera un ID único para la capa
         data: dataArc,
         radiusScale: 20,
         dataTransform: ( f : any ) =>
@@ -155,21 +174,45 @@ const MapHandler = ({setHoverInfo}) => {
           return [255, 140, 0]
         },
         getRadius: (f) => {
-          if(f.properties.type === "source"){
-            if(layers.at(-1)?.props.name !== 'macrozonas'){
-              return 10
+          if (f.properties.type === "target" && f.properties.suma_viajes) {
+              const sumaViajes = parseFloat(f.properties.suma_viajes.replace(',', ''));
+              const minWidth = 10;
+              const maxWidth = 90;
+              const maxSumaViajes = selectionState.source.properties.max_suma_viajes;
+              const scaledWidth = minWidth + (maxWidth - minWidth) * (sumaViajes / maxSumaViajes);
+              return scaledWidth;
+          } else {
+            const lastLayerName = layers.at(-1).id;
+            const isMacrozonas = lastLayerName === 'macrozonas';
+            const isSource = f.properties.type === "source";
+        
+            if (isSource) {
+                return isMacrozonas ? 50 : 10;
             }
-            return 50
           }
-          if(layers.at(-1)?.props.name !== 'macrozonas'){
-            return 10
-          }
-          return 20
         },
         pickable: true
       })      
-      // dispatch(removeAllLayersDeck())
-      dispatch(addLayersDeck([layerCircle, arcInstance]))
+
+      const textLayer = new TextLayer({
+        id: uuidv4(), // Genera un ID único para la capa
+        data: dataArc,
+        pickable: true,
+        dataTransform: ( f : any ) =>
+          f.features.filter(( f : any ) => f && f.properties),
+        getPosition: (f) => f.properties.centroid,
+        getText: d => {
+          if(d.properties.suma_viajes){
+            return d.properties.suma_viajes
+          }
+        },
+        getColor:   [255, 140, 0],
+        getSize: 32,
+        getAngle: 0,
+        getTextAnchor: 'start',
+        getAlignmentBaseline: 'top'
+      });
+      dispatch(addLayersDeck([layerCircle, textLayer, arcInstance]))
     }
 
     map.on('click', handleMapClick);
@@ -177,6 +220,7 @@ const MapHandler = ({setHoverInfo}) => {
     return () => {
       map.off('click', handleMapClick);
     };
+
   }, [selectionState, layers]);
 
   return null;
