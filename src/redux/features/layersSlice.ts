@@ -13,11 +13,13 @@ export const layersSlice = createSlice({
   initialState,
   reducers: {
     addLayers: (state, action: PayloadAction<any>) => {
-      state.layers = [...state.layers, action.payload];
+      state.layers = action.payload;
     },
-    removeLayer: (state, action: PayloadAction<any>) => {
-
-      state.layers = state.layers.filter(layer => layer.props.id !== action.payload.id);
+    removeLayer: (state, action: PayloadAction<{ ids: string[] }>) => {
+      const { ids } = action.payload;
+      if (ids && ids.length > 0) {
+        state.layers = state.layers.filter(layer => !ids.includes(layer.props.id));
+      }
     },
     removeAllLayers: (state) => {
       state.layers = [];
