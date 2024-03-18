@@ -1,4 +1,5 @@
 "use client"
+import Link from 'next/link';
 import React, { useState } from 'react';
 
 export function Carousel() {
@@ -60,7 +61,7 @@ export function Carousel() {
                             <h1 className="text-5xl font-bold text-[#004B98]">{item.text_1}</h1>
                             <p className="text-6xl">{item.text_2}</p>
                             <p className="text-xl mt-4">{item.text_3}</p>
-                            <a href="/map" className="mt-4 inline-block bg-white hover:bg-[#004B98] text-[#004B98] hover:text-white font-bold py-3 px-8 border border-[#004B98] rounded transition-colors duration-300 ease-in-out z-10">Ingresar al Sistema</a>
+                            <Link href={`/map`} className="mt-4 inline-block bg-white hover:bg-[#004B98] text-[#004B98] hover:text-white font-bold py-3 px-8 border border-[#004B98] rounded transition-colors duration-300 ease-in-out z-10">Ingresar al Sistema</Link>
                         </div>
 
                     </div>

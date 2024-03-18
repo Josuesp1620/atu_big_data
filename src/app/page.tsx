@@ -17,7 +17,7 @@ export default function Home() {
         <div className="grid lg:grid-cols-2 xl:grid-cols-2 md:grid-cols-1 sm:grid-cols-2">                      
           <div className="col-span-1">
             <div className="flex justify-end mt-10 sm:mx-10">
-              <img src="/img/about-us.jpg" alt="img" width={500} />
+              <img src={`${process.env.basePath}/img/about-us.jpg`} alt="img" width={500} />
             </div>
           </div>
 
@@ -37,10 +37,10 @@ export default function Home() {
 
     <section id="mu-about-us" className="relative ">
       <div className="fixed inset-0 -z-10 flex justify-center items-center">
-        <img src="/img/counter-bg.jpeg" alt="Background" className="min-w-full h-full object-cover" />
+        <img src={`${process.env.basePath}/img/counter-bg.jpeg`} alt="Background" className="min-w-full h-full object-cover" />
       </div>
       <div className="flex justify-center items-center bg-black bg-opacity-70 py-20">
-        <img src="/img/footer.png" alt="Footer" style={{ height: '300px' }} className="object-contain" />
+        <img src={`${process.env.basePath}/img/footer.png`} alt="Footer" style={{ height: '300px' }} className="object-contain" />
       </div>
     </section>
 
@@ -54,7 +54,7 @@ export default function Home() {
         <div className="grid lg:grid-cols-2 xl:grid-cols-2 md:grid-cols-1 sm:grid-cols-2">                      
           <div className="col-span-1">
             <div className="flex justify-end mt-10 sm:mx-10">
-              <img src="/img/4.jpg" alt="img" width={500}/>
+              <img src={`${process.env.basePath}/img/4.jpg`} alt="img" width={500}/>
             </div>
           </div>
 
@@ -81,7 +81,7 @@ export default function Home() {
         <div className="grid grid-cols-1">                      
           <div className="col-span-1">
             <div className="flex justify-center mt-10 sm:mx-10">
-              <img src="/img/5.jpg" alt="img" width={1100}/>
+              <img src={`${process.env.basePath}/img/5.jpg`} alt="img" width={1100}/>
             </div>
           </div>
 
@@ -106,7 +106,7 @@ export default function Home() {
         <div className="grid lg:grid-cols-2 xl:grid-cols-2 md:grid-cols-1 sm:grid-cols-2">                      
           <div className="col-span-1">
             <div className="flex justify-end mt-10 sm:mx-10">
-              <img src="/img/6.jpg" alt="img" width={500}/>
+              <img src={`${process.env.basePath}/img/6.jpg`} alt="img" width={500}/>
             </div>
           </div>
 
@@ -134,7 +134,7 @@ export default function Home() {
         <div className="grid grid-cols-1">                      
           <div className="col-span-1">
             <div className="flex justify-center mt-10 sm:mx-10">
-              <img src="/img/7.jpg" alt="img" width={1100}/>
+              <img src={`${process.env.basePath}/img/7.jpg`} alt="img" width={1100}/>
             </div>
           </div>
 
@@ -159,7 +159,7 @@ export default function Home() {
         <div className="grid grid-cols-1">                      
           <div className="col-span-1">
             <div className="flex justify-center mt-10 sm:mx-10">
-              <img src="/img/8.jpg" alt="img" width={1100}/>
+              <img src={`${process.env.basePath}/img/8.jpg`} alt="img" width={1100}/>
             </div>
           </div>
 
@@ -183,7 +183,7 @@ export default function Home() {
         <div className="grid grid-cols-1">                      
           <div className="col-span-1">
             <div className="flex justify-center mt-10 sm:mx-10">
-              <img src="/img/9.jpg" alt="img" width={1100}/>
+              <img src={`${process.env.basePath}/img/9.jpg`} alt="img" width={1100}/>
             </div>
           </div>
 

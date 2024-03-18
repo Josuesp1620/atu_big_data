@@ -9,7 +9,7 @@ export default function Header() {
 <nav className="bg-white border-gray-200 dark:bg-gray-900 fixed top-0 left-0 w-full z-50 border-b">
   <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-8">
     <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-        <img src="/img/logo.png" className="h-8" alt="ATU" />
+        <img src={`${process.env.basePath}/img/logo.png`} className="h-8" alt="ATU" />
     </a>
     <button 
       data-collapse-toggle="navbar-default" 
