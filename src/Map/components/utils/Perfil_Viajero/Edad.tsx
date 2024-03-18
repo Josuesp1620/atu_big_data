@@ -22,13 +22,13 @@ export default function EdadComponent() {
     return (
         <>
         <div className="py-1 whitespace-nowrap flex justify-between">
-                    <StyledLabelSpan size="xs">15 a 19</StyledLabelSpan>
+                    <StyledLabelSpan size="xs">18 a 19</StyledLabelSpan>
                     <input
                         type="checkbox"
                         name="from_source_checkbox"
-                        checked={analytics.edad.includes("15 - 19")}
+                        checked={analytics.edad.includes("18 - 19")}
                         className={styledCheckbox({ variant: "default" })}
-                        onChange={(e) => {onChange("15 - 19")}}
+                        onChange={(e) => {onChange("18 - 19")}}
                         />
                 </div>
                 <div className="py-1 whitespace-nowrap flex justify-between">
@@ -63,13 +63,23 @@ export default function EdadComponent() {
                     />
                 </div>
                 <div className="py-1 whitespace-nowrap flex justify-between">
-                    <StyledLabelSpan size="xs">50 a mas</StyledLabelSpan>
+                    <StyledLabelSpan size="xs">50 a 70</StyledLabelSpan>
                     <input
                     type="checkbox"
                     name="from_target_checkbox"
-                    checked={analytics.edad.includes("50 - mas")}
+                    checked={analytics.edad.includes("50 a 70")}
                     className={styledCheckbox({ variant: "default" })}
-                    onChange={(e) => {onChange("50 - mas")}}
+                    onChange={(e) => {onChange("50 a 70")}}
+                    />
+                </div>
+                <div className="py-1 whitespace-nowrap flex justify-between">
+                    <StyledLabelSpan size="xs">70 a mas</StyledLabelSpan>
+                    <input
+                    type="checkbox"
+                    name="from_target_checkbox"
+                    checked={analytics.edad.includes("70 a mas")}
+                    className={styledCheckbox({ variant: "default" })}
+                    onChange={(e) => {onChange("70 a mas")}}
                     />
                 </div>
         </>

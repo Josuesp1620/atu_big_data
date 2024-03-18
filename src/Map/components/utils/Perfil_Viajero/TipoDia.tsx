@@ -50,7 +50,7 @@ export default function TipoDiaComponent() {
                     name="from_target_checkbox"
                     checked={analytics.tipo_dia.includes("Miercoles")}
                     className={styledCheckbox({ variant: "default" })}
-                    onChange={(e) => {onChange("ercoles")}}
+                    onChange={(e) => {onChange("Miercoles")}}
                     />
                 </div><div className="py-1 whitespace-nowrap flex justify-between">
                     <StyledLabelSpan size="xs">Jueves</StyledLabelSpan>

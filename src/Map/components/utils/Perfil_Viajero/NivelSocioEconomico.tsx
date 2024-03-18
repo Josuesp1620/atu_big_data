@@ -22,29 +22,51 @@ export default function NivelSocioEconomicoComponent() {
 
     return (
         <>
-            <div className="py-1 whitespace-nowrap flex justify-between">
-                    <StyledLabelSpan size="xs">A / B</StyledLabelSpan>
-                    <input
-                    type="checkbox"
-                    name="source_to_target_checkbox"
-                    checked={analytics.nse.includes("ALTO")}
-                    className={styledCheckbox({ variant: "default" })}
-                    onChange={(e) => {onChange("ALTO")}}
-                    />
+                <div className="py-1 whitespace-nowrap flex justify-between">
+                    <StyledLabelSpan size="xs">A</StyledLabelSpan>
+                        <input
+                        type="checkbox"
+                        name="source_to_target_checkbox"
+                        checked={analytics.nse.includes("ALTO")}
+                        className={styledCheckbox({ variant: "default" })}
+                        onChange={(e) => {onChange("ALTO")}}
+                        />
+                </div>
+
+                <div className="py-1 whitespace-nowrap flex justify-between">
+                    <StyledLabelSpan size="xs">B</StyledLabelSpan>
+                        <input
+                        type="checkbox"
+                        name="source_to_target_checkbox"
+                        checked={analytics.nse.includes("MEDIO ALTO")}
+                        className={styledCheckbox({ variant: "default" })}
+                        onChange={(e) => {onChange("MEDIO ALTO")}}
+                        />
                 </div>
 
                 <div className="py-1 whitespace-nowrap flex justify-between">
                     <StyledLabelSpan size="xs">C</StyledLabelSpan>
+                        <input
+                        type="checkbox"
+                        name="source_to_target_checkbox"
+                        checked={analytics.nse.includes("MEDIO")}
+                        className={styledCheckbox({ variant: "default" })}
+                        onChange={(e) => {onChange("MEDIO")}}
+                        />
+                </div>
+
+                <div className="py-1 whitespace-nowrap flex justify-between">
+                    <StyledLabelSpan size="xs">D</StyledLabelSpan>
                     <input
                     type="checkbox"
                     name="from_source_checkbox"
-                    checked={analytics.nse.includes("MEDIO ALTO")}
+                    checked={analytics.nse.includes("MEDIO BAJO")}
                     className={styledCheckbox({ variant: "default" })}
-                    onChange={(e) => {onChange("MEDIO ALTO")}}
+                    onChange={(e) => {onChange("MEDIO BAJO")}}
                     />
                 </div>
                 <div className="py-1 whitespace-nowrap flex justify-between">
-                    <StyledLabelSpan size="xs">D / E</StyledLabelSpan>
+                    <StyledLabelSpan size="xs">E</StyledLabelSpan>
                     <input
                     type="checkbox"
                     name="from_target_checkbox"
