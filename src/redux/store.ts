@@ -6,6 +6,7 @@ import arcReducer from "@/redux/features/arcSlice"
 import panelReducer from "@/redux/features/panelSlice"
 import layersGeoserverReducer from "@/redux/features/layersGeoserver"
 import analyticsReducer from "@/redux/features/analyticsSlice"
+import mapReducer from "@/redux/features/mapSlice"
 
 export const store = configureStore({
   reducer: {
@@ -15,7 +16,8 @@ export const store = configureStore({
     arcReducer,
     panelReducer,
     layersGeoserverReducer,
-    analyticsReducer
+    analyticsReducer,
+    mapReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
