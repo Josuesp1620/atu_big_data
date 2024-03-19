@@ -13,6 +13,7 @@ import { PanelInnerMap } from "./PanelTabMap";
 import { ButtonPanelToggleMap } from "./ButtonPanelToggleMap";
 import { setScreenWidth } from "@/redux/features/panelSlice";
 import MapHandler from "./utils/MapHandler";
+import { setMapRef } from "@/redux/features/mapSlice";
 
 export default function MapComponent() {
   const mapRef = React.useRef(null);
@@ -22,12 +23,6 @@ export default function MapComponent() {
   const panelReducer = useAppSelector((state) => state.panelReducer);
 
   React.useEffect(() => {
-    layers.length !== 0 && layers.map((layer) => {
-      mapRef.current.getMap().removeLayer(layer.id);
-    })
-    layers.length !== 0 && layers.map((layer) => {
-      mapRef.current.getMap().removeSource(layer.id);
-    })
     layers.length !== 0 && layers.map((layer) => {
       mapRef.current.getMap().addLayer(layer);
     })
@@ -45,6 +40,7 @@ export default function MapComponent() {
     if (attributionControl) {
       attributionControl.innerHTML = '© <a href="#" target="_blank" rel="noopener">GeoSolution</a> | © <a href="http://www.openstreetmap.org/about/" target="_blank">OpenStreetMap</a> contributors';
     }    
+    dispatch(setMapRef(mapRef.current))
   }, []);
 
   const [hoverInfo, setHoverInfo] = React.useState<any>(null);

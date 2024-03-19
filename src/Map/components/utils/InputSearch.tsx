@@ -5,15 +5,17 @@ import { data_input } from "@/Map/constants/input.data.constants";
 import { clsx } from "clsx";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setLineasDeseo } from "@/redux/features/analyticsSlice";
-import {Source, Layer} from 'react-map-gl';
 import { addLayers, removeAllLayers } from "@/redux/features/layersSlice";
 import { removeAllLayersDeck } from "@/redux/features/layersDeckSlice";
 import { resetArc } from "@/redux/features/arcSlice";
+import { delete_layers, delete_source } from "@/Map/map_functions/layers_map";
 
 export function InputSearch({ label, disable=false, placeholder='', type='' }: { label: string, disable?: boolean, placeholder?: string, type?: string }) {
     const dispatch = useAppDispatch();
 
     const [showResult, setShowResult] = React.useState([]);
+    const layers = useAppSelector((state) => state.layersReducer.layers);
+    const mapRef = useAppSelector((state) => state.mapReducer.mapRef);
 
     const layersGeoserver = useAppSelector((state) => state.layersGeoserverReducer);
     const analytics = useAppSelector((state) => state.analyticsReducer);
@@ -36,10 +38,14 @@ export function InputSearch({ label, disable=false, placeholder='', type='' }: {
         }))
 
         const layerDetails = layersGeoserver[item.tipo];
+
+        delete_layers({mapRef, layers})
+        delete_source({mapRef, sources: layers})
+
         dispatch(removeAllLayers())
         dispatch(removeAllLayersDeck())
         
-        if (layerDetails.layer) { 
+        if (layerDetails.layer) {
             dispatch(addLayers([layerDetails.labelLayer, layerDetails.outLineLayer, layerDetails.selectedOutLineLayer, layerDetails.fillLayer]))
         }
     };
@@ -88,7 +94,7 @@ export function InputSearch({ label, disable=false, placeholder='', type='' }: {
                     <input
                         type="text"
                         name="source_input"
-                        value={type === 'source' ? analytics.lineas_deseo.value_source : analytics.lineas_deseo.value_target}
+                        value={type === 'source' ? (analytics.lineas_deseo.value_source || '') : (analytics.lineas_deseo.value_target || '')}
                         disabled={disable}
                         placeholder={placeholder}
                         className={clsx(disable ? "cursor-not-allowed" : "cursor-text", inputClass({ _size: "xs" }))}

@@ -8,7 +8,6 @@ import { useMap } from 'react-map-gl/maplibre';
 import * as turf from '@turf/turf';
 import { ScatterplotLayer } from "@deck.gl/layers/typed";
 
-
 const MapHandler = ({setHoverInfo}) => {
   const {current: mapRef} = useMap();
   const dispatch = useAppDispatch();
@@ -24,7 +23,8 @@ const MapHandler = ({setHoverInfo}) => {
     if (map!.getCanvas().style.cursor === "pointer" || !features || features.length === 0) return null;
 
     const featuresFiltered = features.filter((f) => {
-      const layerId = layers.at(-1).id;
+      if(layers.at(-1) === null) return []
+      const layerId = layers.at(-1) ? layers.at(-1).id : null;
       return f.layer.id === layerId;
     });
 
@@ -131,6 +131,7 @@ const MapHandler = ({setHoverInfo}) => {
       map.setFilter(layerId, filters);
 
       const dataArc : any = { type: 'FeatureCollection', features: [selectionState.source, ...selectionState.target]};
+      
 
       const arcInstance = new ArcLayer({
         id: uuidv4(), // Genera un ID único para la capa
