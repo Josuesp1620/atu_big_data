@@ -7,7 +7,7 @@ WORKDIR /usr/src/atu_big_data
 # Copiar package.json y .env
 COPY package.json .
 
-RUN npm install --only=prod
+RUN npm install
 
 COPY . .
 
