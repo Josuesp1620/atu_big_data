@@ -23,7 +23,6 @@ const MapHandler = ({setHoverInfo}) => {
     if (map!.getCanvas().style.cursor === "pointer" || !features || features.length === 0) return null;
 
     const featuresFiltered = features.filter((f) => {
-      console.log(layers.at(-1))
       if(layers.at(-1) === null) return []
       const layerId = layers.at(-1) ? layers.at(-1).id : null;
       return f.layer.id === layerId;
