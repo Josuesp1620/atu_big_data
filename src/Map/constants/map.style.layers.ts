@@ -358,20 +358,20 @@ export const mapLayersStyleGeoserver = {
           },
           // "filter": ["in", "NOMBRE", "Corredor Carretera Central", "Corredor Javier Prado", "Corredor Panamericana", "Corredor San Juan de Lurigancho - Brasil", "Corredor Tacna - Garcilaso - Arequipa", "Línea Metro 1", "Línea Metro 2", "Línea Metro 3", "Línea Metro 4", "Línea Metro 4 - Ramal Faucett - Gambetta", "Línea Metro 5 de la RBML", "Línea Metro 6 de la RBML", "Metropolitano"]
         },
-        {
-          id: 'sistemas_masivos_points-outline',
-          type: 'circle',
-          source: {
-            type: 'vector',
-            tiles: ['http://200.121.128.47:8080/sistemas_masivos_points/{z}/{x}/{y}']
-          },
-          "source-layer": "sistemas_masivos_points",
-          "paint": {
-            "circle-color": "hsla(0,0%,0%,0.75)",
-            "circle-stroke-width": 1.5,
-            "circle-stroke-color": "white",
-          }
-        }
+        // {
+        //   id: 'sistemas_masivos_points-outline',
+        //   type: 'circle',
+        //   source: {
+        //     type: 'vector',
+        //     tiles: ['http://200.121.128.47:8080/sistemas_masivos_points/{z}/{x}/{y}']
+        //   },
+        //   "source-layer": "sistemas_masivos_points",
+        //   "paint": {
+        //     "circle-color": "hsla(0,0%,0%,0.75)",
+        //     "circle-stroke-width": 1.5,
+        //     "circle-stroke-color": "white",
+        //   }
+        // }
       ],
   },
 }
