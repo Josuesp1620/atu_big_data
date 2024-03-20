@@ -9,6 +9,7 @@ import { addLayers, removeAllLayers } from "@/redux/features/layersSlice";
 import { removeAllLayersDeck } from "@/redux/features/layersDeckSlice";
 import { resetArc } from "@/redux/features/arcSlice";
 import { delete_layers, delete_source } from "@/Map/map_functions/layers_map";
+import { resetCheckedStates, setCheckedStates } from "@/redux/features/layersGeoserver";
 
 export function InputSearch({ label, disable=false, placeholder='', type='' }: { label: string, disable?: boolean, placeholder?: string, type?: string }) {
     const dispatch = useAppDispatch();
@@ -38,15 +39,23 @@ export function InputSearch({ label, disable=false, placeholder='', type='' }: {
         }))
 
         const layerDetails = layersGeoserver[item.tipo];
+        dispatch(resetCheckedStates())
+        dispatch(setCheckedStates({name: item.tipo, checked: !layerDetails.state}))
 
         delete_layers({mapRef, layers})
         delete_source({mapRef, sources: layers})
-
         dispatch(removeAllLayers())
+        dispatch(resetArc())
         dispatch(removeAllLayersDeck())
         
         if (layerDetails.layer) {
-            dispatch(addLayers([layerDetails.labelLayer, layerDetails.outLineLayer, layerDetails.selectedOutLineLayer, layerDetails.fillLayer]))
+            dispatch(addLayers(layerDetails.layers))
+            if (!layerDetails.state && layerDetails.layer) {
+                dispatch(addLayers(layerDetails.layers))
+                layerDetails.layers.map((layer) => {
+                  mapRef.getMap().addLayer(layer);
+                })
+            }
         }
     };
     
