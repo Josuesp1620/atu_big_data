@@ -272,55 +272,51 @@ export const mapLayersStyleGeoserver = {
     children: [
       {
         name: "Corredor Carretera Central",
-        index: 8,
+        index: [8],
       },
       {
         name: "Corredor Javier Prado",
-        index: 9,
+        index: [9],
       },
       {
         name: "Corredor Panamericana",
-        index: 10,
+        index: [10],
       },
       {
         name: "Corredor San Juan de Lurigancho",
-        index: 11,
+        index: [11],
       },
       {
         name: "Corredor TGA",
-        index: 12,
+        index: [12],
       },
       {
         name: "Línea Metro 1",
-        index: 0,
+        index: [0],
       },
       {
         name: "Línea Metro 2",
-        index: 1,
+        index: [1],
       },
       {
         name: "Línea Metro 3",
-        index: 2,
+        index: [2],
       },
       {
         name: "Línea Metro 4",
-        index: 3,
-      },
-      {
-        name: "Línea Metro 4",
-        index: 4,
+        index: [3, 4],
       },
       {
         name: "Línea Metro 5",
-        index: 6,
+        index: [6],
       },
       {
         name: "Línea Metro 6",
-        index: 5,
+        index: [5],
       },
       {
         name: "Metropolitano",
-        index: 7,
+        index: [7],
       },
     ],
     layers : [
@@ -348,8 +344,8 @@ export const mapLayersStyleGeoserver = {
                 ["Línea Metro 1", "#eada61"],
                 ["Línea Metro 2", "#2237d6"],
                 ["Línea Metro 3", "#19cacd"],
-                ["Línea Metro 4", "#76d454"],
-                ["Línea Metro 4 - Ramal Faucett - Gambetta", "#5ee875"],
+                ["Línea Metro 4", "#E8518E"],
+                ["Línea Metro 4 - Ramal Faucett - Gambetta", "#E8518E"],
                 ["Línea Metro 5 de la RBML", "#4b96d3"],
                 ["Línea Metro 6 de la RBML", "#ec3d37"],
                 ["Metropolitano", "#e8518d"]
