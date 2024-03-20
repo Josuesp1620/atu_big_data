@@ -19,14 +19,7 @@ export default function MapComponent() {
   const mapRef = React.useRef(null);
   const dispatch = useAppDispatch();
   const mapStyle = useAppSelector((state) => state.mapStyleReducer.layer);
-  const layers = useAppSelector((state) => state.layersReducer.layers);
   const panelReducer = useAppSelector((state) => state.panelReducer);
-
-  React.useEffect(() => {
-    layers.length !== 0 && layers.map((layer) => {
-      mapRef.current.getMap().addLayer(layer);
-    })
-  }, [layers]);
 
   React.useEffect(() => {
     dispatch(setScreenWidth(window.innerWidth));
