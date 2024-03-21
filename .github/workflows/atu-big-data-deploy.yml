@@ -16,4 +16,4 @@ jobs:
     - name: Remove Docker image
       run: docker rmi -f atu_big_data || true
     - name: Run docker-compose
-      run: docker-compose -f docker-compose-frontend.yml up -d
+      run: docker compose -f docker-compose-frontend.yml up -d
