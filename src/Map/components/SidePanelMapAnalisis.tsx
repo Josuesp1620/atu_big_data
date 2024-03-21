@@ -5,13 +5,13 @@ import React from "react";
 import { PeriodoEstudio } from "./utils/form_periodo_studio";
 import { LineasDeseo } from "./utils/form_lineas_deseo";
 import clsx from "clsx";
+import axios from "axios";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setActivePanel, setActiveSubPanel } from "@/redux/features/panelSlice";
 import { collapsiblePerfilViajero } from "./utils/Perfil_Viajero/perfil_viajero_fields";
-import axios from "axios";
-import { setDashboardData, setSelectionState } from "@/redux/features/arcSlice";
 import { removeAllLayersDeck } from "@/redux/features/layersDeckSlice";
 import { SymbolIcon } from "@radix-ui/react-icons";
+import { setDashboardData, setSelectionState } from "@/redux/features/arcSlice";
 
 
 export function SidePanelMapAnalisisComponent({panelWidth}) {
@@ -85,20 +85,24 @@ export function SidePanelMapAnalisisComponent({panelWidth}) {
             [analytics.lineas_deseo.type_target]: analytics.lineas_deseo.target_id === null ? [] : [analytics.lineas_deseo.target_id],
             "type": analytics.lineas_deseo.type,
         };
-        
-        const responseArc =  await axios.post('http://37.60.239.85:7777/filter_data', filters)
-        const _responseArc =responseArc.data.data.data
-        
-        dispatch(setSelectionState(({
-            source: _responseArc.source,
-            target: _responseArc.target,
-            isSourceSelected: false,
-        })));
+        try{
+            const responseArc =  await axios.post('http://200.121.128.47:3071/filter_data', filters)
+            const _responseArc =responseArc.data.data.data
+            
+            dispatch(setSelectionState(({
+                source: _responseArc.source,
+                target: _responseArc.target,
+                isSourceSelected: false,
+            })));
 
-        const responseDashboardData =  await axios.post('http://37.60.239.85:7777/data_dash_board', filters)
-        const _responseDashboardData =responseDashboardData.data.data.data
-        dispatch(setDashboardData((_responseDashboardData)));
-        setIsSubmitting(false)
+            const responseDashboardData =  await axios.post('http://200.121.128.47:3071/data_dash_board', filters)
+            const _responseDashboardData =responseDashboardData.data.data.data
+            dispatch(setDashboardData((_responseDashboardData)));
+        }catch (e) {
+            alert("ERROR AL HACER LA PETICION")
+        }finally {
+            setIsSubmitting(false)
+        }
 
     }
 
