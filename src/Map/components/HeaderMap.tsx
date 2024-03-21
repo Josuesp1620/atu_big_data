@@ -11,11 +11,16 @@ import { resetCheckedStates } from "@/redux/features/layersGeoserver";
 import { removeAllLayersDeck } from "@/redux/features/layersDeckSlice";
 import { removeAllLayers } from "@/redux/features/layersSlice";
 import Image from "next/image";
+import { resetArc } from "@/redux/features/arcSlice";
+import { resetLineasDeseo, resetPerfilViajero, resetPeriodoEstudio } from "@/redux/features/analyticsSlice";
+import { delete_layers, delete_source } from "../map_functions/layers_map";
 
 export default function HeaderMapComponent() {
 
     const dispatch = useAppDispatch();
     const panelReducer = useAppSelector((state) => state.panelReducer);
+    const layers = useAppSelector((state) => state.layersReducer.layers);
+    const mapRef = useAppSelector((state) => state.mapReducer.mapRef);
 
     const openSidePanelOption = (title) => {
         if(panelReducer.showPanel && panelReducer.activePanel !== title){
@@ -86,8 +91,14 @@ export default function HeaderMapComponent() {
                     Perfil de viajero
                 </E.Button>
                 <E.Button size="md" variant="primary" onClick={()=> {
+                    delete_layers({mapRef, layers})
+                    delete_source({mapRef, sources: layers})
                     dispatch(resetCheckedStates());
                     dispatch(removeAllLayers())
+                    dispatch(resetArc())
+                    dispatch(resetLineasDeseo())
+                    dispatch(resetPerfilViajero())
+                    dispatch(resetPeriodoEstudio())
                     dispatch(removeAllLayersDeck())
                 }}>
                     <EraserIcon />
