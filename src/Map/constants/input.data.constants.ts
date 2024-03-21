@@ -10,7 +10,7 @@ export const data_input = {
         title: 'Macrozonas'
         
     },
-    distrito: {
+    distritos: {
         id: "distrito", 
         data: distritos,
         title: 'Distritos'

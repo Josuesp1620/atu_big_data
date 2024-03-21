@@ -122,16 +122,15 @@ const MapHandler = ({setHoverInfo}) => {
       const layerId = `${layers.at(-1).id}-outline-selected`
       
       const filters: any =  altPressedRef.current ? map.getFilter(layerId) :['in', 'taz', selectionState.source.properties.taz];
-      
+
       selectionState.target.map((target) => {
         filters.push("taz")
         filters.push(target.properties.taz)
       })
       
       map.setFilter(layerId, filters);
-
-      const dataArc : any = { type: 'FeatureCollection', features: [selectionState.source, ...selectionState.target]};
       
+      const dataArc : any = { type: 'FeatureCollection', features: [selectionState.source, ...selectionState.target]};
 
       const arcInstance = new ArcLayer({
         id: uuidv4(), // Genera un ID único para la capa
@@ -145,19 +144,20 @@ const MapHandler = ({setHoverInfo}) => {
         getTargetPosition: (f) => f.properties.centroid,
         getSourceColor: (f) => [Math.sqrt(f.inbound), 140, 0],
         getTargetColor: (f) => [255, 140, 0],
-        getWidth: (f) => {
-          if(f.properties.type === "target"  && f.properties.suma_viajes){
-            const sumaViajes = parseFloat(f.properties.suma_viajes.replace(',', ''));
-            const minWidth = 4;
-            const maxWidth = 30;
-            const scaledWidth = minWidth + (maxWidth - minWidth) * (sumaViajes / selectionState.source.properties.max_suma_viajes);
-            return scaledWidth;
-          }
-          else{
-            return 3
-          }
+        getWidth: (f) => 4,
+        // getWidth: (f) => {
+        //   if(f.properties.type === "target"  && f.properties.suma_viajes){
+        //     const sumaViajes = parseFloat(f.properties.suma_viajes.replace(',', ''));
+        //     const minWidth = 4;
+        //     const maxWidth = 30;
+        //     const scaledWidth = minWidth + (maxWidth - minWidth) * (sumaViajes / selectionState.source.properties.max_suma_viajes);
+        //     return scaledWidth;
+        //   }
+        //   else{
+        //     return 3
+        //   }
           
-        },
+        // },
         onHover: info => setHoverInfo({info, source: selectionState.source.properties}),
       });
 
@@ -174,24 +174,25 @@ const MapHandler = ({setHoverInfo}) => {
           }
           return [255, 140, 0]
         },
-        getRadius: (f) => {
-          if (f.properties.type === "target" && f.properties.suma_viajes) {
-              const sumaViajes = parseFloat(f.properties.suma_viajes.replace(',', ''));
-              const minWidth = 10;
-              const maxWidth = 90;
-              const maxSumaViajes = selectionState.source.properties.max_suma_viajes;
-              const scaledWidth = minWidth + (maxWidth - minWidth) * (sumaViajes / maxSumaViajes);
-              return scaledWidth;
-          } else {
-            const lastLayerName = layers.at(-1).id;
-            const isMacrozonas = lastLayerName === 'macrozonas';
-            const isSource = f.properties.type === "source";
+        getRadius: (f) => 10,
+        // getRadius: (f) => {
+        //   if (f.properties.type === "target" && f.properties.suma_viajes) {
+        //       const sumaViajes = parseFloat(f.properties.suma_viajes.replace(',', ''));
+        //       const minWidth = 10;
+        //       const maxWidth = 90;
+        //       const maxSumaViajes = selectionState.source.properties.max_suma_viajes;
+        //       const scaledWidth = minWidth + (maxWidth - minWidth) * (sumaViajes / maxSumaViajes);
+        //       return scaledWidth;
+        //   } else {
+        //     const lastLayerName = layers.at(-1).id;
+        //     const isMacrozonas = lastLayerName === 'macrozonas';
+        //     const isSource = f.properties.type === "source";
         
-            if (isSource) {
-                return isMacrozonas ? 50 : 10;
-            }
-          }
-        },
+        //     if (isSource) {
+        //         return isMacrozonas ? 50 : 10;
+        //     }
+        //   }
+        // },
         pickable: true
       })      
 
@@ -207,13 +208,13 @@ const MapHandler = ({setHoverInfo}) => {
             return d.properties.suma_viajes
           }
         },
-        getColor:   [255, 140, 0],
+        getColor:(f) => [Math.sqrt(f.inbound), 140, 0],
         getSize: 32,
         getAngle: 0,
         getTextAnchor: 'start',
         getAlignmentBaseline: 'top'
       });
-      dispatch(addLayersDeck([layerCircle, textLayer, arcInstance]))
+      dispatch(addLayersDeck([textLayer, layerCircle, arcInstance]))
     }
 
     map.on('click', handleMapClick);
