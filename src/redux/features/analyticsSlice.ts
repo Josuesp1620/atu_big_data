@@ -65,14 +65,18 @@ export const AnalyticsSlice = createSlice({
     setPeriodoEstudio: (state, action: PayloadAction<any>) => {
       state.perfil_viajero = action.payload;
     },
-    resetAnalytics : (state) => {
+    resetPerfilViajero : (state) => {
       state.perfil_viajero = initialState.perfil_viajero
+    },
+    resetLineasDeseo : (state) => {
       state.lineas_deseo = initialState.lineas_deseo
+    },
+    resetPeriodoEstudio : (state) => {
       state.periodo_estudio = initialState.periodo_estudio
     }
   },
 });
 
-export const { setPerfilViajero, setLineasDeseo, setPeriodoEstudio, resetAnalytics } = AnalyticsSlice.actions;
+export const { setPerfilViajero, setLineasDeseo, setPeriodoEstudio, resetPerfilViajero, resetLineasDeseo, resetPeriodoEstudio } = AnalyticsSlice.actions;
 
 export default AnalyticsSlice.reducer;
