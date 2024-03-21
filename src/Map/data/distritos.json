@@ -112,7 +112,7 @@
     {
         "tipo": "distritos",
         "id": "23",
-        "denominacion": "Distr: CARMEN DE LA LEGUA - OESTE"
+        "denominacion": "Distr: CARMEN DE LA LEGUA REYNOSO - OESTE"
     },
     {
         "tipo": "distritos",
@@ -212,7 +212,7 @@
     {
         "tipo": "distritos",
         "id": "43",
-        "denominacion": "Distr: CALLAO - OESTE"
+        "denominacion": "Distr: CERCADO DEL CALLAO - OESTE"
     },
     {
         "tipo": "distritos",
@@ -247,6 +247,6 @@
     {
         "tipo": "distritos",
         "id": "50",
-        "denominacion": "Distr: LIMA - CENTRO"
+        "denominacion": "Distr: CERCADO LIMA - CENTRO"
     }
 ]
