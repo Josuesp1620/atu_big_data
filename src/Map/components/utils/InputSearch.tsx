@@ -11,7 +11,7 @@ import { resetArc } from "@/redux/features/arcSlice";
 import { delete_layers, delete_source } from "@/Map/map_functions/layers_map";
 import { resetCheckedStates, setCheckedStates } from "@/redux/features/layersGeoserver";
 
-export function InputSearch({ label, disable=false, placeholder='', type='' }: { label: string, disable?: boolean, placeholder?: string, type?: string }) {
+export function InputSearch({ label, disable=false, placeholder='', type='', source_to_target=false }: { label: string, disable?: boolean, placeholder?: string, type?: string, source_to_target?: boolean }) {
     const dispatch = useAppDispatch();
 
     const [showResult, setShowResult] = React.useState([]);
@@ -32,31 +32,28 @@ export function InputSearch({ label, disable=false, placeholder='', type='' }: {
         setShowResult([]);
         dispatch(setLineasDeseo({
             [type === 'source' ? 'source_id' : 'target_id']: parseInt(item.id), 
-            type_source: item.tipo === 'macrozonas' ? 'taz_macro_o' : item.tipo === 'mesozonas' ? 'taz_meso_o' :  item.tipo === 'microzonas' ? 'taz_micro_o' : '',
-            type_target: item.tipo === 'macrozonas' ? 'taz_macro_d' : item.tipo === 'mesozonas' ? 'taz_meso_d' :  item.tipo === 'microzonas' ? 'taz_micro_d' : '',
-            type: item.tipo === 'macrozonas' ? 'macrozonas' : item.tipo === 'mesozonas' ? 'mesozonas' :  item.tipo === 'microzonas' ? 'microzonas' : '',
+            type_source: item.tipo === 'macrozonas' ? 'taz_macro_o' : item.tipo === 'mesozonas' ? 'taz_meso_o' :  item.tipo === 'microzonas' ? 'taz_micro_o' : item.tipo === 'distritos' ? 'taz_dist_o' : '',
+            type_target: item.tipo === 'macrozonas' ? 'taz_macro_d' : item.tipo === 'mesozonas' ? 'taz_meso_d' :  item.tipo === 'microzonas' ? 'taz_micro_d' : item.tipo === 'distritos' ? 'taz_dist_d' : '',
+            type: item.tipo === 'macrozonas' ? 'macrozonas' : item.tipo === 'mesozonas' ? 'mesozonas' :  item.tipo === 'microzonas' ? 'microzonas' : item.tipo === 'distritos' ? 'distritos' : '',
             [type === 'source' ? 'value_source' : 'value_target']: item.denominacion,
         }))
 
         const layerDetails = layersGeoserver[item.tipo];
         dispatch(resetCheckedStates())
         dispatch(setCheckedStates({name: item.tipo, checked: !layerDetails.state}))
-
+        
+        // DELETE LAYERS MAP
         delete_layers({mapRef, layers})
         delete_source({mapRef, sources: layers})
         dispatch(removeAllLayers())
         dispatch(resetArc())
         dispatch(removeAllLayersDeck())
         
-        if (layerDetails.layer) {
-            dispatch(addLayers(layerDetails.layers))
-            if (!layerDetails.state && layerDetails.layer) {
-                dispatch(addLayers(layerDetails.layers))
-                layerDetails.layers.map((layer) => {
-                  mapRef.getMap().addLayer(layer);
-                })
-            }
-        }
+        // ADD LAYERS MAP
+        dispatch(addLayers(layerDetails.layers))
+        layerDetails.layers.map((layer) => {
+            mapRef.getMap().addLayer(layer);
+        })
     };
     
     const handleOnchangeInput = (event) => {
@@ -70,7 +67,7 @@ export function InputSearch({ label, disable=false, placeholder='', type='' }: {
 
         const combinedResults = [
             ...searchInType(data_input.macrozonas),
-            ...searchInType(data_input.distrito),
+            ...searchInType(data_input.distritos),
             ...searchInType(data_input.mesozonas),
             ...searchInType(data_input.microzonas)
         ];
@@ -113,10 +110,16 @@ export function InputSearch({ label, disable=false, placeholder='', type='' }: {
                 <div className="result-search">
                     {showResult.length > 0 && (
                         <ul className="absolute z-50 bg-white border border-gray-100 rounded w-full shadow-lg">
-                            {renderListItems("macrozonas", data_input.macrozonas.title)}
-                            {renderListItems("distrito", data_input.distrito.title)}
-                            {renderListItems("mesozonas", data_input.mesozonas.title)}
-                            {renderListItems("microzonas", data_input.microzonas.title)}
+                            {!source_to_target ? (
+                                <>
+                                    {renderListItems("macrozonas", data_input.macrozonas.title)}
+                                    {renderListItems("distritos", data_input.distritos.title)}
+                                    {renderListItems("mesozonas", data_input.mesozonas.title)}
+                                    {renderListItems("microzonas", data_input.microzonas.title)}
+                                </>
+                            ) : (
+                                renderListItems(analytics.lineas_deseo.type, data_input[analytics.lineas_deseo.type].title)
+                            )}
                         </ul>
                     )}
                 </div>

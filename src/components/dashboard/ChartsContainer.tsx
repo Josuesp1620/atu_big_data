@@ -15,7 +15,7 @@ const labelsAll = {
 const ChartsContainer = ({ dataAPI }) => {
   const [currentPage, setCurrentPage] = useState("horario");
   return (
-    <div className="absolute left-0 mx-3 bg-white shadow-lg border border-gray-200 rounded dialog-footer">        
+    <div className="absolute left-0 mx-3 bg-white shadow-lg border border-gray-200 rounded dialog-footer z-50">        
       <Pagination
         setCurrentPage={setCurrentPage}
         labelsAll={labelsAll}

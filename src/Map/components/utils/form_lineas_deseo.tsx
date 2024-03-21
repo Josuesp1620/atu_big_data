@@ -1,6 +1,6 @@
 import { InputSearch } from "@/Map/components/utils/InputSearch"
 import { StyledLabelSpan, styledCheckbox } from "@/components/elements"
-import { setLineasDeseo } from "@/redux/features/analyticsSlice";
+import { resetLineasDeseo, setLineasDeseo } from "@/redux/features/analyticsSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import React from "react"
 
@@ -12,11 +12,9 @@ export function LineasDeseo() {
         from_target_checkbox: false, 
         source_to_target_checkbox: false,
         inputSource: {
-            value: "",
             disable: false
         },
         inputTarget: {
-            value: "",
             disable: true
         }
     })
@@ -37,11 +35,9 @@ export function LineasDeseo() {
                     from_target_checkbox: false, 
                     source_to_target_checkbox: false,
                     inputSource: {
-                        value: "",
                         disable: false
                     },
                     inputTarget: {
-                        value: "",
                         disable: true
                     }
                 })
@@ -50,28 +46,26 @@ export function LineasDeseo() {
         </div>
         <div className="py-1 whitespace-nowrap flex justify-between">
             <StyledLabelSpan size="xs">Hacia un Destino</StyledLabelSpan>
-            <input
+            {/* <input
             type="checkbox"
             name="from_target_checkbox"
             checked={lineasDeseo.from_target_checkbox}
             className={styledCheckbox({ variant: "default" })}
             onChange={(e) => {
-                dispatch(setLineasDeseo({value_source: ""}))
+                dispatch(setLineasDeseo({value_source: null, source_id: null}))
                 _setLineasDeseo({
                     from_source_checkbox: false, 
                     from_target_checkbox: true, 
                     source_to_target_checkbox: false,
                     inputSource: {
-                        value: "",
                         disable: true
                     },
                     inputTarget: {
-                        value: "",
                         disable: false
                     }
                 })
             }}
-            />
+            /> */}
         </div>
         <div className="py-1 whitespace-nowrap flex justify-between">
             <StyledLabelSpan size="xs">Orígen a Destino</StyledLabelSpan>
@@ -80,17 +74,16 @@ export function LineasDeseo() {
             name="source_to_target_checkbox"
             checked={lineasDeseo.source_to_target_checkbox}
             className={styledCheckbox({ variant: "default" })}
-            onChange={(e) => {
+            onChange={(e) => {   
+                dispatch(resetLineasDeseo())             
                 _setLineasDeseo({
                     from_source_checkbox: false, 
                     from_target_checkbox: false, 
                     source_to_target_checkbox: true,
                     inputSource: {
-                        value: "",
                         disable: false
                     },
                     inputTarget: {
-                        value: "",
                         disable: false
                     }
                 })
@@ -102,7 +95,7 @@ export function LineasDeseo() {
             <InputSearch label={"Origen"} placeholder={"Ingrese Origen"} disable={lineasDeseo.inputSource.disable} type={'source'}/>
         </div>
         <div>
-            <InputSearch label={"Destino"} placeholder={"Ingrese Destino"} disable={lineasDeseo.inputTarget.disable} type={'target'}/>
+            <InputSearch label={"Destino"} placeholder={"Ingrese Destino"} disable={lineasDeseo.inputTarget.disable} type={'target'} source_to_target={lineasDeseo.source_to_target_checkbox}/>
         </div>
     </>
     )
