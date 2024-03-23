@@ -19,6 +19,11 @@ interface AnalyticsState {
     source_id : number | null,
     target_id: number | null,
   },
+  config_lineas : {
+    top_max: boolean,
+    top_min: boolean,
+    value: number,
+  },
   periodo_estudio : {
     year: number | null,
     month: string | null,
@@ -44,6 +49,11 @@ const initialState: AnalyticsState = {
     source_id : null,
     target_id: null,
   },
+  config_lineas : {
+    top_max: true,
+    top_min: false,
+    value: 5,
+  },
   periodo_estudio : {
     year: null,
     month: null,
@@ -65,6 +75,10 @@ export const AnalyticsSlice = createSlice({
     setPeriodoEstudio: (state, action: PayloadAction<any>) => {
       state.perfil_viajero = action.payload;
     },
+    setConfigLineas: (state, action: PayloadAction<any>) => {
+      const updatedConfigLineas = { ...state.config_lineas, ...action.payload };
+      state.config_lineas = updatedConfigLineas;
+    },
     resetPerfilViajero : (state) => {
       state.perfil_viajero = initialState.perfil_viajero
     },
@@ -73,10 +87,13 @@ export const AnalyticsSlice = createSlice({
     },
     resetPeriodoEstudio : (state) => {
       state.periodo_estudio = initialState.periodo_estudio
+    },
+    resetConfigLineas : (state) => {
+      state.config_lineas = initialState.config_lineas
     }
   },
 });
 
-export const { setPerfilViajero, setLineasDeseo, setPeriodoEstudio, resetPerfilViajero, resetLineasDeseo, resetPeriodoEstudio } = AnalyticsSlice.actions;
+export const { setPerfilViajero, setLineasDeseo, setPeriodoEstudio, setConfigLineas, resetPerfilViajero, resetLineasDeseo, resetPeriodoEstudio, resetConfigLineas } = AnalyticsSlice.actions;
 
 export default AnalyticsSlice.reducer;
