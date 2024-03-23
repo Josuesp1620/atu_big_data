@@ -1,25 +1,21 @@
 import React from 'react';
 import {
   Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
   Title,
   Tooltip,
   Legend,
+  ArcElement,
 } from 'chart.js';
-import { Bar } from 'react-chartjs-2';
+import { Pie } from 'react-chartjs-2';
 
 ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
+  ArcElement,
   Title,
   Tooltip,
   Legend
 );
 
-export function VerticalChart({labelsAll, label, dataAPI, title, color}:{labelsAll : any, label: any, dataAPI: any, title: any, color: string}) {
+export function PieChart({labelsAll, label, dataAPI, title, color}:{labelsAll : any, label: any, dataAPI: any, title: any, color: any}) {
     
   const options = {
       responsive: true,
@@ -32,11 +28,18 @@ export function VerticalChart({labelsAll, label, dataAPI, title, color}:{labelsA
           text: title,
       },
       },
-  };  
+  };
+
+  const generateRandomColor = () => {
+    const r = Math.floor(Math.random() * 156) + 100; // Rango de 100 a 255 para tonos pasteles
+    const g = Math.floor(Math.random() * 156) + 100; // Rango de 100 a 255 para tonos pasteles
+    const b = Math.floor(Math.random() * 156) + 100; // Rango de 100 a 255 para tonos pasteles
+    return `rgba(${r}, ${g}, ${b}, 0.5)`; // 0.5 es la opacidad para tonos pasteles
+  };
 
   const datasets = [
       {
-        label: label,
+        labels: label,
         data: labelsAll.map(_label => {
           const dataItem = dataAPI.find(item => item[label] === _label);
           return dataItem ? dataItem.suma_viajes : 0;
@@ -50,5 +53,5 @@ export function VerticalChart({labelsAll, label, dataAPI, title, color}:{labelsA
   };
 
   
-  return <Bar options={options} data={data} />;
+  return <Pie options={options} data={data} />;
 }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import {ChartVertical} from './VerticalBarChart';
+import {VerticalChart} from './VerticalBarChart';
 import Pagination from './Pagination'
+import { PieChart } from './PieChart';
 
 const labelsAll = {
     "horario" : ['0 a 6', '6 a 9', '9 a 11', '11 a 13', '13 a 15', '15 a 17', '17 a 19', '19 a 21', '21 a 0'],
@@ -10,7 +11,16 @@ const labelsAll = {
     "motivo" : ['A casa', 'A trabajo', 'Otros'],
     "genero" : ['Masculino', 'Femenino'],
   };
-  
+
+const colorsLabels = {
+  "horario": "#3498db",
+  "edad": "#9b59b6",
+  "nse": ["#1abc9c", "#9b59b6", "#34495e", "#e74c3c", "#f39c12"],
+  "tipo_dia": "#f1c40f",
+  "motivo": "#2ecc71",
+  "genero": ["#3498db", "#ff69b4"]
+
+};
 
 const ChartsContainer = ({ dataAPI }) => {
   const [currentPage, setCurrentPage] = useState("horario");
@@ -20,12 +30,23 @@ const ChartsContainer = ({ dataAPI }) => {
         setCurrentPage={setCurrentPage}
         labelsAll={labelsAll}
       />
-      <ChartVertical
-        labelsAll={labelsAll[currentPage]}
-        label={currentPage}
-        dataAPI={dataAPI[currentPage]}
-        title={currentPage}
+      { currentPage !== "genero" && currentPage !== "nse" ?
+        <VerticalChart
+          color={colorsLabels[currentPage]}
+          labelsAll={labelsAll[currentPage]}
+          label={currentPage}
+          dataAPI={dataAPI[currentPage]}
+          title={currentPage}
         />
+      : (
+        <PieChart
+          color={colorsLabels[currentPage]}
+          labelsAll={labelsAll[currentPage]}
+          label={currentPage}
+          dataAPI={dataAPI[currentPage]}
+          title={currentPage}
+        />
+      )}
     </div>
   );
 };
