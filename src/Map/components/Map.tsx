@@ -34,7 +34,7 @@ export default function MapComponent() {
       attributionControl.innerHTML = '© <a href="#" target="_blank" rel="noopener">GeoSolution</a> | © <a href="http://www.openstreetmap.org/about/" target="_blank">OpenStreetMap</a> contributors';
     }    
     dispatch(setMapRef(mapRef.current))
-  }, []);
+  }, [dispatch]);
 
   const [hoverInfo, setHoverInfo] = React.useState<any>(null);
 
