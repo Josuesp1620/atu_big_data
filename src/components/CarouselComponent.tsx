@@ -1,4 +1,5 @@
 "use client"
+import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
 
@@ -56,7 +57,7 @@ export function Carousel() {
                     <div key={item.link} 
                     className={`absolute block w-full h-full transition-opacity duration-700 ease-in-out ${index === activeIndex ? 'opacity-100' : 'opacity-0'}`} 
                     data-carousel-item>
-                        <img src={item.link} className="absolute block w-full h-full object-cover transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt={`Slide ${index + 1}`} />
+                        <Image src={`${process.env.basePath}${item.link}`} className="absolute block w-full h-full object-cover transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt={`Slide ${index + 1}`} width={1903} height={750}/>
                         <div className="absolute top-0 left-0 w-full h-full flex flex-col justify-center items-center text-center text-white space-y-4 bg-black bg-opacity-60">
                             <h1 className="text-5xl font-bold text-[#004B98]">{item.text_1}</h1>
                             <p className="text-6xl">{item.text_2}</p>
