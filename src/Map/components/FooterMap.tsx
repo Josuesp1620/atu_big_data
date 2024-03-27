@@ -106,7 +106,7 @@ export default function FooterMapComponent() {
                 </thead>
                 <tbody>
                    {arcReducer.target && arcReducer.target.map((element) => (
-                    <tr className="bg-white text-center items-center justify-center">
+                    <tr key={element.id} className="bg-white text-center items-center justify-center">
                         <td scope="row" className="px-6 py-4 font-medium text-gray-900 border border-gray-500">
                           {arcReducer.source.properties.name}
                         </td>
