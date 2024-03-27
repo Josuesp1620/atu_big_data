@@ -167,9 +167,11 @@ export const styledCheckbox = ({
 export const inputClass = ({
   _size = "sm",
   variant = "default",
+  width = "w-56"
 }: {
   _size?: B3Size;
   variant?: B3Variant;
+  width?: string
 }) =>
   clsx([
     sharedPadding(_size),
@@ -177,7 +179,7 @@ export const inputClass = ({
     {
       "font-mono": variant === "code",
     },
-    `block w-56
+    `block ${width}
     dark:bg-transparent dark:text-gray-100`,
 ]);
 

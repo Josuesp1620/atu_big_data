@@ -61,7 +61,8 @@ const MapHandler = ({setHoverInfo}) => {
     });
 
     if (updatedFeatureCollection === null) return
-    if (altPressedRef.current === false &&!selectionState.isSourceSelected) {
+    // if (altPressedRef.current === false &&!selectionState.isSourceSelected) {
+    if (!selectionState.isSourceSelected) {
       dispatch(setSelectionState(({
         source: updatedFeatureCollection[0],
         target: null,
@@ -75,44 +76,46 @@ const MapHandler = ({setHoverInfo}) => {
         updatedFeatureCollection[0].properties.taz
       ]);
 
-      map.setPaintProperty(layerId, 'line-color', '#94F14B');
+      // map.setPaintProperty(layerId, 'line-color', '#94F14B');
       
-    } else {         
+    } else {
+      const targetData = selectionState.target  && selectionState.target.length !== 0 ? [ ...selectionState.target , ...updatedFeatureCollection] : [...updatedFeatureCollection]
       dispatch(setSelectionState(({
         source: selectionState.source,
-        target: updatedFeatureCollection,
-        isSourceSelected: altPressedRef.current,
+        target: targetData,
+        // isSourceSelected: altPressedRef.current,
+        isSourceSelected: false,
       })));    
     }
   }
 
-  function handleKeyDown(event) {
-    if (event.keyCode === 18) {
-      setAaltPressed(true);
-    }
-  }
+  // function handleKeyDown(event) {
+  //   if (event.keyCode === 18) {
+  //     setAaltPressed(true);
+  //   }
+  // }
 
-  function handleKeyUp(event) {
-    if (event.keyCode === 18) {
-      setAaltPressed(false);
-    }
-  }
+  // function handleKeyUp(event) {
+  //   if (event.keyCode === 18) {
+  //     setAaltPressed(false);
+  //   }
+  // }
 
-  React.useEffect(() => {
-    altPressedRef.current = altPressed;
-    if(!altPressedRef.current){
-      dispatch(resetArc());
-    }
-  }, [altPressed]);
+  // React.useEffect(() => {
+  //   altPressedRef.current = altPressed;
+  //   if(!altPressedRef.current){
+  //     dispatch(resetArc());
+  //   }
+  // }, [altPressed]);
 
-  React.useEffect(() => {
-    document.addEventListener("keydown", handleKeyDown);
-    document.addEventListener("keyup", handleKeyUp);
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-      document.removeEventListener("keyup", handleKeyUp);
-    };
-  }, []);
+  // React.useEffect(() => {
+  //   document.addEventListener("keydown", handleKeyDown);
+  //   document.addEventListener("keyup", handleKeyUp);
+  //   return () => {
+  //     document.removeEventListener("keydown", handleKeyDown);
+  //     document.removeEventListener("keyup", handleKeyUp);
+  //   };
+  // }, []);
 
   React.useEffect(() => {
     const map = mapRef.getMap();
@@ -120,16 +123,16 @@ const MapHandler = ({setHoverInfo}) => {
     if (selectionState.source !== null && selectionState.target !== null ) {
       const map = mapRef.getMap();
       const layerId = `${layers.at(-1).id}-outline-selected`
-      
-      const filters: any =  altPressedRef.current ? map.getFilter(layerId) :['in', 'taz', selectionState.source.properties.taz];
+      console.log( selectionState.target)
+      // const filters: any =  altPressedRef.current ? map.getFilter(layerId) :['in', 'taz', selectionState.source.properties.taz];
+      const filters: any =  ['in', 'taz', selectionState.source.properties.taz];
 
       selectionState.target.map((target) => {
         filters.push("taz")
         filters.push(target.properties.taz)
-      })
-      
+      })      
       map.setFilter(layerId, filters);
-      
+            
       const dataArc : any = { type: 'FeatureCollection', features: [selectionState.source, ...selectionState.target]};
 
       const arcInstance = new ArcLayer({
@@ -142,7 +145,10 @@ const MapHandler = ({setHoverInfo}) => {
            f.features.filter(( f : any ) => f && f.properties),
         getSourcePosition: (f) => selectionState.source.properties.centroid,
         getTargetPosition: (f) => f.properties.centroid,
-        getSourceColor: (f) => [Math.sqrt(f.inbound), 140, 0],
+        getSourceColor: (f) => {
+          console.log([Math.sqrt(f.inbound), 140, 0])
+          return [Math.sqrt(f.inbound), 140, 0]
+        },
         getTargetColor: (f) => [255, 140, 0],
         getWidth: (f) => 4,
         // getWidth: (f) => {

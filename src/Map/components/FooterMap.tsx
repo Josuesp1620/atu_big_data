@@ -70,21 +70,71 @@ export default function FooterMapComponent() {
   return (
    <>
     {/* TODO */}
-    {/* {isAnyCheckboxChecked() && (
-      <div className="absolute top-0 right-0 my-16 mx-3 p-6 bg-white shadow-lg border border-gray-200 rounded dialog-footer">
-        <p className="text-gray-700 title-dialog">SELECCIONE 2 POLIGONOS:</p>
-        <p className="text-gray-700">Punto Origen: <span className="font-medium">{selectionState.source ? selectionState.source.properties[selectionState.source.properties.filter] : "No seleccionado" }</span></p>
-        <p className="text-gray-700">Punto Destino: <span className="font-medium">{selectionState.target ? selectionState.target.properties[selectionState.target.properties.filter] : "No seleccionado"}</span></p>
-      </div>
-    )} */}
+    {arcReducer.source && (
+      <div className="absolute top-0 right-0 my-16 mx-3 p-6 bg-white shadow-lg border border-gray-200 rounded dialog-footer z-50">
+        
+        <p className="text-gray-700 title-dialog w-16">Leyenda Origen - Destino</p>
 
-    {isAnyCheckboxChecked() && (
+        <table className="w-full text-sm rounded-xl border border-gray-500">
+                <thead className="text-xs text-gray-700 uppercase bg-gray-200">
+                    <tr>
+                        <th scope="col" className="px-6 py-3 items-center justify-center space-x-3 border border-gray-500">
+                            <svg className='inline-block' width="15px" height="15px" viewBox="-2.4 -2.4 28.80 28.80" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000000">
+                              <g id="SVGRepo_bgCarrier" stroke-width="0">
+                                <rect x="-2.4" y="-2.4" width="28.80" height="28.80" rx="14.4" fill="#008C00" strokeWidth="0"></rect>
+                              </g>
+                              <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                              <g id="SVGRepo_iconCarrier"> 
+                                <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#008C00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> 
+                              </g>
+                            </svg>
+                            <p className='inline-block	'>Origen</p>
+                        </th>
+                        <th scope="col" className="px-6 py-3 items-center justify-center space-x-3 border border-gray-500">
+                            <svg className='inline-block	' width="15px" height="15px" viewBox="-2.4 -2.4 28.80 28.80" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000000">
+                              <g id="SVGRepo_bgCarrier" stroke-width="0">
+                                <rect x="-2.4" y="-2.4" width="28.80" height="28.80" rx="14.4" fill="#FF8C00" strokeWidth="0"></rect>
+                              </g>
+                              <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                              <g id="SVGRepo_iconCarrier"> 
+                                <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#FF8C00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> 
+                              </g>
+                            </svg>
+                            <p className='inline-block'>Destino</p>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                   {arcReducer.target && arcReducer.target.map((element) => (
+                    <tr className="bg-white text-center items-center justify-center">
+                        <td scope="row" className="px-6 py-4 font-medium text-gray-900 border border-gray-500">
+                          {arcReducer.source.properties.name}
+                        </td>
+                        <td className="px-6 py-4 text-center border border-gray-500">
+                          {element.properties.name}
+                        </td>
+                    </tr>          
+                    // <div key={element.id}>
+                    //   <p className="text-gray-700">Origen: <span className="font-medium"></span> Destino: <span className="font-medium"></span></p>          
+                    // </div>
+                  ))}        
+               
+                </tbody>
+            </table>
+
+        {/* <p className="text-gray-700 title-dialog">SELECCIONE 2 POLIGONOS:</p> */}
+        
+       
+      </div>
+    )}
+
+    {/* {isAnyCheckboxChecked() && (
       <div className="absolute top-0 right-0 my-16 mx-3 p-6 bg-white shadow-lg border border-gray-200 rounded dialog-footer">
         <p className="text-gray-700 title-dialog">SELECCIONE 2 POLIGONOS:</p>
         <p className="text-gray-700">Punto Origen:</p>
         <p className="text-gray-700">Punto Destino:</p>
       </div>
-    )}
+    )} */}
 
     {arcReducer.dashboardData !== null && (
       <ChartsContainer dataAPI={arcReducer.dashboardData}></ChartsContainer>
