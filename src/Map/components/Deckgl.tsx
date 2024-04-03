@@ -18,7 +18,7 @@ export default function DeckGlComponent() {
 
   const { current: map } = useMap();
   const layersDeck = useAppSelector((state) => state.layersDeckReducer.layers);
-  
+  map.getMap().getStyle()
   return (
     <DeckGLOverlay
       layers={layersDeck}

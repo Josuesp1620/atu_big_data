@@ -6,6 +6,8 @@ import * as Popover from "@radix-ui/react-popover";
 import {
     SymbolIcon
   } from "@radix-ui/react-icons";
+import Link from "next/link";
+import Image from "next/image";
 
 export type B3Size = "xxs" | "xs" | "sm" | "md" | "lg";
 
@@ -183,6 +185,31 @@ export const inputClass = ({
     dark:bg-transparent dark:text-gray-100`,
 ]);
 
+export const Input = classed.input(inputClass);
+
+// TODO: all kinds of issues with select. Change to styled soon.
+export const styledSelect = ({
+  size,
+  variant = "default",
+}:{
+  size?: B3Size,
+  variant?:B3Variant,
+}) =>
+  clsx([
+    sharedPadding(size),
+    sharedOutline(variant),
+    sharedText("default"),
+    `
+    px-11
+    bg-transparent
+
+    focus-visible:bg-white
+    active:bg-white
+
+    dark:focus-visible:bg-black
+    dark:active:bg-black
+    `,
+  ]);
 
 export const styledButton = ({
     size = "sm",
@@ -327,3 +354,41 @@ export function Loading({ size = "sm" }: { size?: B3Size }) {
     </div>
   );
 }
+
+export const H1 = classed.h2("font-bold text-2xl");
+
+export const MinimalHeader = () => {
+  return (
+    <div className="flex">
+      <nav className="w-full max-w-4xl mx-auto flex items-center flex-auto gap-x-2 py-2">
+        <MinimalHeaderLogoLink />
+      </nav>
+    </div>
+  );
+};
+
+export const MinimalHeaderLogoLink = () => {
+  return (
+    <Link
+      href=""
+      className="py-1 pl-1 pr-2
+                      flex
+                      w-full
+                      gap-x-2
+                      items-center
+                      justify-between
+                      focus-visible:ring-1 focus-visible:ring-blue-300
+                      text-blue-500 hover:text-blue-700"
+      title="Home"
+    >
+      <div className="recorte-img-name w-full items-center justify-center flex">
+      <Image src={`${process.env.basePath}/img/mapa/mtc.png`} alt="Logo MTC" width={250} height={35} />
+      <Image src={`${process.env.basePath}/img/mapa/logoatte.png`} alt="Logo ATU" width={250} height={30}
+                
+            />            
+      </div>
+    </Link>
+  );
+};
+export const styledInlineA =
+  "text-blue-700 underline hover:text-black";

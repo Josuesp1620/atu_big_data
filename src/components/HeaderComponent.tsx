@@ -1,9 +1,15 @@
 "use client"
 import Image from 'next/image';
 import React from 'react';
+import { Button, styledButton } from './elements';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import clsx from 'clsx';
+import { PersonIcon } from '@radix-ui/react-icons';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const router = useRouter()
 
   return (
 <nav className="bg-white border-gray-200 dark:bg-gray-900 fixed top-0 left-0 w-full z-50 border-b">
@@ -33,6 +39,13 @@ export default function Header() {
         </li>
         <li>
           <a href="#" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">AYUDA</a>
+        </li> 
+        <li>
+          <Link href="/login" className="flex items-center space-x-1 py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+            <PersonIcon />
+            <p>INICIAR SESSIÓN</p>
+          </Link>
+
         </li>       
       </ul>
     </div>

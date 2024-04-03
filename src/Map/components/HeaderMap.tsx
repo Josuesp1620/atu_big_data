@@ -14,6 +14,7 @@ import Image from "next/image";
 import { resetArc } from "@/redux/features/arcSlice";
 import { resetLineasDeseo, resetPerfilViajero, resetPeriodoEstudio } from "@/redux/features/analyticsSlice";
 import { delete_layers, delete_source } from "../map_functions/layers_map";
+import ControlPrint from "@/components/control/Print/MapControlPrint";
 
 export default function HeaderMapComponent() {
 
@@ -118,8 +119,9 @@ export default function HeaderMapComponent() {
                 </E.Button>
             </div>
 
-            <div className="flex mx-3">
+            <div className="flex mx-3 flex-row-reverse space-x-4 space-x-reverse">
                 <ControlLayers />
+                <ControlPrint />
             </div>
         </div>
         
